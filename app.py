@@ -32,6 +32,7 @@ demo = gr.Interface(
     inputs="file",
     outputs="json",
     title="Resume to JSON Extractor",
+    api_name="resume_to_json_extractor",
 )
 
 demo.launch()
