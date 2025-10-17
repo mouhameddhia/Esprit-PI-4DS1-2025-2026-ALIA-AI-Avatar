@@ -27,12 +27,28 @@ def resume_to_json(filepath):
     return json.loads(text_output[json_start:json_end])
 
 
-demo = gr.Interface(
+def hello(name):
+    return f"Hello {name}!"
+
+resume_to_json_extractor = gr.Interface(
     fn=resume_to_json,
     inputs="file",
     outputs="json",
     title="Resume to JSON Extractor",
     api_name="resume_to_json_extractor",
+)
+
+hello_interface = gr.Interface(
+    fn=hello,
+    inputs="text",
+    outputs="text",
+    title="Hello Interface",
+    api_name="hello_interface",
+)
+
+demo = gr.TabbedInterface(
+    [resume_to_json_extractor, hello_interface],
+    ["Resume to JSON", "Hello"]
 )
 
 demo.launch()
