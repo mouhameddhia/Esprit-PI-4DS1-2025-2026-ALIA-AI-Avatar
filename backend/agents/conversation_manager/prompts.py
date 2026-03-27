@@ -25,7 +25,7 @@ def build_intent_prompt(
     
     if system_mode == "training":
         intents_section = _get_training_intents()
-        next_agent = "doctor_simulation"
+        next_agent = "knowledge_retrieval"
     else:
         intents_section = _get_doctor_intents()
         next_agent = "knowledge_retrieval"
@@ -106,8 +106,8 @@ def build_routing_prompt(intent: str, system_mode: str) -> str:
 determine which agent should handle the next step.
 
 Available agents:
-- doctor_simulation (for training mode)
-- knowledge_retrieval (for doctor mode)
+- doctor_simulation (for training greeting/closing flow)
+- knowledge_retrieval (for training medical content and doctor mode)
 - fallback (for unclear cases)
 
 Return only the agent name."""

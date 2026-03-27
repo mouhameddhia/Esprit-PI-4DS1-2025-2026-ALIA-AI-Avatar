@@ -1,0 +1,4 @@
+Cardiomax dosing information for adult patients:
+- Recommended starting dose: 10 mg once daily.
+- Titrate to 20 mg once daily based on blood pressure response and tolerability.
+- Clinical judgment is required for special populations.

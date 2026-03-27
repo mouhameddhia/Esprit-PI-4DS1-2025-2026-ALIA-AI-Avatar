@@ -247,9 +247,19 @@ class ConversationManagerAgent:
         if intent in ["unclear", "off_topic"]:
             return "fallback"
         
+        training_knowledge_intents = {
+            "product_introduction",
+            "clinical_evidence",
+            "safety_information",
+            "objection_response",
+        }
+
         # Route based on system mode
         if system_mode == SystemMode.TRAINING:
-            # In training mode, route to doctor simulation
+            # In training mode, route medical-content turns to the Knowledge Agent (RAG).
+            # Keep greeting/closing turns with the doctor simulation flow.
+            if intent in training_knowledge_intents:
+                return "knowledge_retrieval"
             return "doctor_simulation"
         
         elif system_mode == SystemMode.DOCTOR:
@@ -259,85 +269,3 @@ class ConversationManagerAgent:
         # Default fallback
         return "fallback"
 
-
-
-# ==================== Testing ====================
-
-if __name__ == "__main__":
-    """
-    Local testing with various scenarios
-    """
-    
-    print("=" * 60)
-    print("🧪 Testing Agent 1 - Conversation Manager")
-    print("=" * 60)
-    
-    agent = ConversationManagerAgent()
-    
-    # Test scenarios for TRAINING mode
-    training_tests = [
-        "Hello doctor, good morning!",
-        "I'd like to introduce you to our new medication, Cardiomax",
-        "Our clinical trials showed 85% efficacy in patients",
-        "The safety profile is excellent with minimal side effects",
-        "I understand your concerns about the cost, but...",
-        "Thank you for your time. Can we schedule a follow-up?"
-    ]
-    
-    # Test scenarios for DOCTOR mode
-    doctor_tests = [
-        "How effective is this drug compared to the standard treatment?",
-        "What are the common side effects?",
-        "What's the recommended dosage for elderly patients?",
-        "How does this medication work?",
-        "Are there any contraindications I should know about?",
-        "Tell me about the latest research on this drug"
-    ]
-    
-    print("\n📘 TRAINING MODE Tests:")
-    print("-" * 60)
-    
-    for i, test_input in enumerate(training_tests, 1):
-        print(f"\n{i}. Input: \"{test_input}\"")
-        
-        result = agent.process(
-            user_input=test_input,
-            system_mode="training",
-            conversation_state={
-                "stage": "discussion",
-                "turn_number": i,
-                "mentioned_topics": [],
-                "last_intent": None
-            }
-        )
-        
-        print(f"   Intent: {result['intent']}")
-        print(f"   Entities: {result['entities']}")
-        print(f"   State: {result['dialogue_state']}")
-        print(f"   Next Agent: {result['next_agent']}")
-    
-    print("\n\n📗 DOCTOR MODE Tests:")
-    print("-" * 60)
-    
-    for i, test_input in enumerate(doctor_tests, 1):
-        print(f"\n{i}. Input: \"{test_input}\"")
-        
-        result = agent.process(
-            user_input=test_input,
-            system_mode="doctor",
-            conversation_state={
-                "stage": "discussion",
-                "turn_number": i,
-                "mentioned_topics": [],
-                "last_intent": None
-            }
-        )
-        
-        print(f"   Intent: {result['intent']}")
-        print(f"   Entities: {result['entities']}")
-        print(f"   State: {result['dialogue_state']}")
-        print(f"   Next Agent: {result['next_agent']}")
-    
-    print("\n" + "=" * 60)
-    print("✅ Testing complete!")
-    print("=" * 60)

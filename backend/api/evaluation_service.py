@@ -13,8 +13,8 @@ from pathlib import Path
 # Add parent directory to path for imports
 sys.path.append(str(Path(__file__).parent.parent))
 
-from agents.evaluation_agent.agent import EvaluationAgent
-from agents.evaluation_agent.schemas import EvaluationRequest, EvaluationResponse
+from agents.Knowledge_agent.agent import EvaluationAgent
+from agents.Knowledge_agent.schemas import EvaluationRequest, EvaluationResponse
 
 
 class EvaluationService:
