@@ -4,16 +4,34 @@
 
 ### Adaptive Language Intelligence Avatar
 
-*Developed fot  **VITAL Lab** · Esprit School of Engineering · 4DS1 · 2025–2026*
+*Developed for **VITAL Lab** · Esprit School of Engineering · 4DS1 · 2025–2026*
 
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
+[![Status](https://img.shields.io/badge/Status-Active%20Development-orange?style=flat-square)]()
+[![VITAL Lab](https://img.shields.io/badge/Lab-VITAL%20Lab-purple?style=flat-square)]()
+
+</div>
 
 ---
 
 ## Overview
 
-**ALIA**  is an intelligent AI avatar system built for **VITAL Lab**. It combines Large Language Models (LLMs), Computer Vision (CNN), and Natural Language Processing (NLP) within a modular multi-agent architecture.
+**ALIA** (Adaptive Language Intelligence Avatar) is an AI-powered avatar system developed for **VITAL Lab**, designed specifically for the pharmaceutical and healthcare sector. It serves as an intelligent conversational agent that operates in two distinct roles — simulating a doctor to train medical representatives, or simulating a medical rep to assist doctors with product knowledge.
 
-The system is designed to analyze multimodal user input — text and visual data — coordinate specialized AI agents, and generate structured, context-aware responses in real time.
+ALIA combines Large Language Models (LLMs), Computer Vision (CNN), and Natural Language Processing (NLP) within a modular multi-agent architecture, enabling it to perceive, understand, and respond to users through both text and visual input in real time.
+
+---
+
+## Use Cases
+
+ALIA operates in two primary modes:
+
+**Mode 1 — Medical Rep Training**
+Medical representatives interact with ALIA as a simulated doctor. ALIA plays the role of a physician — asking questions, raising objections, and evaluating the rep's pitch — allowing reps to practice and improve their product presentation skills in a realistic, risk-free environment.
+
+**Mode 2 — Doctor Consultation Support**
+Medical staff (doctors, clinicians) interact with ALIA as if it were a knowledgeable medical representative. They can ask ALIA about drug products, active ingredients, recommended dosages, side effects, contraindications, and the latest product updates — getting instant, structured answers on demand.
 
 ---
 
@@ -52,13 +70,13 @@ The system is designed to analyze multimodal user input — text and visual data
 └───────┘     └─────────────┘  └──────────────┘
 ```
 
-**LLM Agent** — Core reasoning engine. Handles open-domain conversation, task planning, and response generation using an external LLM API.
+**LLM Agent** — Core reasoning engine. Handles open-domain conversation, role-playing (doctor or medical rep), task planning, and response generation using an external LLM API.
 
 **NLP Pipeline** — Processes raw text through tokenization, named entity recognition (NER), intent classification, and sentiment analysis.
 
 **CNN Vision Module** — Analyzes visual inputs (images, video frames) for emotion detection, facial expression recognition, and scene understanding via OpenCV and DeepFace.
 
-**Orchestration Core** — Routes tasks to the appropriate agents, manages context/memory, and assembles final structured JSON output.
+**Orchestration Core** — Routes tasks to the appropriate agents, manages context and memory, and assembles final structured JSON output.
 
 ---
 
@@ -123,16 +141,6 @@ python src/main.py
 
 ---
 
- 
-ALIA operates in two primary modes designed for the pharmaceutical and healthcare sector:
- 
-**Mode 1 — Medical Rep Training**
-Medical representatives interact with ALIA as a simulated doctor. ALIA plays the role of a physician, asking questions, raising objections, and evaluating the rep's pitch — allowing reps to practice and improve their product presentation skills in a realistic, risk-free environment.
- 
-**Mode 2 — Doctor Consultation Support**
-Medical staff (doctors, clinicians) interact with ALIA as if it were a knowledgeable medical representative. They can ask ALIA about drug products, active ingredients, recommended dosages, side effects, contraindications, and the latest product updates — getting instant, structured answers on demand.
----
-
 ## Contributing
 
 Contributions are welcome! To get started:
@@ -161,6 +169,6 @@ This project is licensed under the [MIT License](LICENSE).
 
 <div align="center">
 
-*Built for  VITAL Lab · Esprit School of Engineering*
+*Built for VITAL Lab · Esprit School of Engineering*
 
 </div>
