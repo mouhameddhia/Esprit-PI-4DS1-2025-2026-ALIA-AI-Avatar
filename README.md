@@ -11,7 +11,7 @@
 
 ## Overview
 
-**ALIA** (Adaptive Language Intelligence Avatar) is an intelligent AI avatar system built for **VITAL Lab**. It combines Large Language Models (LLMs), Computer Vision (CNN), and Natural Language Processing (NLP) within a modular multi-agent architecture.
+**ALIA**  is an intelligent AI avatar system built for **VITAL Lab**. It combines Large Language Models (LLMs), Computer Vision (CNN), and Natural Language Processing (NLP) within a modular multi-agent architecture.
 
 The system is designed to analyze multimodal user input — text and visual data — coordinate specialized AI agents, and generate structured, context-aware responses in real time.
 
