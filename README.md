@@ -123,32 +123,14 @@ python src/main.py
 
 ---
 
-## Project Structure
-
-```
-ALIA-AI-Avatar/
-├── src/
-│   ├── main.py              # Application entry point
-│   ├── agents/              # Multi-agent system modules
-│   ├── nlp/                 # NLP pipeline components
-│   ├── vision/              # CNN & computer vision modules
-│   └── llm/                 # LLM interface and prompt management
-├── data/                    # Sample inputs and test assets
-├── outputs/                 # Generated JSON responses
-├── requirements.txt
-├── .env.example
-└── README.md
-```
-
----
-
-## Use Cases
-
-- **Healthcare assistance** — Emotion-aware patient interaction support
-- **Emotion & stress detection** — Real-time affective state analysis
-- **Decision support tools** — Context-aware recommendations
-- **Human-computer interaction** — Research in conversational AI systems
-
+ 
+ALIA operates in two primary modes designed for the pharmaceutical and healthcare sector:
+ 
+**Mode 1 — Medical Rep Training**
+Medical representatives interact with ALIA as a simulated doctor. ALIA plays the role of a physician, asking questions, raising objections, and evaluating the rep's pitch — allowing reps to practice and improve their product presentation skills in a realistic, risk-free environment.
+ 
+**Mode 2 — Doctor Consultation Support**
+Medical staff (doctors, clinicians) interact with ALIA as if it were a knowledgeable medical representative. They can ask ALIA about drug products, active ingredients, recommended dosages, side effects, contraindications, and the latest product updates — getting instant, structured answers on demand.
 ---
 
 ## Contributing
