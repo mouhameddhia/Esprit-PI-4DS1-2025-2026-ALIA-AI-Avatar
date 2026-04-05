@@ -17,7 +17,7 @@
 
 ## Overview
 
-**ALIA** (Adaptive Language Intelligence Avatar) is an AI-powered avatar system developed for **VITAL Lab**, designed specifically for the pharmaceutical and healthcare sector. It serves as an intelligent conversational agent that operates in two distinct roles — simulating a doctor to train medical representatives, or simulating a medical rep to assist doctors with product knowledge.
+**ALIA**  is an AI-powered avatar system developed for **VITAL Lab**, designed specifically for the pharmaceutical and healthcare sector. It serves as an intelligent conversational agent that operates in two distinct roles — simulating a doctor to train medical representatives, or simulating a medical rep to assist doctors with product knowledge.
 
 ALIA combines Large Language Models (LLMs), Computer Vision (CNN), and Natural Language Processing (NLP) within a modular multi-agent architecture, enabling it to perceive, understand, and respond to users through both text and visual input in real time.
 
