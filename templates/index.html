@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Emotion Insight Console</title>
+    <style>
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        margin: 0;
+        padding: 0;
+        /* Soft pharma-style gradient: blue + green + white */
+        background:
+          radial-gradient(circle at top left, rgba(219, 243, 255, 0.95), transparent 55%),
+          radial-gradient(circle at bottom right, rgba(204, 251, 241, 0.9), transparent 55%),
+          linear-gradient(135deg, #0f172a 0%, #020617 60%);
+        color: #0b1120;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        min-height: 100vh;
+      }
+      header {
+        padding: 1.75rem 1rem 0.75rem;
+        text-align: center;
+      }
+      h1 {
+        margin: 0;
+        font-size: 1.9rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #e0f2fe;
+      }
+      main {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        width: 100%;
+        max-width: 1120px;
+        padding: 0 1rem 2rem;
+        box-sizing: border-box;
+      }
+      .video-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.8rem;
+      }
+      .controls-row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.4rem;
+      }
+      .card {
+        background: linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.9));
+        border-radius: 0.75rem;
+        padding: 1.1rem 1.4rem;
+        box-shadow: 0 20px 60px rgba(15, 23, 42, 0.95);
+        border: 1px solid rgba(34, 197, 235, 0.25);
+      }
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+      }
+      .col {
+        flex: 1 1 260px;
+      }
+      video {
+        width: 100%;
+        max-width: 720px;
+        border-radius: 0.75rem;
+        border: 1px solid rgba(34, 197, 235, 0.5);
+        background: radial-gradient(circle at top, #1e293b, #020617);
+        box-shadow: 0 0 0 1px rgba(34, 197, 235, 0.3), 0 18px 45px rgba(15, 23, 42, 0.9);
+      }
+      button {
+        padding: 0.6rem 1.4rem;
+        border-radius: 999px;
+        border: none;
+        cursor: pointer;
+        font-size: 0.95rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+      }
+      #startBtn {
+        background: linear-gradient(135deg, #0ea5e9, #22c55e);
+        color: #02131d;
+        margin-right: 0.5rem;
+      }
+      #stopBtn {
+        background: #082f49;
+        color: #e0f2fe;
+        border: 1px solid rgba(34, 197, 235, 0.4);
+      }
+      button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 0.75rem;
+        margin-top: 0.5rem;
+      }
+      .metric {
+        padding: 0.7rem 0.9rem;
+        background: rgba(15, 23, 42, 0.9);
+        border-radius: 0.6rem;
+        border: 1px solid rgba(34, 197, 235, 0.25);
+      }
+      .metric-label {
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #7dd3fc;
+      }
+      .metric-value {
+        margin-top: 0.2rem;
+        font-size: 1.1rem;
+      }
+      .badge {
+        display: inline-block;
+        padding: 0.2rem 0.6rem;
+        border-radius: 999px;
+        font-size: 0.75rem;
+        background: rgba(34, 197, 235, 0.12);
+        color: #a5f3fc;
+        border: 1px solid rgba(34, 197, 235, 0.8);
+      }
+      .status {
+        font-size: 0.85rem;
+        color: #9ca3af;
+        margin-top: 0.35rem;
+      }
+      .summary-grid {
+        display: grid;
+        grid-template-columns: minmax(260px, 1.6fr) minmax(320px, 2fr);
+        gap: 1.2rem;
+        margin-top: 0.8rem;
+        align-items: stretch;
+      }
+      .summary-card {
+        padding: 0.8rem 1rem;
+        background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.94));
+        border-radius: 0.7rem;
+        border: 1px solid rgba(34, 197, 235, 0.3);
+      }
+      .charts-column {
+        display: flex;
+        flex-direction: row;
+        gap: 0.85rem;
+        justify-content: space-between;
+      }
+      .chart-card {
+        padding: 0.8rem 1rem;
+        border-radius: 0.7rem;
+        background: radial-gradient(circle at top right, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.94));
+        border: 1px solid rgba(34, 197, 235, 0.3);
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 0;
+      }
+      .chart-title {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        color: #7dd3fc;
+        margin-bottom: 0.35rem;
+      }
+      .chart-body {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .chart-legend {
+        margin-top: 0.4rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.45rem 0.9rem;
+        font-size: 0.75rem;
+        color: #9ca3af;
+      }
+      .legend-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+      }
+      .legend-swatch {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+      }
+      .summary-label {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #7dd3fc;
+      }
+      .summary-value {
+        margin-top: 0.25rem;
+        font-size: 1.1rem;
+      }
+      .summary-bar-wrapper {
+        margin-top: 0.35rem;
+        width: 100%;
+        height: 0.4rem;
+        border-radius: 999px;
+        background: rgba(31, 41, 55, 0.9);
+        overflow: hidden;
+      }
+      .summary-bar-fill {
+        height: 100%;
+        width: 0%;
+        border-radius: 999px;
+        transition: width 260ms ease-out;
+      }
+      .bar-stress {
+        background: linear-gradient(90deg, #0369a1, #22c55e);
+      }
+      .bar-calm {
+        background: linear-gradient(90deg, #0ea5e9, #22c55e);
+      }
+      .bar-stability {
+        background: linear-gradient(90deg, #1d4ed8, #22c55e);
+      }
+      .summary-remarks {
+        margin-top: 0.7rem;
+        font-size: 0.88rem;
+        color: #cbd5f5;
+        line-height: 1.5;
+        white-space: pre-line;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>EMOTION INSIGHT CONSOLE</h1>
+      <p style="margin-top: 0.4rem; color: #a5b4fc; font-size: 0.9rem;">
+        Real‑time facial analytics for clinical and pharmaceutical conversations.
+      </p>
+    </header>
+
+    <main>
+      <section class="card">
+        <div class="video-section">
+          <video id="video" autoplay muted playsinline></video>
+          <div class="controls-row">
+            <div>
+              <button id="startBtn">Start Session</button>
+              <button id="stopBtn" disabled>Stop &amp; Summarize</button>
+            </div>
+            <div class="status" id="statusText">Idle. Click "Start Session" to begin.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2 style="margin-top: 0; font-size: 1.2rem; margin-bottom: 0.4rem; color: #f9fafb;">Session analytics overview</h2>
+        <div class="summary-grid">
+          <div class="summary-card">
+            <div class="summary-label">Stress index (0–1)</div>
+            <div class="summary-value" id="sumStressVal">0.00</div>
+            <div class="summary-bar-wrapper">
+              <div class="summary-bar-fill bar-stress" id="sumStressBar"></div>
+            </div>
+          </div>
+          <div class="summary-card">
+            <div class="summary-label">Calmness index (0–1)</div>
+            <div class="summary-value" id="sumCalmVal">0.00</div>
+            <div class="summary-bar-wrapper">
+              <div class="summary-bar-fill bar-calm" id="sumCalmBar"></div>
+            </div>
+          </div>
+          <div class="summary-card">
+            <div class="summary-label">Primary affect</div>
+            <div class="summary-value"><span class="badge" id="sumDomEmotion">neutral</span></div>
+          </div>
+          <div class="summary-card">
+            <div class="summary-label">Stability index (0–1)</div>
+            <div class="summary-value" id="sumStabVal">0.00</div>
+            <div class="summary-bar-wrapper">
+              <div class="summary-bar-fill bar-stability" id="sumStabBar"></div>
+            </div>
+          </div>
+          <div class="charts-column">
+            <div class="chart-card">
+              <div class="chart-title">Affect composition (derived)</div>
+              <div class="chart-body">
+                <canvas id="affectPie" width="240" height="240"></canvas>
+              </div>
+              <div class="chart-legend">
+                <span class="legend-item"><span class="legend-swatch" style="background: #0ea5e9;"></span>Stress-related (angry, fear, sad)</span>
+                <span class="legend-item"><span class="legend-swatch" style="background: #22c55e;"></span>Calm &amp; neutral (happy, neutral)</span>
+                <span class="legend-item"><span class="legend-swatch" style="background: #a5b4fc;"></span>Other expressions (surprise, disgust)</span>
+              </div>
+            </div>
+            <div class="chart-card">
+              <div class="chart-title">Indices distribution</div>
+              <div class="chart-body">
+                <canvas id="indicesBar" width="260" height="160"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="summary-remarks" id="summaryText">
+          No session yet. After you stop, the system will summarise the overall emotional load and consistency of the interaction.
+        </div>
+      </section>
+    </main>
+
+    <canvas id="captureCanvas" width="640" height="480" style="display: none;"></canvas>
+
+    <script src="/static/script.js"></script>
+  </body>
+</html>
