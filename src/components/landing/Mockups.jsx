@@ -9,6 +9,7 @@ import {
   YAxis,
 } from 'recharts';
 import { ChevronLeft, ChevronRight, Video, Database, LayoutDashboard, TrendingUp } from 'lucide-react';
+import CursorParticleField from './CursorParticleField';
 
 const chartData = [
   { month: 'Jan', score: 65 },
@@ -85,6 +86,7 @@ export default function Mockups() {
 
   return (
     <section ref={containerRef} id="product" className="landing-section container mockups-section">
+      <CursorParticleField className="mockups-cursor-particles" density={0.92} />
       <motion.div
         className="landing-section-head mockups-section-head"
         initial={{ opacity: 0, y: 18 }}

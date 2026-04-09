@@ -362,7 +362,35 @@
   background: var(--mode2-gradient);
 }
 
+/* Cursor-following particle canvas (hero + product sections) */
+.cursor-particle-field {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.cursor-particle-field canvas {
+  display: block;
+}
+
 /* Mockups — product split + 3D deck */
+.mockups-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.mockups-section .mockups-cursor-particles {
+  z-index: 0;
+}
+
+.mockups-section .landing-section-head,
+.mockups-section .mockups-product-grid {
+  position: relative;
+  z-index: 2;
+}
+
 .mockups-section .landing-section-head {
   margin-bottom: clamp(2.5rem, 6vw, 3.75rem);
 }

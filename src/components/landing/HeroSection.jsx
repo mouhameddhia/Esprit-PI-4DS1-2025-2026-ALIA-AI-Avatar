@@ -4,6 +4,7 @@ import { ArrowRight, Play, ChevronDown, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { MeshDistortMaterial, Sphere, Environment, Float } from '@react-three/drei';
+import CursorParticleField from './CursorParticleField';
 
 const AiBlob = () => {
   const meshRef = useRef();
@@ -59,6 +60,7 @@ export default function HeroSection() {
 
   return (
     <section onMouseMove={handleMouseMove} className="hero-section" aria-label="Introduction">
+      <CursorParticleField className="hero-cursor-particles" density={1.05} />
       <div className="hero-bg-shape" />
       <div className="hero-grid">
         <motion.div
