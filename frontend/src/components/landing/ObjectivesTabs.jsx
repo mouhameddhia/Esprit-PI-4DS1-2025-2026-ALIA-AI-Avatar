@@ -172,7 +172,7 @@ export default function ObjectivesTabs() {
                     fontSize: '1.1rem',
                   }}
                 >
-                  <Globe size={22} /> Data &amp; AI objectives
+                  <Globe size={22} /> Features
                 </h3>
                 <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
                   {tabs[activeTab].dso.map((line) => (
