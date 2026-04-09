@@ -71,7 +71,7 @@ export default function ComparisonSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.55 }}
         >
-          <p className="landing-kicker">Contrast</p>
+          <p className="landing-kicker"/> 
           <h2>The output gap</h2>
           <p>Traditional programs versus an AI avatar that trains, assesses, and engages with consistency.</p>
         </motion.div>
