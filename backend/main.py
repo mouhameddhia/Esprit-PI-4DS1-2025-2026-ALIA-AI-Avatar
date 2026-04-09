@@ -3,16 +3,18 @@ from fastapi.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 from dotenv import load_dotenv
 import os
-from .routes import auth
+from pathlib import Path
 
-load_dotenv()
+BASE_DIR = Path(__file__).resolve().parent
+load_dotenv(dotenv_path=BASE_DIR / ".env")
+from .routes import auth
 
 app = FastAPI(title="ALIA Backend", version="1.0.0")
 
 # CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # Frontend URL
+    allow_origins=["http://localhost:5173", "http://localhost:5174"],  # Frontend URL(s)
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

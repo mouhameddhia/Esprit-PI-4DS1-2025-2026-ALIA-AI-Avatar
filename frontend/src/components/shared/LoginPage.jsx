@@ -12,14 +12,41 @@ const LoginPage = ({ onClose }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [isTraditionalLoading, setIsTraditionalLoading] = useState(false);
   const navigate = useNavigate();
-  const { loginWithPopup, isLoading, error } = useAuth0();
+  const { loginWithPopup, getIdTokenClaims, user, isLoading, error } = useAuth0();
   const [isAuthLoading, setIsAuthLoading] = useState(false);
+
+  const syncAuth0Profile = async (syncRole) => {
+    const tokenClaims = await getIdTokenClaims();
+    const idToken = tokenClaims?.__raw;
+    if (!idToken) {
+      throw new Error('Unable to retrieve Auth0 ID token');
+    }
+
+    const response = await fetch('http://localhost:8000/auth/auth0-sync', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${idToken}`,
+      },
+      body: JSON.stringify({
+        role: syncRole.toLowerCase().replace(' ', ''),
+        name: user?.name || '',
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.detail || 'Unable to sync Auth0 profile');
+    }
+
+    return await response.json();
+  };
 
   const handleAuth0Login = async () => {
     setIsAuthLoading(true);
     try {
       await loginWithPopup();
-      // After successful login, navigate based on role
+      await syncAuth0Profile(role);
       if (role === 'Medical Rep') {
         navigate('/portal');
       } else if (role === 'Physician') {
@@ -27,6 +54,7 @@ const LoginPage = ({ onClose }) => {
       }
     } catch (err) {
       console.error('Auth0 login error:', err);
+      alert(err.message || 'Auth0 login failed');
     } finally {
       setIsAuthLoading(false);
     }

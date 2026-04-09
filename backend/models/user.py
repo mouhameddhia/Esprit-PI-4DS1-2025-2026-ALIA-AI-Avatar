@@ -1,6 +1,13 @@
-from pydantic import BaseModel, Field
-from typing import Optional
+from pydantic import BaseModel, Field, field_validator
+from typing import Optional, Any
 from datetime import datetime
+from bson import ObjectId
+
+
+def _objectid_to_str(v: Any) -> Any:
+    if isinstance(v, ObjectId):
+        return str(v)
+    return v
 
 class UserBase(BaseModel):
     email: str
@@ -20,6 +27,11 @@ class UserInDB(UserBase):
         "populate_by_name": True,
     }
 
+    @field_validator("id", mode="before")
+    @classmethod
+    def _id_from_objectid(cls, v: Any) -> Any:
+        return _objectid_to_str(v)
+
 class UserResponse(UserBase):
     id: str = Field(..., alias="_id")
     created_at: datetime
@@ -27,6 +39,11 @@ class UserResponse(UserBase):
     model_config = {
         "populate_by_name": True,
     }
+
+    @field_validator("id", mode="before")
+    @classmethod
+    def _id_from_objectid(cls, v: Any) -> Any:
+        return _objectid_to_str(v)
 
 class Token(BaseModel):
     access_token: str
