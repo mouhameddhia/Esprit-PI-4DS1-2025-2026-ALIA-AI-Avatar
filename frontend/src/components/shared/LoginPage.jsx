@@ -1,19 +1,70 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Brain, LogIn, X } from 'lucide-react';
+import { Brain, LogIn, X, Shield, Eye, EyeOff } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
 import './LoginPage.css';
 
 const LoginPage = ({ onClose }) => {
   const [role, setRole] = useState('Medical Rep');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [isTraditionalLoading, setIsTraditionalLoading] = useState(false);
   const navigate = useNavigate();
+  const { loginWithPopup, isLoading, error } = useAuth0();
+  const [isAuthLoading, setIsAuthLoading] = useState(false);
 
-  const handleLogin = (e) => {
+  const handleAuth0Login = async () => {
+    setIsAuthLoading(true);
+    try {
+      await loginWithPopup();
+      // After successful login, navigate based on role
+      if (role === 'Medical Rep') {
+        navigate('/portal');
+      } else if (role === 'Physician') {
+        navigate('/physician/portal');
+      }
+    } catch (err) {
+      console.error('Auth0 login error:', err);
+    } finally {
+      setIsAuthLoading(false);
+    }
+  };
+
+  const handleTraditionalLogin = async (e) => {
     e.preventDefault();
-    if (role === 'Medical Rep') {
-      navigate('/portal');
-    } else if (role === 'Physician') {
-      navigate('/physician/portal');
+    setIsTraditionalLoading(true);
+    try {
+      const response = await fetch('http://localhost:8000/auth/login/jwt', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+          username: email,
+          password: password,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem('token', data.access_token);
+        // Navigate based on role - for now assume medrep, could be improved
+        if (role === 'Medical Rep') {
+          navigate('/portal');
+        } else if (role === 'Physician') {
+          navigate('/physician/portal');
+        }
+      } else {
+        const errorData = await response.json();
+        alert(errorData.detail || 'Login failed');
+      }
+    } catch (err) {
+      console.error('Traditional login error:', err);
+      alert('Login failed');
+    } finally {
+      setIsTraditionalLoading(false);
     }
   };
 
@@ -93,7 +144,9 @@ const LoginPage = ({ onClose }) => {
            >
             <h2 className="login-card-title">Sign In</h2>
 
-            <form onSubmit={handleLogin}>
+            {error && <div style={{ color: 'red', marginBottom: '1rem' }}>Error: {error.message}</div>}
+
+            <form onSubmit={handleTraditionalLogin}>
               <div className="login-form-group">
                 <label className="login-form-label">I am a:</label>
                 <div className="login-role-toggles">
@@ -116,26 +169,56 @@ const LoginPage = ({ onClose }) => {
 
               <div className="login-form-group">
                 <label className="login-form-label">Email</label>
-                <input 
-                  type="email" 
-                  placeholder="your.email@example.com" 
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="login-input"
+                  required
                 />
               </div>
 
               <div className="login-form-group">
                 <label className="login-form-label">Password</label>
-                <input 
-                  type="password" 
-                  placeholder="••••••••" 
-                  className="login-input"
-                />
+                <div className="login-password-input-container">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="login-input"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="login-password-toggle"
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                  >
+                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                  </button>
+                </div>
               </div>
 
-              <button type="submit" className="login-submit-btn">
-                <LogIn size={18} /> Sign In
+              <button 
+                type="submit" 
+                className="login-submit-btn"
+                disabled={isTraditionalLoading}
+              >
+                <LogIn size={18} /> {isTraditionalLoading ? 'Signing In...' : 'Sign In'}
               </button>
             </form>
+
+            <div className="login-divider">
+              <span>or</span>
+            </div>
+
+            <button 
+              onClick={handleAuth0Login}
+              className="login-auth0-btn"
+              disabled={isAuthLoading || isLoading}
+            >
+              <Shield size={18} /> {isAuthLoading ? 'Signing In...' : 'Continue with Auth0'}
+            </button>
 
             <p className="login-footer-text">
               Don't have an account? <Link to="/signup">Sign Up</Link>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
 import ThemeToggle from './components/shared/ThemeToggle';
 import CustomCursor from './components/shared/CustomCursor';
 import HeroSection from './components/landing/HeroSection';
@@ -17,9 +18,11 @@ import MedRepTraining from './components/medrep/MedRepTraining';
 import MedRepAnalyticsPairing from './components/medrep/MedRepAnalyticsPairing';
 import MedRepSimulation from './components/medrep/MedRepSimulation';
 import PhysicianPortal from './components/physician/PhysicianPortal';
-import { LogIn } from 'lucide-react';
+import { LogoutButton, UserProfile } from './components/shared/AuthComponent';
+import { ProtectedRoute } from './components/shared/ProtectedRoute';
 
 function LandingPage() {
+  const { isAuthenticated, isLoading } = useAuth0();
   const navigate = useNavigate();
 
   return (
@@ -33,12 +36,20 @@ function LandingPage() {
           </div>
         </div>
 
-        <button 
-          onClick={() => navigate('/login')}
-          className="btn btn-primary"
-        >
-          <LogIn size={18} /> Sign Up / Login
-        </button>
+        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+          {!isLoading && (
+            isAuthenticated ? (
+              <>
+                <LogoutButton />
+              </>
+            ) : (
+              <div style={{ display: 'flex', gap: '1rem' }}>
+                <button onClick={() => navigate('/login')} className="btn btn-primary">Sign In</button>
+                <button onClick={() => navigate('/signup')} className="btn btn-secondary">Sign Up</button>
+              </div>
+            )
+          )}
+        </div>
       </header>
 
       <HeroSection />
@@ -52,23 +63,30 @@ function LandingPage() {
   );
 }
 
-function App() {
-  const navigate = useNavigate();
+function ProfilePage() {
+  return (
+    <div style={{ padding: '2rem' }}>
+      <UserProfile />
+    </div>
+  );
+}
 
+function App() {
   return (
     <div className="App relative">
       <CustomCursor />
       <ThemeToggle />
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<LoginPage onClose={() => navigate('/')} />} />
-        <Route path="/signup" element={<SignupPage onClose={() => navigate('/')} />} />
-        <Route path="/portal" element={<MedRepPortal />} />
-        <Route path="/rep/dashboard" element={<MedRepDashboard />} />
-        <Route path="/rep/training" element={<MedRepTraining />} />
-        <Route path="/rep/simulation" element={<MedRepSimulation />} />
-        <Route path="/analytics/pairing" element={<MedRepAnalyticsPairing />} />
-        <Route path="/physician/portal" element={<PhysicianPortal />} />
+        <Route path="/login" element={<LoginPage onClose={() => window.history.back()} />} />
+        <Route path="/signup" element={<SignupPage onClose={() => window.history.back()} />} />
+        <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+        <Route path="/portal" element={<ProtectedRoute><MedRepPortal /></ProtectedRoute>} />
+        <Route path="/rep/dashboard" element={<ProtectedRoute><MedRepDashboard /></ProtectedRoute>} />
+        <Route path="/rep/training" element={<ProtectedRoute><MedRepTraining /></ProtectedRoute>} />
+        <Route path="/rep/simulation" element={<ProtectedRoute><MedRepSimulation /></ProtectedRoute>} />
+        <Route path="/analytics/pairing" element={<ProtectedRoute><MedRepAnalyticsPairing /></ProtectedRoute>} />
+        <Route path="/physician/portal" element={<ProtectedRoute><PhysicianPortal /></ProtectedRoute>} />
       </Routes>
     </div>
   );
