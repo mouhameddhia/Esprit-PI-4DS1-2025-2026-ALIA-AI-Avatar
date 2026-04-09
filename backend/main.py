@@ -7,7 +7,7 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
 load_dotenv(dotenv_path=BASE_DIR / ".env")
-from .routes import auth
+from .routes import auth, chat
 
 app = FastAPI(title="ALIA Backend", version="1.0.0")
 
@@ -27,6 +27,7 @@ db = client.alia
 
 # Include routers
 app.include_router(auth.router, prefix="/auth", tags=["auth"])
+app.include_router(chat.router, prefix="/chat", tags=["chat"])
 
 @app.get("/")
 async def root():
