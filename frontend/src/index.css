@@ -272,6 +272,7 @@ h3 { font-size: clamp(1.5rem, 3vw, 2rem); }
   content: '';
   position: absolute;
   inset: 0;
+  z-index: 0;
   background: var(--hero-after-gradient);
   pointer-events: none;
 }
@@ -280,6 +281,7 @@ h3 { font-size: clamp(1.5rem, 3vw, 2rem); }
   position: absolute;
   left: -8%;
   top: 10%;
+  z-index: 0;
   width: 320px;
   height: 320px;
   border-radius: 50%;
@@ -288,9 +290,13 @@ h3 { font-size: clamp(1.5rem, 3vw, 2rem); }
   pointer-events: none;
 }
 
+.hero-cursor-particles {
+  z-index: 1;
+}
+
 .hero-grid {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   max-width: 1200px;
   margin: 0 auto;
   display: grid;
