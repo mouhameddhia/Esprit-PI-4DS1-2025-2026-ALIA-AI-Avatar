@@ -819,7 +819,10 @@
 /* Impact flip cards */
 .impact-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-areas:
+    'card-1 card-1 card-2 card-3'
+    'card-4 card-5 card-6 card-6';
   gap: 1rem;
 }
 
@@ -834,6 +837,17 @@
   height: 100%;
   transform-style: preserve-3d;
   transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.impact-flip-card:nth-child(1) { grid-area: card-1; }
+.impact-flip-card:nth-child(2) { grid-area: card-2; }
+.impact-flip-card:nth-child(3) { grid-area: card-3; }
+.impact-flip-card:nth-child(4) { grid-area: card-4; }
+.impact-flip-card:nth-child(5) { grid-area: card-5; }
+.impact-flip-card:nth-child(6) { grid-area: card-6; }
+
+.impact-flip-card.is-featured {
+  height: 280px;
 }
 
 .impact-flip-card:hover .impact-flip-card-inner {
@@ -869,9 +883,22 @@
     linear-gradient(150deg, rgba(15, 23, 42, 0.2), rgba(15, 23, 42, 0.8));
 }
 
+.impact-card-front::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: var(--impact-image);
+  background-size: cover;
+  background-position: center;
+  opacity: 0.34;
+  mix-blend-mode: screen;
+}
+
 .impact-card-front > * {
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 .impact-card-front strong {
@@ -923,6 +950,35 @@
 
 .impact-flip-card.tone-slate .impact-card-front {
   background: linear-gradient(155deg, #1e293b, #0f172a 60%, #020617);
+}
+
+@media (max-width: 1024px) {
+  .impact-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      'card-1 card-1'
+      'card-2 card-3'
+      'card-4 card-5'
+      'card-6 card-6';
+  }
+}
+
+@media (max-width: 700px) {
+  .impact-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'card-1'
+      'card-2'
+      'card-3'
+      'card-4'
+      'card-5'
+      'card-6';
+  }
+
+  .impact-flip-card,
+  .impact-flip-card.is-featured {
+    height: 230px;
+  }
 }
 
 /* Testimonials marquee */
