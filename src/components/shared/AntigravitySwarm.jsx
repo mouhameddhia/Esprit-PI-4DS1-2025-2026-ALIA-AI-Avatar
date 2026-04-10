@@ -14,7 +14,7 @@ const AntigravitySwarm = () => {
     // Google colors + ALIA purple
     const colors = ['#4285F4', '#EA4335', '#FBBC05', '#34A853', '#7C3AED', '#A78BFA'];
 
-    const numParticles = 0; // Reduced amount for a lighter, cleaner swarm
+    const numParticles = 50; // Reduced amount for a lighter, cleaner swarm
     const particles = [];
 
     // Mouse tracking

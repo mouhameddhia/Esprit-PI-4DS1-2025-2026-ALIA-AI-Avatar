@@ -1,39 +1,9 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { motion, useMotionValue } from 'framer-motion';
 import { ArrowRight, Play, ChevronDown, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { MeshDistortMaterial, Sphere, Environment, Float } from '@react-three/drei';
 import CursorParticleField from './CursorParticleField';
-
-const AiBlob = () => {
-  const meshRef = useRef();
-
-  useFrame((state) => {
-    const t = state.clock.getElapsedTime();
-    if (meshRef.current) {
-      meshRef.current.rotation.x = t * 0.1;
-      meshRef.current.rotation.y = t * 0.2;
-      meshRef.current.position.x = state.mouse.x * 0.8 + Math.sin(t * 0.5) * 0.2;
-      meshRef.current.position.y = state.mouse.y * 0.8 + Math.cos(t * 0.5) * 0.2;
-    }
-  });
-
-  return (
-    <Float speed={2} rotationIntensity={1} floatIntensity={2}>
-      <Sphere ref={meshRef} args={[1, 128, 128]} scale={2.2}>
-        <MeshDistortMaterial
-          color="#a855f7"
-          attach="material"
-          distort={0.4}
-          speed={1.5}
-          roughness={0.1}
-          metalness={0.8}
-        />
-      </Sphere>
-    </Float>
-  );
-};
+import fireflyDoctorVideo from '../../assets/Firefly doctor video.mp4';
 
 const metricVariants = {
   hidden: { opacity: 0, y: 16 },
@@ -164,13 +134,16 @@ export default function HeroSection() {
             }}
             transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
           >
-            <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
-              <ambientLight intensity={0.55} />
-              <directionalLight position={[10, 10, 5]} intensity={1.6} color="#ffffff" />
-              <directionalLight position={[-8, -8, -4]} intensity={0.65} color="#2dd4bf" />
-              <AiBlob />
-              <Environment preset="city" />
-            </Canvas>
+            <video
+              className="hero-visual-media"
+              src={fireflyDoctorVideo}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              aria-label="Firefly doctor demonstration"
+            />
           </motion.div>
         </motion.div>
       </div>

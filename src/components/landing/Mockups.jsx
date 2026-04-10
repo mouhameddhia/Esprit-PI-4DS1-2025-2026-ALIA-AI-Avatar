@@ -30,8 +30,8 @@ const VIDEO_SLIDES = [
     ).href,
   },
   {
-    title: 'Nour in conversation',
-    caption: 'Nelly · avatar from audio (preview)',
+    title: 'ALIA in conversation',
+    caption: 'ALIA · avatar from audio (preview)',
     src: new URL(
       '../../assets/67ff9faac266bb379ddc0ea2_68952a70df76b4e5734ba5ee_Nelly - Audio to Video U 30 MB-transcode.mp4',
       import.meta.url,
@@ -117,12 +117,12 @@ export default function Mockups() {
           </div>
           <h3 className="mockup-rep-card__title">Competency trajectory</h3>
           <p className="mockup-rep-card__lede">
-            Rolling readiness score from visits debriefed in the portal—so managers see momentum, not a single snapshot.
+            Rolling readiness score from visits debriefed in the portal—so HCPs see momentum, not a single snapshot.
           </p>
           <div className="mockup-rep-card__hero">
             <span className="mockup-rep-card__score">{latestScore}</span>
             <span className="mockup-rep-card__score-max">/ 100</span>
-            <span className="mockup-rep-card__delta">+{delta} vs Jan</span>
+            <span className="mockup-rep-card__delta">+{delta} vs without ALIA</span>
           </div>
           <div className="mockup-rep-card__chart">
             <ResponsiveContainer width="100%" height="100%">
