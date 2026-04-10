@@ -13,6 +13,7 @@ import {
   Package,
   MessageSquarePlus,
 } from 'lucide-react';
+import { useSessionFinalize } from '../../hooks/useSessionFinalize';
 import './PhysicianPortal.css';
 import '../medrep/MedRepPortal.css';
 import '../medrep/MedRepSimulation.css';
@@ -79,6 +80,9 @@ const PhysicianPortal = () => {
     { date: 'OCT 24', title: 'Advances in Hypertension', time: '14:00 GMT' },
     { date: 'NOV 12', title: 'Managing Diabetic Renal Risk', time: '10:00 GMT' },
   ];
+
+  // Auto-finalize session when tab/window closes
+  useSessionFinalize(sessionId, API_BASE, SESSION_STORAGE_KEY);
 
   const scrollToBottom = () => {
     const el = chatHistoryRef.current;
