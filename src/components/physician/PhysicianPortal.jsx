@@ -270,7 +270,7 @@ const PhysicianPortal = () => {
             </div>
 
             <div className="ai-rep-info">
-              <h2>Nour</h2>
+              <h2>ALIA</h2>
               <p>Your AI Pharmaceutical Rep</p>
             </div>
 
@@ -332,7 +332,7 @@ const PhysicianPortal = () => {
                 <div className="history-header">
                   <div>
                     <h2>Interaction History</h2>
-                    <p>Your conversations with Nour (saved when you sign out)</p>
+                    <p>Your conversations with ALIA (saved when you sign out)</p>
                   </div>
                   <button type="button" className="history-back" onClick={() => setActiveSection('chat')}>
                     <ArrowRight size={16} style={{ transform: 'rotate(180deg)' }} />
@@ -345,7 +345,7 @@ const PhysicianPortal = () => {
                     <p style={{ color: 'var(--text-secondary)', padding: '1rem' }}>Loading…</p>
                   ) : sessionHistory.length === 0 ? (
                     <p style={{ color: 'var(--text-secondary)', padding: '1rem' }}>
-                      No saved sessions yet. Chat with Nour, then sign out to generate a summary.
+                      No saved sessions yet. Chat with ALIA, then sign out to generate a summary.
                     </p>
                   ) : (
                     sessionHistory.map((item) => (
@@ -466,7 +466,7 @@ const PhysicianPortal = () => {
                   <input
                     type="text"
                     className="chat-input-field"
-                    placeholder="Ask Nour about clinical data or product info..."
+                    placeholder="Ask ALIA about clinical data or product info..."
                     value={inputText}
                     onChange={(e) => setInputText(e.target.value)}
                     onKeyDown={(e) => {

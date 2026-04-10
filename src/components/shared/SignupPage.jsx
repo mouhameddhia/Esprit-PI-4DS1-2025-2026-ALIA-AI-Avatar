@@ -147,7 +147,7 @@ const SignupPage = ({ onClose }) => {
               transition={{ delay: 0.3 }}
               className="login-subtitle"
             >
-              Interact with Nour, your intelligent AI representative, for training simulations and instant product knowledge.
+              Interact with ALIA, your intelligent AI representative, for training simulations and instant product knowledge.
             </motion.p>
 
             <motion.div 
