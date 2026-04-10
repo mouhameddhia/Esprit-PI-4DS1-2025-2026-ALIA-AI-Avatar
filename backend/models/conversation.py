@@ -16,6 +16,12 @@ class MessageEntry(BaseModel):
     at: datetime
 
 
+class RollingSummaryEntry(BaseModel):
+    summary: str
+    generated_at: datetime
+    message_count: int
+
+
 class ConversationResponse(BaseModel):
     id: str = Field(..., alias="_id")
     user_email: str
@@ -23,6 +29,9 @@ class ConversationResponse(BaseModel):
     messages: List[MessageEntry] = []
     summary: Optional[str] = None
     summary_created_at: Optional[datetime] = None
+    summary_method: Optional[Literal["auto", "manual"]] = None
+    summary_triggered_by: Optional[str] = None
+    rolling_summaries: List[RollingSummaryEntry] = []
     topics: List[str] = []
     objections: List[str] = []
     action_items: List[str] = []

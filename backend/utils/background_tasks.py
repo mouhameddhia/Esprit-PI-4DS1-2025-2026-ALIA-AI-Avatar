@@ -37,7 +37,7 @@ async def auto_finalize_idle_sessions(db: AsyncIOMotorDatabase) -> int:
             messages = session.get("messages", [])
             
             # Generate summary and metadata
-            summary, metadata = await generate_summary_with_caching(
+            summary, metadata, rolling_summaries = await generate_summary_with_caching(
                 str(session_id),
                 messages,
                 force_regenerate=False,
@@ -45,13 +45,16 @@ async def auto_finalize_idle_sessions(db: AsyncIOMotorDatabase) -> int:
             
             now = datetime.utcnow()
             
-            # Update the session
+            # Update the session with audit trail
             await db.conversations.update_one(
                 {"_id": session_id},
                 {
                     "$set": {
                         "summary": summary,
                         "summary_created_at": now,
+                        "summary_method": "auto",
+                        "summary_triggered_by": "system",
+                        "rolling_summaries": rolling_summaries,
                         "topics": metadata.get("topics", []),
                         "objections": metadata.get("objections", []),
                         "action_items": metadata.get("action_items", []),

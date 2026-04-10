@@ -145,6 +145,9 @@ async def send_message(
             "messages": messages,
             "summary": None,
             "summary_created_at": None,
+            "summary_method": None,
+            "summary_triggered_by": None,
+            "rolling_summaries": [],
             "topics": [],
             "objections": [],
             "action_items": [],
@@ -179,8 +182,8 @@ async def finalize_session(
 
     msgs = doc.get("messages") or []
     
-    # Generate summary with caching and metadata extraction
-    summary, metadata = await generate_summary_with_caching(
+    # Generate summary with caching, error handling, and incremental summaries
+    summary, metadata, rolling_summaries = await generate_summary_with_caching(
         session_id=session_id,
         messages=msgs,
         force_regenerate=force_regenerate,
@@ -193,6 +196,9 @@ async def finalize_session(
             "$set": {
                 "summary": summary,
                 "summary_created_at": now,
+                "summary_method": "manual",
+                "summary_triggered_by": current_user.email,
+                "rolling_summaries": rolling_summaries,
                 "topics": metadata.get("topics", []),
                 "objections": metadata.get("objections", []),
                 "action_items": metadata.get("action_items", []),
