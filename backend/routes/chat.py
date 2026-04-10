@@ -11,6 +11,7 @@ from pydantic import BaseModel, Field
 from ..dependencies import get_database, get_current_user
 from ..models.conversation import ConversationResponse, SessionListItem
 from ..models.user import UserInDB
+from ..utils.summary import generate_summary_with_caching
 
 router = APIRouter()
 
@@ -62,37 +63,6 @@ def _chat_completion(messages: list[dict]) -> str:
         raise HTTPException(
             status_code=status.HTTP_502_BAD_GATEWAY,
             detail="Empty response from language model",
-        )
-    return choice.content.strip()
-
-
-def _summary_completion(transcript: str) -> str:
-    client = _groq_client()
-    completion = client.chat.completions.create(
-        model=GROQ_MODEL,
-        messages=[
-            {
-                "role": "system",
-                "content": (
-                    "You summarize pharmaceutical training / HCP chat sessions for internal records. "
-                    "Output a short headline (one line) then 3–6 bullet points. "
-                    "Focus on topics discussed, products mentioned, objections, and any follow-ups. "
-                    "Be factual; do not invent details not present in the transcript."
-                ),
-            },
-            {
-                "role": "user",
-                "content": f"Summarize this conversation:\n\n{transcript}",
-            },
-        ],
-        temperature=0.4,
-        max_tokens=512,
-    )
-    choice = completion.choices[0].message
-    if not choice or not choice.content:
-        raise HTTPException(
-            status_code=status.HTTP_502_BAD_GATEWAY,
-            detail="Empty summary from language model",
         )
     return choice.content.strip()
 
@@ -175,6 +145,9 @@ async def send_message(
             "messages": messages,
             "summary": None,
             "summary_created_at": None,
+            "topics": [],
+            "objections": [],
+            "action_items": [],
             "status": "open",
             "created_at": now,
             "updated_at": asst_time,
@@ -194,30 +167,41 @@ async def send_message(
 @router.post("/sessions/{session_id}/finalize", response_model=FinalizeResponse)
 async def finalize_session(
     session_id: str,
+    force_regenerate: bool = False,
     current_user: UserInDB = Depends(get_current_user),
     db: AsyncIOMotorDatabase = Depends(get_database),
 ):
     doc, oid = await _get_owned_session(db, session_id, current_user.email)
-    if doc.get("summary"):
+    
+    # If already summarized and not forcing regeneration, return cached summary
+    if doc.get("summary") and not force_regenerate:
         return FinalizeResponse(session_id=session_id, summary=doc["summary"])
 
     msgs = doc.get("messages") or []
-    if not msgs:
-        summary = "No messages in this conversation."
-        now = datetime.utcnow()
-        await db.conversations.update_one(
-            {"_id": oid},
-            {"$set": {"summary": summary, "summary_created_at": now, "status": "closed", "updated_at": now}},
-        )
-        return FinalizeResponse(session_id=session_id, summary=summary)
-
-    transcript = "\n".join(f"{m['role']}: {m['content']}" for m in msgs)
-    summary = _summary_completion(transcript)
+    
+    # Generate summary with caching and metadata extraction
+    summary, metadata = await generate_summary_with_caching(
+        session_id=session_id,
+        messages=msgs,
+        force_regenerate=force_regenerate,
+    )
+    
     now = datetime.utcnow()
     await db.conversations.update_one(
         {"_id": oid},
-        {"$set": {"summary": summary, "summary_created_at": now, "status": "closed", "updated_at": now}},
+        {
+            "$set": {
+                "summary": summary,
+                "summary_created_at": now,
+                "topics": metadata.get("topics", []),
+                "objections": metadata.get("objections", []),
+                "action_items": metadata.get("action_items", []),
+                "status": "closed",
+                "updated_at": now,
+            }
+        },
     )
+    
     return FinalizeResponse(session_id=session_id, summary=summary)
 
 

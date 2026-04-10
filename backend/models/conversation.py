@@ -23,6 +23,9 @@ class ConversationResponse(BaseModel):
     messages: List[MessageEntry] = []
     summary: Optional[str] = None
     summary_created_at: Optional[datetime] = None
+    topics: List[str] = []
+    objections: List[str] = []
+    action_items: List[str] = []
     status: str
     created_at: datetime
     updated_at: datetime
