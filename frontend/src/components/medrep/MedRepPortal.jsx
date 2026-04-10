@@ -61,7 +61,7 @@ const MedRepPortal = () => {
               <div className="portal-avatar-inner">
                 <img
                   src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=400&h=400"
-                  alt="Nour AI"
+                  alt="ALIA AI"
                   className="portal-avatar-img"
                 />
                 <div className="portal-avatar-overlay">

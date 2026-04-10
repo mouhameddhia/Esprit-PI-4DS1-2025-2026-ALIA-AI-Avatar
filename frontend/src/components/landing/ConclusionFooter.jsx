@@ -4,12 +4,22 @@ import { CheckSquare, Send, ArrowRight, Mail, Phone, MapPin, ExternalLink } from
 import { useNavigate } from 'react-router-dom';
 
 const steps = [
-  'Voice & text chat integrated (Groq)',
+  'Voice & text chat integrated',
   'Auth & roles (rep / physician)',
   'Conversation storage & summaries',
   'Expand simulation rubrics & analytics',
   'Compliance review with medical affairs',
   'CRM & field tooling integration',
+  'Healthcare Professionals friendly',
+  'Realistic, high-pressure simulations',
+  'Compliant product conversations',
+  'Structured interaction data for the field force',
+  'Align messaging with approved claims and materials',
+  'Multilingual responses (e.g. FR / EN / AR / ES)',
+  'RAG over curated product knowledge',
+  'Low-latency conversational UX',
+  'Adaptive difficulty based on performance',
+  'Sentiment & tone signals for coaching',
 ];
 
 export default function ConclusionFooter() {

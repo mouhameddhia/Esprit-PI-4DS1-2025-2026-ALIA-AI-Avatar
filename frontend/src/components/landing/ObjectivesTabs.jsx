@@ -25,7 +25,7 @@ export default function ObjectivesTabs() {
     },
     {
       id: 1,
-      title: 'Mode 2: Nour as the rep',
+      title: 'Mode 2: ALIA as the rep',
       short: 'Engagement',
       color: 'var(--mode-engagement)',
       icon: <Presentation size={20} />,

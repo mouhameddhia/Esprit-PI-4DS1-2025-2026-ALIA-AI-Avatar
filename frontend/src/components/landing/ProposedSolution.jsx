@@ -22,7 +22,7 @@ const features = [
     color: '#a855f7',
     bg: 'rgba(168, 85, 247, 0.12)',
     title: 'One stack, two journeys',
-    body: 'The same core powers training simulations (Mode 1) and Nour as AI pharmaceutical representative for HCPs (Mode 2), with clear separation of tone and guardrails.',
+    body: 'The same core powers training simulations (Mode 1) and ALIA as AI pharmaceutical representative for HCPs (Mode 2), with clear separation of tone and guardrails.',
   },
 ];
 
@@ -93,7 +93,7 @@ export default function ProposedSolution() {
                     border: '1px solid rgba(251, 146, 60, 0.35)',
                   }}
                 >
-                  Mode 2 · AI rep (Nour)
+                  Mode 2 · AI rep (ALIA)
                 </span>
               </div>
             </motion.div>
