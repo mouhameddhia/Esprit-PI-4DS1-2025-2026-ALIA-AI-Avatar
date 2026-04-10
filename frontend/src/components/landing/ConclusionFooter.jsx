@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { CheckSquare, Send, ArrowRight } from 'lucide-react';
+import { CheckSquare, Send, ArrowRight, Mail, Phone, MapPin, ExternalLink } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const steps = [
@@ -14,6 +14,7 @@ const steps = [
 
 export default function ConclusionFooter() {
   const navigate = useNavigate();
+  const year = new Date().getFullYear();
 
   return (
     <>
@@ -142,22 +143,69 @@ export default function ConclusionFooter() {
         </div>
       </section>
 
-      <footer style={{ borderTop: '1px solid var(--glass-border)', padding: '2rem 1.25rem', background: 'var(--bg-color)' }}>
-        <div
-          className="container"
-          style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}
-        >
-          <div style={{ color: 'var(--text-secondary)', fontSize: '0.92rem' }}>
-            © {new Date().getFullYear()} ALIA · Academic &amp; industry collaboration (Laboratoires Vital)
+      <footer id="contact" className="landing-footer">
+        <div className="container landing-footer-grid">
+          <div>
+            <div className="brand" style={{ marginBottom: '1rem' }}>
+              <div className="brand-mark">AL</div>
+              <div>
+                <div style={{ fontWeight: 700, letterSpacing: '0.02em', color: 'var(--text-primary)' }}>ALIA</div>
+                <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>AI Avatar Platform</div>
+              </div>
+            </div>
+            <p className="landing-footer-copy">
+              AI-powered simulation and engagement for pharmaceutical training, readiness, and compliant field conversations.
+            </p>
+            <div className="landing-footer-socials">
+              <a href="https://www.linkedin.com" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+                <span>in</span>
+              </a>
+              <a href="https://www.youtube.com" target="_blank" rel="noreferrer" aria-label="YouTube">
+                <span>YT</span>
+              </a>
+              <a href="mailto:contact@alia-platform.com" aria-label="Email">
+                <Mail size={18} />
+              </a>
+            </div>
           </div>
-          <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
-            <button type="button" className="landing-nav-link" onClick={() => navigate('/signup')}>
-              Sign up
-            </button>
-            <button type="button" className="landing-nav-link" onClick={() => navigate('/login')}>
-              Sign in
-            </button>
+
+          <div>
+            <h4>Quick links</h4>
+            <div className="landing-footer-links">
+              <button type="button" className="landing-nav-link" onClick={() => navigate('/signup')}>
+                Create account
+              </button>
+              <button type="button" className="landing-nav-link" onClick={() => navigate('/login')}>
+                Sign in
+              </button>
+              <a href="#impact">Impact metrics</a>
+              <a href="#testimonials">Testimonials</a>
+              <a href="#faq">FAQ</a>
+            </div>
           </div>
+
+          <div>
+            <h4>Contact</h4>
+            <div className="landing-footer-contact">
+              <a href="mailto:contact@alia-platform.com">
+                <Mail size={16} aria-hidden /> contact@alia-platform.com
+              </a>
+              <a href="tel:+21600000000">
+                <Phone size={16} aria-hidden /> +216 00 000 000
+              </a>
+              <p>
+                <MapPin size={16} aria-hidden /> Tunis, Tunisia
+              </p>
+            </div>
+            <a className="landing-footer-external" href="https://www.quantified.ai/" target="_blank" rel="noreferrer">
+              Industry inspiration <ExternalLink size={14} aria-hidden />
+            </a>
+          </div>
+        </div>
+
+        <div className="container landing-footer-bottom">
+          <span>© {year} ALIA. All rights reserved.</span>
+          <span>Academic &amp; industry collaboration with Laboratoires Vital.</span>
         </div>
       </footer>
     </>

@@ -7,6 +7,9 @@ import ComparisonSection from './ComparisonSection';
 import ObjectivesTabs from './ObjectivesTabs';
 import ProposedSolution from './ProposedSolution';
 import Mockups from './Mockups';
+import StatsFlipSection from './StatsFlipSection';
+import TestimonialsSection from './TestimonialsSection';
+import FaqSection from './FaqSection';
 import ConclusionFooter from './ConclusionFooter';
 import { LogoutButton } from '../shared/AuthComponent';
 
@@ -16,6 +19,9 @@ const navTargets = [
   { id: 'modes', label: 'Modes' },
   { id: 'platform', label: 'Platform' },
   { id: 'product', label: 'Product' },
+  { id: 'impact', label: 'Impact' },
+  { id: 'testimonials', label: 'Testimonials' },
+  { id: 'faq', label: 'FAQ' },
   { id: 'get-started', label: 'Get started' },
 ];
 
@@ -81,6 +87,9 @@ export default function LandingPage() {
       <ObjectivesTabs />
       <ProposedSolution />
       <Mockups />
+      <StatsFlipSection />
+      <TestimonialsSection />
+      <FaqSection />
       <ConclusionFooter />
     </div>
   );
