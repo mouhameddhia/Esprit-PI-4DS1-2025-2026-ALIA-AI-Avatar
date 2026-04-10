@@ -11,6 +11,8 @@ const cards = [
     detail:
       'Structured role-play with scoring rubrics helps reps internalize key product narratives and objection handling faster.',
     tone: 'purple',
+    featured: true,
+    imageUrl: 'https://images.pexels.com/photos/7579831/pexels-photo-7579831.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=900&w=1400',
   },
   {
     icon: TrendingUp,
@@ -56,6 +58,8 @@ const cards = [
     detail:
       'A controlled simulation environment supports confidence building while reducing off-script messaging risk.',
     tone: 'slate',
+    featured: true,
+    imageUrl: 'https://images.pexels.com/photos/4989186/pexels-photo-4989186.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=900&w=1400',
   },
 ];
 
@@ -81,14 +85,17 @@ export default function StatsFlipSection() {
             return (
               <motion.article
                 key={card.title}
-                className={`impact-flip-card tone-${card.tone}`}
+                className={`impact-flip-card tone-${card.tone} ${card.featured ? 'is-featured' : ''}`}
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
                 transition={{ duration: 0.5, delay: i * 0.06 }}
               >
                 <div className="impact-flip-card-inner">
-                  <div className="impact-card-face impact-card-front">
+                  <div
+                    className="impact-card-face impact-card-front"
+                    style={card.imageUrl ? { '--impact-image': `url("${card.imageUrl}")` } : undefined}
+                  >
                     <Icon size={24} aria-hidden />
                     <strong>{card.stat}</strong>
                     <h3>{card.title}</h3>
