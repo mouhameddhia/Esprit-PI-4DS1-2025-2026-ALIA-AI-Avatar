@@ -3,8 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Brain, UserPlus, X, Shield, Eye, EyeOff } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
+import AntigravitySwarm from './AntigravitySwarm';
 import './LoginPage.css';
-
 const SignupPage = ({ onClose }) => {
   const [role, setRole] = useState('Medical Rep');
   const [email, setEmail] = useState('');
@@ -109,6 +109,7 @@ const SignupPage = ({ onClose }) => {
         exit={{ opacity: 0 }}
         className="login-page-container"
       >
+        <AntigravitySwarm />
         <button className="login-close-btn" onClick={onClose} aria-label="Close">
           <X size={24} />
         </button>
