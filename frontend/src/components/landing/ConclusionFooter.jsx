@@ -66,11 +66,11 @@ export default function ConclusionFooter() {
                   <div key={step} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.85rem' }}>
                     <CheckSquare
                       size={22}
-                      color={i < 3 ? 'var(--mode-training)' : 'var(--text-secondary)'}
+                      color={i < 16 ? 'var(--mode-training)' : 'var(--text-secondary)'}
                       style={{ flexShrink: 0, marginTop: 2 }}
                       aria-hidden
                     />
-                    <span style={{ color: i < 3 ? 'var(--text-primary)' : 'var(--text-secondary)', lineHeight: 1.55 }}>
+                    <span style={{ color: i < 16 ? 'var(--text-primary)' : 'var(--text-secondary)', lineHeight: 1.55 }}>
                       {step}
                     </span>
                   </div>

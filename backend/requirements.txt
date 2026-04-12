@@ -12,3 +12,9 @@ passlib[bcrypt]==1.7.4
 groq==0.13.1
 redis==5.0.1
 apscheduler==3.10.4
+
+# Vector Database & Embeddings
+sentence-transformers==2.2.2
+pinecone-client==3.1.0
+numpy>=1.24.0
+pypdf==5.1.0

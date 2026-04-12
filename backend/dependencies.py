@@ -10,6 +10,31 @@ def get_database() -> AsyncIOMotorDatabase:
     from .main import db
     return db
 
+def get_vector_client():
+    """Get the vector database client."""
+    from .main import vector_client
+    return vector_client
+
+def get_embedding_encoder():
+    """Get the embedding encoder."""
+    from .main import embedding_encoder
+    return embedding_encoder
+
+def get_product_indexer():
+    """Get the product indexer."""
+    from .main import product_indexer
+    return product_indexer
+
+def get_conversation_embedder():
+    """Get the conversation embedder."""
+    from .main import conversation_embedder
+    return conversation_embedder
+
+def get_knowledge_document_indexer():
+    """Get the knowledge document indexer."""
+    from .main import knowledge_document_indexer
+    return knowledge_document_indexer
+
 async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security), db: AsyncIOMotorDatabase = Depends(get_database)) -> UserInDB:
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,

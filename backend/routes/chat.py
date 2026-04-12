@@ -1,4 +1,5 @@
 import os
+import logging
 from datetime import datetime
 from typing import List, Literal, Optional
 
@@ -8,10 +9,13 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from motor.motor_asyncio import AsyncIOMotorDatabase
 from pydantic import BaseModel, Field
 
-from ..dependencies import get_database, get_current_user
+from ..dependencies import get_database, get_current_user, get_vector_client, get_embedding_encoder
 from ..models.conversation import ConversationResponse, SessionListItem
 from ..models.user import UserInDB
 from ..utils.summary import generate_summary_with_caching
+from ..utils.rag_pipeline import RAGPipeline
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
@@ -107,6 +111,8 @@ async def send_message(
     body: SendMessageRequest,
     current_user: UserInDB = Depends(get_current_user),
     db: AsyncIOMotorDatabase = Depends(get_database),
+    vector_client = Depends(get_vector_client),
+    embedding_encoder = Depends(get_embedding_encoder),
 ):
     now = datetime.utcnow()
 
@@ -127,6 +133,25 @@ async def send_message(
 
     user_entry = {"role": "user", "content": body.content.strip(), "at": now}
     groq_messages: list[dict] = [{"role": "system", "content": SYSTEM_PROMPTS[mode]}]
+    
+    # NEW: Get product context using RAG
+    context = ""
+    try:
+        rag = RAGPipeline(vector_client, embedding_encoder, db)
+        context = await rag.get_context(
+            query=body.content,
+            top_k=3,
+            min_score=0.3
+        )
+        
+        if context:
+            groq_messages.append({"role": "system", "content": context})
+            logger.info("RAG context added to message")
+    except Exception as e:
+        logger.warning(f"Failed to retrieve RAG context: {e}")
+        # Continue without context if RAG fails - don't break the chat
+    
+    # Add conversation history
     for m in messages:
         groq_messages.append({"role": m["role"], "content": m["content"]})
     groq_messages.append({"role": "user", "content": user_entry["content"]})
