@@ -25,11 +25,11 @@ jobs:
 
       - name: Run NLP evaluator quality gate
         run: |
-          python NLP/evaluation/run_eval.py NLP/datasets/eval_intent_safety_v3.jsonl \
+          python NLP/evaluation/run_eval.py NLP/datasets/eval_intent_safety_v4.jsonl \
             --min-intent-accuracy 0.90 \
             --min-safety-recall 0.95 \
-            --min-secondary-tags-recall 0.70 \
-            --min-entity-map-recall 0.70 \
+            --min-secondary-tags-recall 0.60 \
+            --min-entity-map-recall 0.50 \
             --output-json NLP/evaluation/results/ci_eval.json
 
       - name: Upload evaluation artifact

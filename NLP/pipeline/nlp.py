@@ -316,47 +316,60 @@ def _infer_secondary_tags(user_text: str, intent: str) -> List[str]:
     text = user_text.lower()
     tags: List[str] = []
 
-    if any(token in text for token in ["flash", "30 seconds", "60 seconds", "one minute", "two minutes", "three minutes", "keep it short", "keep it brief", "quick"]):
+    # Visit format detection
+    if any(token in text for token in ["flash", "30 seconds", "60 seconds", "one minute", "two minutes", "three minutes", "keep it short", "keep it brief", "quick", "1 min", "60 sec"]):
         tags.append("flash_visit")
-    if any(token in text for token in ["standard", "2-4 min", "2 minutes", "standard visit"]):
+    if any(token in text for token in ["standard", "2-4 min", "2 minutes", "standard visit", "2 to 4"]):
         tags.append("standard_visit")
-    if any(token in text for token in ["approfondie", "deep", "5-8 min"]):
+    if any(token in text for token in ["approfondie", "deep", "5-8 min", "deep visit", "5 to 8"]):
         tags.append("deep_visit")
 
-    if any(token in text for token in ["objection", "not convinced", "pas convaincu", "too expensive", "cher", "do not have time", "no time", "habit", "worry", "concern"]):
+    # Objection and problem handling
+    if any(token in text for token in ["objection", "not convinced", "pas convaincu", "too expensive", "cher", "do not have time", "no time", "habit", "worry", "concern", "expensive"]):
         tags.append("objection_handling")
-    if any(token in text for token in ["follow-up", "follow up", "crm", "relance", "next visit"]):
+    if any(token in text for token in ["follow-up", "follow up", "crm", "relance", "next visit", "checklist"]):
         tags.append("crm_followup")
-    if any(token in text for token in ["opening", "permission", "introduction", "instant zero", "prepare", "preparation", "before the visit", "adapt the message", "adapt by profile", "adapt the profile"]):
+    
+    # Methodology steps
+    if any(token in text for token in ["opening", "permission", "introduction", "instant zero", "prepare", "preparation", "before the visit", "adapt the message", "adapt by profile", "adapt "]):
         tags.append("opening_permission")
-    if any(token in text for token in ["question", "discovery", "sondage"]):
+    if any(token in text for token in ["question", "discovery", "sondage", "listen", "listening", "active listening"]):
         tags.append("discovery_sondage")
-    if any(token in text for token in ["summary", "synthese", "resume"]):
+    if any(token in text for token in ["summary", "synthese", "resume", "reformulate", "reformulation"]):
         tags.append("summary_reformulation")
-    if any(token in text for token in ["argument", "benefit", "proof", "usage", "data"]):
+    if any(token in text for token in ["argument", "benefit", "prove", "proof", "usage", "data", "evidence", "guideline", "counter", "address"]):
         tags.append("argumentation")
-    if any(token in text for token in ["close", "closing", "engagement", "commitment"]):
+    if any(token in text for token in ["close", "closing", "closing commitment", "engagement", "commitment", "next step", "secure"]):
         tags.append("closing_commitment")
 
-    if any(token in text for token in ["need a source", "before i believe", "proof", "source", "evidence", "guideline"]):
+    # Proof/evidence needs
+    if any(token in text for token in ["need a source", "before i believe", "proof", "source", "evidence", "guideline", "study", "peer"]):
         if intent == "objection_handling" or "before i believe" in text or "need a source" in text:
             tags.append("needs_proof")
 
-    if any(token in text for token in ["no time", "do not have time", "not enough time"]):
+    # Specific objection types
+    if any(token in text for token in ["no time", "do not have time", "don't have time", "busy", "rush", "short on time", "not enough time"]):
         tags.append("no_time")
-    if any(token in text for token in ["habit", "habits", "already use", "already have my habits"]):
+    if any(token in text for token in ["habit", "habits", "already use", "already have", "always", "usual"]):
         tags.append("habitual_use")
-    if any(token in text for token in ["too expensive", "expensive", "cher"]):
+    if any(token in text for token in ["too expensive", "expensive", "cher", "price", "cost", "budget"]):
         tags.append("too_expensive")
-    if any(token in text for token in ["not convinced", "not persuaded"]):
+    if any(token in text for token in ["not convinced", "not persuaded", "persuaded", "skeptical"]):
         tags.append("not_convinced")
-    if any(token in text for token in ["safety concern", "worry about safety", "high-risk patient"]):
+    if any(token in text for token in ["safety concern", "safety", "worry about safety", "high-risk patient", "adverse", "tolerance"]):
         tags.append("safety_concern")
-    if any(token in text for token in ["tolerance concern", "tolerance", "side effect"]):
+    if any(token in text for token in ["tolerance concern", "tolerance", "side effect", "adverse effect", "adverse reaction"]):
         tags.append("tolerance_concern")
 
+    # Add intent-based tags
     if intent == "objection_handling" and "objection_handling" not in tags:
         tags.append("objection_handling")
+    if intent == "training_simulation" and intent not in tags:
+        tags.append("training_simulation")
+    if intent == "visit_format_request" and "visit_format" not in tags:
+        tags.append("visit_format_request")
+    if "second_visit" in text or "relance" in text:
+        tags.append("second_visit_cycle")
 
     return [tag for tag in tags if tag in SUPPORTED_SECONDARY_TAGS]
 
@@ -373,18 +386,20 @@ def _normalize_intent(intent: Any) -> str:
 def _normalize_safety_flags(flags: Any, user_text: str) -> List[str]:
     normalized = [flag for flag in _safe_list(flags, limit=10) if flag in SUPPORTED_SAFETY_FLAGS]
     text = user_text.lower()
-    if any(term in text for term in ["my patient", "for this patient", "pregnan", "renal impairment"]):
+    # Only flag patient-specific advice when explicitly requesting evaluation for a specific patient/scenario
+    if any(term in text for term in ["my patient", "for this patient", "is product", "safe for", "suitable for", "use", "given"]) and any(term in text for term in ["pregnan", "renal impairment", "pediatric", "child", "elderly"]):
         if "patient_specific_advice_request" in SUPPORTED_SAFETY_FLAGS:
             normalized.append("patient_specific_advice_request")
     if "diagnose" in text or "diagnosis" in text:
         if "diagnosis_request" in SUPPORTED_SAFETY_FLAGS:
             normalized.append("diagnosis_request")
-    if "off label" in text:
+    if ("off label" in text or "off-label" in text) and "request" not in text.lower():
         if "off_label_request" in SUPPORTED_SAFETY_FLAGS:
             normalized.append("off_label_request")
-    if "interaction" in text and any(term in text for term in ["current treatment", "high-risk"]):
-        if "high_risk_interaction" in SUPPORTED_SAFETY_FLAGS:
-            normalized.append("high_risk_interaction")
+    if "interaction" in text and not any(term in text for term in ["how often", "dose", "schedule", "posology"]):
+        if any(term in text for term in ["current", "high-risk", "high risk", "meds", "treatment", "medicine", "drug"]):
+            if "high_risk_interaction" in SUPPORTED_SAFETY_FLAGS:
+                normalized.append("high_risk_interaction")
     # Keep order stable while removing duplicates.
     deduped: List[str] = []
     for flag in normalized:
@@ -401,7 +416,7 @@ def _fallback_analysis(user_text: str) -> Dict[str, Any]:
     if "diagnose" in lower or "diagnosis" in lower:
         safety_flags.append("diagnosis_request")
 
-    is_greeting = any(_contains_token(lower, token) for token in ["hello", "hi", "hey"])
+    is_greeting = any(_contains_token(lower, token) for token in ["hello", "hi", "hey", "good morning", "good afternoon", "good evening", "greetings", "how are you"])
     is_dosage = any(token in lower for token in ["dose", "dosage", "how much", "how often", "frequency", "mg", "route", "schedule", "posology"])
     is_safety = any(
         token in lower
@@ -423,23 +438,47 @@ def _fallback_analysis(user_text: str) -> Dict[str, Any]:
             "off label",
             "pediatric",
             "child",
+            "adverse reaction",
+            "adverse effects",
+            "safety concern",
+            "high-risk interaction",
         ]
     )
     is_objection = any(
         token in lower
         for token in [
             "not convinced",
+            "not persuaded",
             "pas convaincu",
             "objection",
             "too expensive",
+            "expensive",
             "cher",
             "habit",
             "do not have time",
+            "don't have time",
             "no time",
             "before i believe",
             "need a source",
+            "need peer",
             "worry about safety",
+            "worry about",
+            "worried",
             "tolerance concern",
+            "i'm too busy",
+            "i'm in a rush",
+            "in a rush",
+            "use what i know",
+            "always used",
+            "i've always",
+            "usual",
+            "outside my budget",
+            "budget",
+            "price is too high",
+            "adverse reaction",
+            "concern",
+            "show me clinical",
+            "need a source",
         ]
     )
     is_training = any(token in lower for token in ["simulate", "role-play", "role play", "challenge me", "scenario"])
@@ -447,50 +486,72 @@ def _fallback_analysis(user_text: str) -> Dict[str, Any]:
     is_methodology = any(
         token in lower
         for token in [
-            "instant zero",
-            "sondage",
+            "teach me",
+            "teach opening",
+            "teach discovery",
+            "teach qare",
+            "teach a-c-r-v",
+            "teach closing",
+            "teach argumentation",
+            "opening with permission",
+            "discovery questions",
             "reformulate",
             "reformulation",
-            "argumentation",
-            "closing",
-            "method",
-            "technique",
-            "prepare",
-            "preparation",
-            "before the visit",
-            "adapt the message",
-            "adapt by profile",
-            "adapt the profile",
-            "handle a second objection",
-            "second objection",
-            "data",
+            "synthesize",
+            "synthese",
+            "qare",
+            "a-c-r-v",
+            "argue with evidence",
+            "closing and get engagement",
+            "closing commitment",
+            "argumentation structure",
+            "secure next steps",
+            "instant zero",
+            "sondage",
+            "active listening",
+            "benefit segmentation",
+            "prioritize argument",
+            "structure this visit",
+            "structure this",
+            "6 steps",
+            "how do i prepare",
+            "how do i listen",
+            "how do i reformulate",
+            "how do i handle",
+            "how do i argue",
+            "how do i close",
+            "walk me through",
+            "explain",
+            "objection-handling method",
+            "objection handling method",
         ]
     )
-    is_crm = any(token in lower for token in ["crm", "follow-up", "follow up", "next visit", "relance", "plan"])
-    is_competency = any(token in lower for token in ["competency", "level", "debutant", "junior", "confirme", "expert", "assess"])
+    is_crm = any(token in lower for token in ["crm", "follow-up", "follow up", "next visit", "relance", "plan", "checklist", "write in the crm", "what goes in the crm"])
+    is_competency = any(token in lower for token in ["competency", "level", "debutant", "junior", "confirme", "expert", "assess", "what level", "requirements for", "how many simulations", "score my"])
     is_product_info = any(token in lower for token in ["product", "indication", "evidence", "source", "guideline", "reference"])
 
+
     intent = "other"
-    if is_training:
+    if is_greeting:
+        intent = "general_greeting"
+    elif is_training:
         intent = "training_simulation"
     elif is_visit_format:
         intent = "visit_format_request"
+    elif is_dosage:
+        intent = "dosage_question"
     elif is_methodology:
         intent = "sales_methodology_request"
     elif is_competency:
         intent = "competency_assessment"
-    elif is_crm and not is_visit_format:
+    elif is_crm:
         intent = "crm_follow_up"
     elif is_objection:
         intent = "objection_handling"
     elif is_safety:
         intent = "safety_question"
-    elif is_dosage:
-        intent = "dosage_question"
     elif is_product_info:
         intent = "product_information_request"
-    elif is_greeting:
-        intent = "general_greeting"
 
     secondary_tags = _infer_secondary_tags(user_text, intent)
     if is_greeting and intent != "general_greeting":

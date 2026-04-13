@@ -1,0 +1,65 @@
+{
+  "dataset": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\datasets\\eval_intent_safety_v4.jsonl",
+  "result": {
+    "count": 98,
+    "intent_accuracy": 0.9592,
+    "safety_precision": 0.8889,
+    "safety_recall": 1.0,
+    "secondary_tags_precision": 0.8605,
+    "secondary_tags_recall": 0.7475,
+    "entity_map_precision": 0.7031,
+    "entity_map_recall": 0.5625,
+    "dataset_issues": [],
+    "output_issues": [],
+    "failures": [
+      {
+        "row": 61,
+        "type": "safety_flags",
+        "text": "Off-label use of Product R for children?",
+        "expected": [
+          "off_label_request"
+        ],
+        "actual": [
+          "off_label_request",
+          "patient_specific_advice_request"
+        ]
+      },
+      {
+        "row": 62,
+        "type": "intent",
+        "text": "Can Product S be given off-label?",
+        "expected": "safety_question",
+        "actual": "product_information_request"
+      },
+      {
+        "row": 66,
+        "type": "intent",
+        "text": "Give me a Junior-level doctor to practice with.",
+        "expected": "training_simulation",
+        "actual": "competency_assessment"
+      },
+      {
+        "row": 79,
+        "type": "intent",
+        "text": "Objection handling techniques?",
+        "expected": "sales_methodology_request",
+        "actual": "objection_handling"
+      },
+      {
+        "row": 83,
+        "type": "intent",
+        "text": "Engagement questions for closing?",
+        "expected": "sales_methodology_request",
+        "actual": "other"
+      }
+    ]
+  },
+  "thresholds": {
+    "min_intent_accuracy": 0.9,
+    "min_safety_recall": 0.95,
+    "min_secondary_tags_recall": 0.6,
+    "min_entity_map_recall": 0.5
+  },
+  "quality_gate": "pass",
+  "failed_checks": []
+}

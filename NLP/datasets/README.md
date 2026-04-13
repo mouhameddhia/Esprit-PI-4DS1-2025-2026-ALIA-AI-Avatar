@@ -5,9 +5,10 @@ This folder stores labeled data used to evaluate and improve the NLP pipeline.
 ## Files
 
 - eval_intent_safety_template.jsonl: Starter evaluation dataset format.
-- eval_intent_safety_v1.jsonl: First labeled evaluation set.
-- eval_intent_safety_v2.jsonl: Expanded set derived from the teacher files in useful-files/.
-- eval_intent_safety_v3.jsonl: Larger benchmark with same-domain variants and teacher-file coverage.
+- eval_intent_safety_v1.jsonl: First labeled evaluation set (24 samples).
+- eval_intent_safety_v2.jsonl: Expanded set derived from teacher files in useful-files/ (58 samples).
+- eval_intent_safety_v3.jsonl: Larger benchmark with same-domain variants (71 samples).
+- eval_intent_safety_v4.jsonl: Extended benchmark covering methodology, objections, safety, physician questions (153 samples).
 
 ## JSONL Schema
 
