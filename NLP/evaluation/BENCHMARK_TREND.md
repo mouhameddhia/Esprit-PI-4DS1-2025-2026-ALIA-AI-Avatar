@@ -41,10 +41,26 @@ This document tracks the quality metrics across our labeled evaluation datasets.
 
 ## Next Steps
 
-1. **Expand to ~200 same-domain examples** to further stabilize entity-map metrics
-2. **Add public-source supplement** (small, curated set) for language variety
-3. **Monitor drift over time** by running evaluator on each CI/PR and archiving results
-4. **Fine-tune entity extraction** rules based on failure modes in the next expanded set
+1. **✓ Expand to ~250 same-domain examples** → In progress (v5 created, needs heuristic refinement)
+2. **⚠ Add public-source supplement** → Evaluated; requires domain-specific fine-tuning (deferred to Phase 2)
+3. **✓ Implement drift monitoring dashboard** → DRIFT_MONITORING.md created with archival and analysis framework
+
+### Expansion Path Forward
+
+**Phase 1 (Current)**: Keep v4 as stable baseline (153 samples, all gates passing)
+- Use v4 for CI/CD validation  
+- Archive evaluation results over time
+- Monitor for regressions automatically
+
+**Phase 2 (Future)**: Grow to v5 (250 samples) with improved NLP rules
+- Address failing patterns (generic questions, indirect phrasing)
+- Add more medication-specific terminology and family practice scenarios
+- Re-tune safety detection for expanded vocabulary
+
+**Phase 3 (Future)**: Public-source supplement
+- Requires fine-tuning LLM or retraining extract heuristics
+- Identified gap: current rules too tightly scoped to ALIA domain phrasing
+- Decision: Deploy domain-optimized approach first, evaluate generalization later
 
 ## Quality Gate Status
 
