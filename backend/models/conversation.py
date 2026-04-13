@@ -22,6 +22,33 @@ class RollingSummaryEntry(BaseModel):
     message_count: int
 
 
+class NLPEventEntry(BaseModel):
+    at: datetime
+    mode: str
+    message: str
+    intent: str
+    secondary_tags: List[str] = []
+    entities: List[str] = []
+    entity_map: dict[str, List[str]] = {}
+    topics: List[str] = []
+    objections: List[str] = []
+    action_items: List[str] = []
+    safety_flags: List[str] = []
+    rewritten_query: str
+    confidence: float
+    taxonomy_version: Optional[str] = None
+
+
+class NLPCompetencyEvaluation(BaseModel):
+    level: Literal["Debutant", "Junior", "Confirme", "Expert"]
+    score: float
+    dimensions: dict[str, float]
+    strengths: List[str] = []
+    gaps: List[str] = []
+    notes: List[str] = []
+    evaluated_at: datetime
+
+
 class ConversationResponse(BaseModel):
     id: str = Field(..., alias="_id")
     user_email: str
@@ -32,6 +59,8 @@ class ConversationResponse(BaseModel):
     summary_method: Optional[Literal["auto", "manual"]] = None
     summary_triggered_by: Optional[str] = None
     rolling_summaries: List[RollingSummaryEntry] = []
+    nlp_events: List[NLPEventEntry] = []
+    nlp_evaluation: Optional[NLPCompetencyEvaluation] = None
     topics: List[str] = []
     objections: List[str] = []
     action_items: List[str] = []
@@ -56,3 +85,9 @@ class SessionListItem(BaseModel):
     summary_created_at: Optional[datetime] = None
     status: str
     preview: str
+    nlp_event_count: int = 0
+    last_intent: Optional[str] = None
+    last_confidence: Optional[float] = None
+    last_safety_flags: List[str] = []
+    last_level: Optional[str] = None
+    last_score: Optional[float] = None

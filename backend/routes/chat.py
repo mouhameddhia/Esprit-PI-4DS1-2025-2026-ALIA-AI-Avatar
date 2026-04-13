@@ -1,7 +1,7 @@
 import os
 import logging
 from datetime import datetime
-from typing import List, Literal, Optional
+from typing import Any, List, Literal, Optional
 
 from bson import ObjectId
 from bson.errors import InvalidId
@@ -14,6 +14,8 @@ from ..models.conversation import ConversationResponse, SessionListItem
 from ..models.user import UserInDB
 from ..utils.summary import generate_summary_with_caching
 from ..utils.rag_pipeline import RAGPipeline
+from ..utils.nlp import SUPPORTED_INTENTS, analyze_message_nlp
+from ..utils.nlp_evaluator import evaluate_conversation
 
 logger = logging.getLogger(__name__)
 
@@ -54,11 +56,11 @@ def _groq_client():
     return Groq(api_key=key)
 
 
-def _chat_completion(messages: list[dict]) -> str:
+def _chat_completion(messages: list[dict[str, Any]]) -> str:
     client = _groq_client()
     completion = client.chat.completions.create(
         model=GROQ_MODEL,
-        messages=messages,
+        messages=messages,  # type: ignore[arg-type]
         temperature=0.7,
         max_tokens=1024,
     )
@@ -85,6 +87,16 @@ class SendMessageResponse(BaseModel):
 class FinalizeResponse(BaseModel):
     session_id: str
     summary: str
+
+
+class NLPDebugRequest(BaseModel):
+    content: str = Field(..., min_length=1, max_length=16000)
+    mode: Literal["physician_portal", "medrep_training"] = "physician_portal"
+    session_id: Optional[str] = None
+
+
+class NLPDebugResponse(BaseModel):
+    analysis: dict
 
 
 def _ensure_mode(mode: str) -> str:
@@ -132,14 +144,66 @@ async def send_message(
         messages = []
 
     user_entry = {"role": "user", "content": body.content.strip(), "at": now}
-    groq_messages: list[dict] = [{"role": "system", "content": SYSTEM_PROMPTS[mode]}]
+    nlp_analysis = analyze_message_nlp(
+        user_text=user_entry["content"],
+        history=messages,
+        mode=mode,
+    )
+
+    nlp_event = {
+        "at": now,
+        "mode": mode,
+        "message": user_entry["content"],
+        "intent": nlp_analysis.get("intent", "other"),
+        "secondary_tags": nlp_analysis.get("secondary_tags", []),
+        "entities": nlp_analysis.get("entities", []),
+        "entity_map": nlp_analysis.get("entity_map", {}),
+        "topics": nlp_analysis.get("topics", []),
+        "objections": nlp_analysis.get("objections", []),
+        "action_items": nlp_analysis.get("action_items", []),
+        "safety_flags": nlp_analysis.get("safety_flags", []),
+        "rewritten_query": nlp_analysis.get("rewritten_query", user_entry["content"]),
+        "confidence": nlp_analysis.get("confidence", 0.0),
+        "taxonomy_version": nlp_analysis.get("taxonomy_version"),
+    }
+
+    retrieval_query = nlp_analysis.get("rewritten_query") or user_entry["content"]
+
+    groq_messages: list[dict[str, str]] = [{"role": "system", "content": SYSTEM_PROMPTS[mode]}]
+
+    safety_flags = nlp_analysis.get("safety_flags", [])
+    if safety_flags:
+        groq_messages.append(
+            {
+                "role": "system",
+                "content": (
+                    "Safety note: The user request may include clinical-risk patterns "
+                    f"({', '.join(safety_flags)}). Provide general educational information only, "
+                    "avoid patient-specific medical advice, and recommend official labeling or specialist consultation when needed."
+                ),
+            }
+        )
+
+    nlp_topics = nlp_analysis.get("topics", [])
+    nlp_entities = nlp_analysis.get("entities", [])
+    if nlp_topics or nlp_entities:
+        groq_messages.append(
+            {
+                "role": "system",
+                "content": (
+                    f"NLP intent: {nlp_analysis.get('intent', 'other')}\n"
+                    f"NLP entities: {', '.join(nlp_entities) if nlp_entities else 'none'}\n"
+                    f"NLP topics: {', '.join(nlp_topics) if nlp_topics else 'none'}"
+                ),
+            }
+        )
     
     # NEW: Get product context using RAG
     context = ""
     try:
         rag = RAGPipeline(vector_client, embedding_encoder, db)
         context = await rag.get_context(
-            query=body.content,
+            query=retrieval_query,
             top_k=3,
             min_score=0.3
         )
@@ -168,6 +232,7 @@ async def send_message(
             "user_email": current_user.email,
             "mode": mode,
             "messages": messages,
+            "nlp_events": [nlp_event],
             "summary": None,
             "summary_created_at": None,
             "summary_method": None,
@@ -185,7 +250,10 @@ async def send_message(
     else:
         await db.conversations.update_one(
             {"_id": oid},
-            {"$set": {"messages": messages, "updated_at": asst_time}},
+            {
+                "$set": {"messages": messages, "updated_at": asst_time},
+                "$push": {"nlp_events": nlp_event},
+            },
         )
         session_id = str(oid)
 
@@ -213,6 +281,14 @@ async def finalize_session(
         messages=msgs,
         force_regenerate=force_regenerate,
     )
+
+    nlp_events = list(doc.get("nlp_events") or [])
+    nlp_evaluation = evaluate_conversation(
+        messages=msgs,
+        summary=summary,
+        metadata=metadata,
+        nlp_events=nlp_events,
+    )
     
     now = datetime.utcnow()
     await db.conversations.update_one(
@@ -224,6 +300,14 @@ async def finalize_session(
                 "summary_method": "manual",
                 "summary_triggered_by": current_user.email,
                 "rolling_summaries": rolling_summaries,
+                "nlp_evaluation": nlp_evaluation,
+                "competency_level": nlp_evaluation.get("level"),
+                "evaluation_score": nlp_evaluation.get("score"),
+                "evaluation_dimensions": nlp_evaluation.get("dimensions", {}),
+                "evaluation_strengths": nlp_evaluation.get("strengths", []),
+                "evaluation_gaps": nlp_evaluation.get("gaps", []),
+                "evaluation_notes": nlp_evaluation.get("notes", []),
+                "evaluation_completed_at": nlp_evaluation.get("evaluated_at"),
                 "topics": metadata.get("topics", []),
                 "objections": metadata.get("objections", []),
                 "action_items": metadata.get("action_items", []),
@@ -241,10 +325,35 @@ async def list_sessions(
     current_user: UserInDB = Depends(get_current_user),
     db: AsyncIOMotorDatabase = Depends(get_database),
     limit: int = 50,
+    intent: Optional[str] = None,
+    has_safety_flags: Optional[bool] = None,
 ):
     limit = min(max(limit, 1), 100)
+
+    query: dict[str, Any] = {"user_email": current_user.email}
+
+    if intent:
+        if intent not in SUPPORTED_INTENTS:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=(
+                    "Invalid intent filter. Supported intents: "
+                    f"{', '.join(sorted(SUPPORTED_INTENTS))}"
+                ),
+            )
+        query["nlp_events.intent"] = intent
+
+    if has_safety_flags is True:
+        query["nlp_events"] = {
+            "$elemMatch": {"safety_flags.0": {"$exists": True}}
+        }
+    elif has_safety_flags is False:
+        query["nlp_events"] = {
+            "$not": {"$elemMatch": {"safety_flags.0": {"$exists": True}}}
+        }
+
     cursor = (
-        db.conversations.find({"user_email": current_user.email})
+        db.conversations.find(query)
         .sort("updated_at", -1)
         .limit(limit)
     )
@@ -252,6 +361,8 @@ async def list_sessions(
     async for doc in cursor:
         summary = doc.get("summary")
         msgs = doc.get("messages") or []
+        nlp_events = doc.get("nlp_events") or []
+        last_nlp = nlp_events[-1] if nlp_events else {}
         if summary:
             preview = summary[:220].replace("\n", " ")
         elif msgs:
@@ -268,6 +379,12 @@ async def list_sessions(
                 summary_created_at=doc.get("summary_created_at"),
                 status=doc.get("status", "open"),
                 preview=preview,
+                nlp_event_count=len(nlp_events),
+                last_intent=last_nlp.get("intent"),
+                last_confidence=last_nlp.get("confidence"),
+                last_safety_flags=last_nlp.get("safety_flags", []),
+                last_level=doc.get("competency_level"),
+                last_score=doc.get("evaluation_score"),
             )
         )
     return items
@@ -281,3 +398,24 @@ async def get_session(
 ):
     doc, _ = await _get_owned_session(db, session_id, current_user.email)
     return ConversationResponse(**doc)
+
+
+@router.post("/nlp-debug", response_model=NLPDebugResponse)
+async def nlp_debug(
+    body: NLPDebugRequest,
+    current_user: UserInDB = Depends(get_current_user),
+    db: AsyncIOMotorDatabase = Depends(get_database),
+):
+    mode = _ensure_mode(body.mode)
+    history = []
+
+    if body.session_id:
+        doc, _ = await _get_owned_session(db, body.session_id, current_user.email)
+        history = list(doc.get("messages") or [])
+
+    analysis = analyze_message_nlp(
+        user_text=body.content.strip(),
+        history=history,
+        mode=mode,
+    )
+    return NLPDebugResponse(analysis=analysis)

@@ -45,6 +45,7 @@ class KnowledgeDocumentIndexer:
                 try:
                     text_parts = [
                         document.get("source_name", ""),
+                        document.get("section_title", ""),
                         document.get("title", ""),
                         document.get("chunk_text", ""),
                         document.get("keywords_text", ""),
@@ -66,11 +67,18 @@ class KnowledgeDocumentIndexer:
                                 "type": "document",
                                 "document_id": str(document["_id"]),
                                 "source_name": document.get("source_name", ""),
+                                "source_type": document.get("source_type", "document"),
                                 "source_path": document.get("source_path", ""),
                                 "title": document.get("title", ""),
+                                "section_title": document.get("section_title", ""),
                                 "language": document.get("language", ""),
                                 "page_number": document.get("page_number"),
                                 "chunk_index": document.get("chunk_index", 0),
+                                "sheet_name": document.get("sheet_name", ""),
+                                "row_number": document.get("row_number"),
+                                "topic_tags": document.get("topic_tags", []),
+                                "visit_phase": document.get("visit_phase", ""),
+                                "competency_level": document.get("competency_level", ""),
                             },
                         }
                     )
@@ -112,6 +120,7 @@ class KnowledgeDocumentIndexer:
             searchable_text = " ".join(
                 [
                     document.get("source_name", ""),
+                    document.get("section_title", ""),
                     document.get("title", ""),
                     document.get("chunk_text", ""),
                     document.get("keywords_text", ""),
@@ -128,11 +137,18 @@ class KnowledgeDocumentIndexer:
                             "type": "document",
                             "document_id": document_id,
                             "source_name": document.get("source_name", ""),
+                            "source_type": document.get("source_type", "document"),
                             "source_path": document.get("source_path", ""),
                             "title": document.get("title", ""),
+                            "section_title": document.get("section_title", ""),
                             "language": document.get("language", ""),
                             "page_number": document.get("page_number"),
                             "chunk_index": document.get("chunk_index", 0),
+                            "sheet_name": document.get("sheet_name", ""),
+                            "row_number": document.get("row_number"),
+                            "topic_tags": document.get("topic_tags", []),
+                            "visit_phase": document.get("visit_phase", ""),
+                            "competency_level": document.get("competency_level", ""),
                         },
                     }
                 ]

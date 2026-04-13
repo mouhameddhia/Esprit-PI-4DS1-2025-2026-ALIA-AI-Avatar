@@ -200,6 +200,37 @@ else
 fi
 echo
 
+# ==================== TEST 7: NLP Debug Endpoint ====================
+
+echo -e "${BLUE}=== Test 7: NLP Debug Endpoint ===${NC}"
+
+NLP_DEBUG=$(curl -s -X POST "$API/chat/nlp-debug" \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d "{\"content\":\"Can this drug be used for my patient with renal issues?\",\"mode\":\"physician_portal\",\"session_id\":\"$SESSION_ID\"}")
+
+DBG_INTENT=$(echo $NLP_DEBUG | grep -o '"intent":"[^"]*' | cut -d'"' -f4)
+DBG_FLAGS=$(echo $NLP_DEBUG | grep -o '"safety_flags":\[[^]]*\]' | head -1)
+
+echo "Detected intent: ${DBG_INTENT:-unknown}"
+echo "Safety flags: ${DBG_FLAGS:-none}"
+echo
+
+# ==================== TEST 8: Session NLP Filters ====================
+
+echo -e "${BLUE}=== Test 8: Session NLP Filters ===${NC}"
+
+FILTER_BY_INTENT=$(curl -s -X GET "$API/chat/sessions?limit=10&intent=safety_question" \
+  -H "Authorization: Bearer $TOKEN")
+INTENT_COUNT=$(echo $FILTER_BY_INTENT | grep -o '"id":"' | wc -l)
+echo "Sessions with intent=safety_question: $INTENT_COUNT"
+
+FILTER_WITH_FLAGS=$(curl -s -X GET "$API/chat/sessions?limit=10&has_safety_flags=true" \
+  -H "Authorization: Bearer $TOKEN")
+FLAG_COUNT=$(echo $FILTER_WITH_FLAGS | grep -o '"id":"' | wc -l)
+echo "Sessions with safety flags: $FLAG_COUNT"
+echo
+
 # ==================== SUMMARY ====================
 
 echo -e "${BLUE}=== Test Summary ===${NC}"

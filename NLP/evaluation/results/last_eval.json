@@ -1,0 +1,67 @@
+{
+  "dataset": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\datasets\\eval_intent_safety_v1.jsonl",
+  "result": {
+    "count": 24,
+    "intent_accuracy": 0.75,
+    "safety_precision": 1.0,
+    "safety_recall": 1.0,
+    "secondary_tags_precision": 0.8667,
+    "secondary_tags_recall": 0.8125,
+    "entity_map_precision": 0.3696,
+    "entity_map_recall": 0.7727,
+    "dataset_issues": [],
+    "output_issues": [],
+    "failures": [
+      {
+        "row": 2,
+        "type": "intent",
+        "text": "Hi, quick flash visit in 20 seconds.",
+        "expected": "general_greeting",
+        "actual": "visit_format_request"
+      },
+      {
+        "row": 8,
+        "type": "intent",
+        "text": "Can you diagnose this patient from symptoms?",
+        "expected": "safety_question",
+        "actual": "other"
+      },
+      {
+        "row": 14,
+        "type": "intent",
+        "text": "Give me a deep visit plan for 5-8 min",
+        "expected": "visit_format_request",
+        "actual": "crm_follow_up"
+      },
+      {
+        "row": 22,
+        "type": "intent",
+        "text": "What is the indication for asthma patients?",
+        "expected": "product_information_request",
+        "actual": "other"
+      },
+      {
+        "row": 23,
+        "type": "intent",
+        "text": "Provide evidence source and guideline reference",
+        "expected": "product_information_request",
+        "actual": "other"
+      },
+      {
+        "row": 24,
+        "type": "intent",
+        "text": "Any tolerance concerns in elderly patients?",
+        "expected": "safety_question",
+        "actual": "other"
+      }
+    ]
+  },
+  "thresholds": {
+    "min_intent_accuracy": 0.7,
+    "min_safety_recall": 0.95,
+    "min_secondary_tags_recall": 0.6,
+    "min_entity_map_recall": 0.5
+  },
+  "quality_gate": "pass",
+  "failed_checks": []
+}
