@@ -415,16 +415,26 @@ def _fallback_analysis(user_text: str) -> Dict[str, Any]:
         safety_flags.append("patient_specific_advice_request")
     if "diagnose" in lower or "diagnosis" in lower:
         safety_flags.append("diagnosis_request")
+    if any(term in lower for term in ["pregnancy", "pregnant", "breastfeed", "breastfeeding", "lactation", "category", "use during", "pregnant women", "nursing mother"]):
+        if "patient_specific_advice_request" not in safety_flags:
+            safety_flags.append("patient_specific_advice_request")
+    if any(term in lower for term in ["renal disease", "hepatic disease", "cardiac disease"]) and any(term in lower for term in [" in ", " for ", "dosage", " condition"]):
+        if "patient_specific_advice_request" not in safety_flags:
+            safety_flags.append("patient_specific_advice_request")
 
-    is_greeting = any(_contains_token(lower, token) for token in ["hello", "hi", "hey", "good morning", "good afternoon", "good evening", "greetings", "how are you"])
-    is_dosage = any(token in lower for token in ["dose", "dosage", "how much", "how often", "frequency", "mg", "route", "schedule", "posology"])
+    is_greeting = any(_contains_token(lower, token) for token in ["hello", "hi", "hey", "good morning", "good afternoon", "good evening", "greetings", "how are you", "pleasure", "nice to see", "great to see", "welcome", "salutations", "pleased", "delighted"])
+    is_dosage = any(token in lower for token in ["dose", "dosage", "how much", "how often", "frequency", "mg", "route", "schedule", "posology", "hepatic dosing", "dosing for", "hepatic", "cirrhosis", "renal dose", "geriatric", "geriatric dosing"]) and not any(token in lower for token in ["relance", "follow-up", "crm"])
     is_safety = any(
         token in lower
         for token in [
             "side effect",
             "adverse",
             "contraindication",
+            "contraindicated",
             "safe",
+            "suitable for",
+            "use in",
+            "use during",
             "renal",
             "interaction",
             "my patient",
@@ -435,22 +445,39 @@ def _fallback_analysis(user_text: str) -> Dict[str, Any]:
             "elderly",
             "pregnan",
             "pregnancy",
+            "breastfeeding",
+            "breast feeding",
+            "lactation",
             "off label",
+            "off-label",
             "pediatric",
             "child",
             "adverse reaction",
             "adverse effects",
             "safety concern",
             "high-risk interaction",
+            "black box",
+            "populations should avoid",
+            "populations should",
+            "contraindication in",
+            "avoid in",
+            "pregnancy category",
+            "category for pregnancy",
+            "can i use during",
+            "use during pregnancy",
+            "use during breastfeed",
+            "qt prolongation",
+            "photosensitivity",
+            "hepatotoxicity",
+            "nephrotoxicity",
         ]
-    )
+    ) and "formulation available" not in lower
     is_objection = any(
         token in lower
         for token in [
             "not convinced",
             "not persuaded",
             "pas convaincu",
-            "objection",
             "too expensive",
             "expensive",
             "cher",
@@ -479,9 +506,18 @@ def _fallback_analysis(user_text: str) -> Dict[str, Any]:
             "concern",
             "show me clinical",
             "need a source",
+            "how to handle",
+            "dealing with",
+            "overcoming",
+            "don't believe",
+            "i don't believe",
+            "show me something",
+            "show me",
+            "publish",
+            "published",
         ]
     )
-    is_training = any(token in lower for token in ["simulate", "role-play", "role play", "challenge me", "scenario"])
+    is_training = any(token in lower for token in ["simulate", "role-play", "role play", "challenge me", "scenario", "train me", "training session", "simulated", "roleplay", "practice handling", "practice with", "lets practice", "let me practice"]) and "how many" not in lower
     is_visit_format = any(token in lower for token in ["flash visit", "standard visit", "deep visit", "approfondie", "visit flow", "one minute", "two minutes", "three minutes", "30 seconds", "60 seconds", "keep it short", "keep it brief"])
     is_methodology = any(
         token in lower
@@ -524,11 +560,21 @@ def _fallback_analysis(user_text: str) -> Dict[str, Any]:
             "explain",
             "objection-handling method",
             "objection handling method",
+            "engagement questions",
+            "closing questions",
+            "techniques for",
+            "methodology for",
+            "structure for",
+            "approach for",
+            "best practices for",
+            "objection handling",
+            "how do you",
+            "how should i",
         ]
     )
     is_crm = any(token in lower for token in ["crm", "follow-up", "follow up", "next visit", "relance", "plan", "checklist", "write in the crm", "what goes in the crm"])
-    is_competency = any(token in lower for token in ["competency", "level", "debutant", "junior", "confirme", "expert", "assess", "what level", "requirements for", "how many simulations", "score my"])
-    is_product_info = any(token in lower for token in ["product", "indication", "evidence", "source", "guideline", "reference"])
+    is_competency = any(token in lower for token in ["competency", "competency level", "competency assessment", "what level", "what competency", "debutant", "junior", "confirme", "expert", "assess my level", "evaluate my competency", "my level", "advancement", "promotion", "how many simulations", "requirements for", "score my competency", "rate my", "am i ready", "evaluate", "assess", "performance", "ready to advance", "ready to progress", "feedback on my", "review my", "evaluate my", "assess my"])
+    is_product_info = any(token in lower for token in ["product", "indication", "evidence", "source", "guideline", "reference", "clinical trial", "trial data", "mechanism of action", "mechanism", "mechanism of", "efficacy", "efficacy data", "efficacy study", "effectiveness", "real-world data", "real world", "how does it work", "how it works", "what is the", "pharmacology", "pharmacodynamics", "pharmacokinetics", "bioavailability", "formulation", "available", "FDA approved", "approved"])
 
 
     intent = "other"
@@ -540,10 +586,10 @@ def _fallback_analysis(user_text: str) -> Dict[str, Any]:
         intent = "visit_format_request"
     elif is_dosage:
         intent = "dosage_question"
-    elif is_methodology:
-        intent = "sales_methodology_request"
     elif is_competency:
         intent = "competency_assessment"
+    elif is_methodology:
+        intent = "sales_methodology_request"
     elif is_crm:
         intent = "crm_follow_up"
     elif is_objection:
