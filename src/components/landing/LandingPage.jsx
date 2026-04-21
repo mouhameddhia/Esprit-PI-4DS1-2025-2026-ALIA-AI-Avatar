@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import HeroSection from './HeroSection';
 import ProblemContext from './ProblemContext';
@@ -14,15 +14,15 @@ import ConclusionFooter from './ConclusionFooter';
 import { LogoutButton } from '../shared/AuthComponent';
 
 const navTargets = [
-  { id: 'why-alia', label: 'Why ALIA' },
-  { id: 'comparison', label: 'Compare' },
-  { id: 'modes', label: 'Modes' },
-  { id: 'platform', label: 'Platform' },
-  { id: 'product', label: 'Product' },
-  { id: 'impact', label: 'Impact' },
-  { id: 'testimonials', label: 'Testimonials' },
-  { id: 'faq', label: 'FAQ' },
-  { id: 'get-started', label: 'Get started' },
+  { id: 'why-alia',     path: '/why-alia',     label: 'Why ALIA' },
+  { id: 'comparison',   path: '/compare',       label: 'Compare' },
+  { id: 'modes',        path: '/modes',         label: 'Modes' },
+  { id: 'platform',     path: '/platform',      label: 'Platform' },
+  { id: 'product',      path: '/product',       label: 'Product' },
+  { id: 'impact',       path: '/impact',        label: 'Impact' },
+  { id: 'testimonials', path: '/testimonials',  label: 'Testimonials' },
+  { id: 'faq',          path: '/faq',           label: 'FAQ' },
+  { id: 'get-started',  path: '/get-started',   label: 'Get started' },
 ];
 
 function scrollToId(id) {
@@ -55,10 +55,15 @@ export default function LandingPage() {
           </button>
 
           <nav className="landing-header-nav" aria-label="Page sections">
-            {navTargets.map(({ id, label }) => (
-              <button key={id} type="button" className="landing-nav-link" onClick={() => scrollToId(id)}>
+            {navTargets.map(({ id, path, label }) => (
+              <Link
+                key={id}
+                to={path}
+                className="landing-nav-link"
+                style={{ textDecoration: 'none' }}
+              >
                 {label}
-              </button>
+              </Link>
             ))}
           </nav>
 
