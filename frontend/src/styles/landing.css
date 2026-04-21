@@ -95,6 +95,8 @@
   cursor: pointer;
   padding: 0.35rem 0;
   transition: color 0.2s ease;
+  text-decoration: none;
+  display: inline-block;
 }
 
 .landing-nav-link:hover {
