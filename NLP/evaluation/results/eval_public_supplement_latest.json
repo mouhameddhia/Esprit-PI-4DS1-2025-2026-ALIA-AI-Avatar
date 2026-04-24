@@ -1,0 +1,273 @@
+{
+  "dataset": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\datasets\\eval_intent_safety_public_supplement.jsonl",
+  "result": {
+    "count": 30,
+    "intent_accuracy": 0.9667,
+    "safety_precision": 1.0,
+    "safety_recall": 1.0,
+    "secondary_tags_precision": 0.5625,
+    "secondary_tags_recall": 0.45,
+    "entity_map_precision": 0.25,
+    "entity_map_recall": 0.2,
+    "partial_entity_map_precision": 0.375,
+    "partial_entity_map_recall": 0.3,
+    "dataset_issues": [],
+    "output_issues": [],
+    "failures": [
+      {
+        "row": 4,
+        "type": "intent",
+        "text": "There's no proven benefit for our population.",
+        "expected": "objection_handling",
+        "actual": "other"
+      }
+    ],
+    "intent_confusion_matrix": {
+      "competency_assessment": {
+        "competency_assessment": 1,
+        "crm_follow_up": 0,
+        "dosage_question": 0,
+        "objection_handling": 0,
+        "other": 0,
+        "product_information_request": 0,
+        "safety_question": 0,
+        "sales_methodology_request": 0,
+        "training_simulation": 0
+      },
+      "crm_follow_up": {
+        "competency_assessment": 0,
+        "crm_follow_up": 3,
+        "dosage_question": 0,
+        "objection_handling": 0,
+        "other": 0,
+        "product_information_request": 0,
+        "safety_question": 0,
+        "sales_methodology_request": 0,
+        "training_simulation": 0
+      },
+      "dosage_question": {
+        "competency_assessment": 0,
+        "crm_follow_up": 0,
+        "dosage_question": 1,
+        "objection_handling": 0,
+        "other": 0,
+        "product_information_request": 0,
+        "safety_question": 0,
+        "sales_methodology_request": 0,
+        "training_simulation": 0
+      },
+      "objection_handling": {
+        "competency_assessment": 0,
+        "crm_follow_up": 0,
+        "dosage_question": 0,
+        "objection_handling": 7,
+        "other": 1,
+        "product_information_request": 0,
+        "safety_question": 0,
+        "sales_methodology_request": 0,
+        "training_simulation": 0
+      },
+      "other": {
+        "competency_assessment": 0,
+        "crm_follow_up": 0,
+        "dosage_question": 0,
+        "objection_handling": 0,
+        "other": 0,
+        "product_information_request": 0,
+        "safety_question": 0,
+        "sales_methodology_request": 0,
+        "training_simulation": 0
+      },
+      "product_information_request": {
+        "competency_assessment": 0,
+        "crm_follow_up": 0,
+        "dosage_question": 0,
+        "objection_handling": 0,
+        "other": 0,
+        "product_information_request": 6,
+        "safety_question": 0,
+        "sales_methodology_request": 0,
+        "training_simulation": 0
+      },
+      "safety_question": {
+        "competency_assessment": 0,
+        "crm_follow_up": 0,
+        "dosage_question": 0,
+        "objection_handling": 0,
+        "other": 0,
+        "product_information_request": 0,
+        "safety_question": 4,
+        "sales_methodology_request": 0,
+        "training_simulation": 0
+      },
+      "sales_methodology_request": {
+        "competency_assessment": 0,
+        "crm_follow_up": 0,
+        "dosage_question": 0,
+        "objection_handling": 0,
+        "other": 0,
+        "product_information_request": 0,
+        "safety_question": 0,
+        "sales_methodology_request": 5,
+        "training_simulation": 0
+      },
+      "training_simulation": {
+        "competency_assessment": 0,
+        "crm_follow_up": 0,
+        "dosage_question": 0,
+        "objection_handling": 0,
+        "other": 0,
+        "product_information_request": 0,
+        "safety_question": 0,
+        "sales_methodology_request": 0,
+        "training_simulation": 2
+      }
+    },
+    "intent_metrics": {
+      "competency_assessment": {
+        "support": 1,
+        "predicted": 1,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "crm_follow_up": {
+        "support": 3,
+        "predicted": 3,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "dosage_question": {
+        "support": 1,
+        "predicted": 1,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "objection_handling": {
+        "support": 8,
+        "predicted": 7,
+        "precision": 1.0,
+        "recall": 0.875,
+        "f1": 0.9333
+      },
+      "other": {
+        "support": 0,
+        "predicted": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "product_information_request": {
+        "support": 6,
+        "predicted": 6,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "safety_question": {
+        "support": 4,
+        "predicted": 4,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "sales_methodology_request": {
+        "support": 5,
+        "predicted": 5,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "training_simulation": {
+        "support": 2,
+        "predicted": 2,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "top_intent_confusions": [
+      {
+        "expected": "objection_handling",
+        "actual": "other",
+        "count": 1
+      }
+    ],
+    "safety_flag_metrics": {
+      "contraindication_query": {
+        "support": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "diagnosis_request": {
+        "support": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "high_risk_interaction": {
+        "support": 1,
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "off_label_request": {
+        "support": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "overclaim_risk": {
+        "support": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "patient_specific_advice_request": {
+        "support": 2,
+        "tp": 2,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "source_required": {
+        "support": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    }
+  },
+  "thresholds": {
+    "profile": "public_hardening",
+    "min_intent_accuracy": 0.5,
+    "min_safety_recall": 0.95,
+    "min_secondary_tags_recall": 0.3,
+    "min_entity_map_recall": 0.1
+  },
+  "quality_gate": "pass",
+  "failed_checks": []
+}

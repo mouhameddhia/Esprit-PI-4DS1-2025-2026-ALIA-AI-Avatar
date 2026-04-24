@@ -1,0 +1,18 @@
+{
+  "dataset": "NLP\\datasets\\eval_language_detection_v1.jsonl",
+  "result": {
+    "size": 30,
+    "accuracy": 1.0,
+    "per_language_accuracy": {
+      "ar": 1.0,
+      "en": 1.0,
+      "fr": 1.0,
+      "unknown": null
+    },
+    "failures": []
+  },
+  "thresholds": {
+    "min_accuracy": 0.9
+  },
+  "passed": true
+}

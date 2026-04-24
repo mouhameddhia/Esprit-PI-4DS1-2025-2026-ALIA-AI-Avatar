@@ -1,0 +1,58 @@
+name: NLP Evaluation
+
+on:
+  pull_request:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  evaluate-nlp:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install minimal dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install groq
+
+      - name: Run NLP evaluator quality gate
+        run: |
+          python NLP/evaluation/run_eval.py NLP/datasets/eval_intent_safety_v4.jsonl \
+            --min-intent-accuracy 0.90 \
+            --min-safety-recall 0.95 \
+            --min-secondary-tags-recall 0.60 \
+            --min-entity-map-recall 0.50 \
+            --output-json NLP/evaluation/results/ci_eval.json
+
+      - name: Archive evaluation for drift monitoring
+        if: always()
+        run: |
+          python NLP/evaluation/drift_monitoring.py v4_ci NLP/evaluation/results/ci_eval.json
+          
+      - name: Check for drift warnings
+        run: |
+          python -c "
+          import json
+          with open('NLP/evaluation/results/ci_eval.json') as f:
+            data = json.load(f)
+          baseline = {'intent_accuracy': 0.9592, 'safety_recall': 1.0, 'secondary_tags_recall': 0.7475, 'entity_map_recall': 0.5625}
+          for metric, baseline_val in baseline.items():
+            current = data.get(metric, 0)
+            drift = ((current - baseline_val) / baseline_val * 100) if baseline_val > 0 else 0
+            if drift < -5:
+              print(f'⚠ WARNING: {metric} drifted {drift:.1f}% from baseline')
+          "
+
+      - name: Upload evaluation artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nlp-eval-result
+          path: NLP/evaluation/results/ci_eval.json

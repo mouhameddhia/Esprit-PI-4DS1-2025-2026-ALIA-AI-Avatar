@@ -1,0 +1,41 @@
+{
+  "dataset": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\datasets\\eval_intent_clarification_v1.jsonl",
+  "result": {
+    "count": 48,
+    "clarification_precision": 1.0,
+    "clarification_recall": 1.0,
+    "clarification_f1": 1.0,
+    "clarification_accuracy": 1.0,
+    "clear_intent_accuracy": 0.9231,
+    "confusion": {
+      "tp": 22,
+      "fp": 0,
+      "fn": 0,
+      "tn": 26
+    },
+    "failures": [
+      {
+        "row": 14,
+        "type": "clear_intent",
+        "text": "I am worried about adverse effects",
+        "expected": "objection_handling",
+        "actual": "safety_question"
+      },
+      {
+        "row": 39,
+        "type": "clear_intent",
+        "text": "List contraindications for Product A",
+        "expected": "safety_question",
+        "actual": "product_information_request"
+      }
+    ],
+    "dataset_issues": []
+  },
+  "thresholds": {
+    "min_clarification_recall": 0.8,
+    "min_clarification_precision": 0.7,
+    "min_clear_intent_accuracy": 0.85
+  },
+  "quality_gate": "pass",
+  "failed_checks": []
+}

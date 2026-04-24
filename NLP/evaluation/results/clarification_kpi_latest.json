@@ -1,0 +1,24 @@
+{
+  "generated_at": "2026-04-14T23:02:00.206812+00:00",
+  "window_days": 7,
+  "totals": {
+    "events": 11,
+    "clarification_requested": 0,
+    "clarification_follow_up": 0,
+    "clarification_resolved": 0,
+    "clarification_unresolved": 0
+  },
+  "rates": {
+    "clarification_rate": 0.0,
+    "follow_up_resolution_rate": 0.0
+  },
+  "avg_confidence": 0.8636,
+  "by_mode": {
+    "physician_portal": {
+      "events": 11,
+      "clarification_requested": 0,
+      "clarification_follow_up": 0,
+      "clarification_resolved": 0
+    }
+  }
+}

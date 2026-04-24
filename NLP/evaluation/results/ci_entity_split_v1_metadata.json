@@ -1,0 +1,63 @@
+{
+  "generated_at": "2026-04-16T22:04:20.121749+00:00",
+  "source_dataset": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\datasets\\eval_intent_safety_v5.jsonl",
+  "seed": 42,
+  "ratios": {
+    "train": 0.7,
+    "val": 0.15,
+    "test": 0.15
+  },
+  "counts": {
+    "source_rows": 140,
+    "skipped_rows": 0,
+    "train": 99,
+    "val": 22,
+    "test": 19
+  },
+  "distributions": {
+    "train": {
+      "competency_assessment": 9,
+      "crm_follow_up": 8,
+      "dosage_question": 6,
+      "general_greeting": 6,
+      "objection_handling": 15,
+      "product_information_request": 7,
+      "safety_question": 14,
+      "sales_methodology_request": 20,
+      "training_simulation": 7,
+      "visit_format_request": 7
+    },
+    "val": {
+      "competency_assessment": 2,
+      "crm_follow_up": 2,
+      "dosage_question": 1,
+      "general_greeting": 1,
+      "objection_handling": 3,
+      "product_information_request": 2,
+      "safety_question": 3,
+      "sales_methodology_request": 4,
+      "training_simulation": 2,
+      "visit_format_request": 2
+    },
+    "test": {
+      "competency_assessment": 2,
+      "crm_follow_up": 1,
+      "dosage_question": 1,
+      "general_greeting": 1,
+      "objection_handling": 4,
+      "product_information_request": 1,
+      "safety_question": 3,
+      "sales_methodology_request": 4,
+      "training_simulation": 1,
+      "visit_format_request": 1
+    }
+  },
+  "files": {
+    "train": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\results\\ci_entity_split_v1_train.jsonl",
+    "val": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\results\\ci_entity_split_v1_val.jsonl",
+    "test": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\results\\ci_entity_split_v1_test.jsonl",
+    "train_sha256": "a5565cf80e62f0d8a31b203f6c578ed85e72f968c6367a7d6cd5e1bb7f84de9c",
+    "val_sha256": "a15418a21a11858134b3b73e41d33dffca58b3ef5bf944ba568edae71202e059",
+    "test_sha256": "ba431c72171df2a232635798238ab70217c9f46449668e72bafd1ca2780beafc"
+  }
+}

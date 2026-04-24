@@ -1,0 +1,222 @@
+{
+  "generated_at": "2026-04-18T21:15:28.898723+00:00",
+  "dataset": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\datasets\\eval_intent_safety_v5.jsonl",
+  "methods": {
+    "exact_match": {
+      "tp": 0,
+      "fp": 8,
+      "fn": 110,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "sample_failures": [
+        {
+          "row": 9,
+          "text": "I have 30 seconds for a flash visit.",
+          "expected": [
+            "flash"
+          ],
+          "predicted": [],
+          "missed": [
+            "flash"
+          ],
+          "false_positives": []
+        },
+        {
+          "row": 10,
+          "text": "Can we do a standard visit in two minutes?",
+          "expected": [
+            "standard"
+          ],
+          "predicted": [],
+          "missed": [
+            "standard"
+          ],
+          "false_positives": []
+        },
+        {
+          "row": 11,
+          "text": "I need a deep visit, let's take 5-8 minutes.",
+          "expected": [
+            "approfondie"
+          ],
+          "predicted": [],
+          "missed": [
+            "approfondie"
+          ],
+          "false_positives": []
+        },
+        {
+          "row": 12,
+          "text": "Keep it short, flash visit only.",
+          "expected": [
+            "flash"
+          ],
+          "predicted": [],
+          "missed": [
+            "flash"
+          ],
+          "false_positives": []
+        },
+        {
+          "row": 13,
+          "text": "Give me a standard visit flow.",
+          "expected": [
+            "standard"
+          ],
+          "predicted": [],
+          "missed": [
+            "standard"
+          ],
+          "false_positives": []
+        }
+      ]
+    },
+    "exact_fuzzy": {
+      "tp": 2,
+      "fp": 17,
+      "fn": 108,
+      "precision": 0.1053,
+      "recall": 0.0182,
+      "f1": 0.031,
+      "sample_failures": [
+        {
+          "row": 9,
+          "text": "I have 30 seconds for a flash visit.",
+          "expected": [
+            "flash"
+          ],
+          "predicted": [],
+          "missed": [
+            "flash"
+          ],
+          "false_positives": []
+        },
+        {
+          "row": 10,
+          "text": "Can we do a standard visit in two minutes?",
+          "expected": [
+            "standard"
+          ],
+          "predicted": [],
+          "missed": [
+            "standard"
+          ],
+          "false_positives": []
+        },
+        {
+          "row": 11,
+          "text": "I need a deep visit, let's take 5-8 minutes.",
+          "expected": [
+            "approfondie"
+          ],
+          "predicted": [],
+          "missed": [
+            "approfondie"
+          ],
+          "false_positives": []
+        },
+        {
+          "row": 12,
+          "text": "Keep it short, flash visit only.",
+          "expected": [
+            "flash"
+          ],
+          "predicted": [],
+          "missed": [
+            "flash"
+          ],
+          "false_positives": []
+        },
+        {
+          "row": 13,
+          "text": "Give me a standard visit flow.",
+          "expected": [
+            "standard"
+          ],
+          "predicted": [],
+          "missed": [
+            "standard"
+          ],
+          "false_positives": []
+        }
+      ]
+    },
+    "exact_fuzzy_ner": {
+      "tp": 2,
+      "fp": 17,
+      "fn": 108,
+      "precision": 0.1053,
+      "recall": 0.0182,
+      "f1": 0.031,
+      "sample_failures": [
+        {
+          "row": 9,
+          "text": "I have 30 seconds for a flash visit.",
+          "expected": [
+            "flash"
+          ],
+          "predicted": [],
+          "missed": [
+            "flash"
+          ],
+          "false_positives": []
+        },
+        {
+          "row": 10,
+          "text": "Can we do a standard visit in two minutes?",
+          "expected": [
+            "standard"
+          ],
+          "predicted": [],
+          "missed": [
+            "standard"
+          ],
+          "false_positives": []
+        },
+        {
+          "row": 11,
+          "text": "I need a deep visit, let's take 5-8 minutes.",
+          "expected": [
+            "approfondie"
+          ],
+          "predicted": [],
+          "missed": [
+            "approfondie"
+          ],
+          "false_positives": []
+        },
+        {
+          "row": 12,
+          "text": "Keep it short, flash visit only.",
+          "expected": [
+            "flash"
+          ],
+          "predicted": [],
+          "missed": [
+            "flash"
+          ],
+          "false_positives": []
+        },
+        {
+          "row": 13,
+          "text": "Give me a standard visit flow.",
+          "expected": [
+            "standard"
+          ],
+          "predicted": [],
+          "missed": [
+            "standard"
+          ],
+          "false_positives": []
+        }
+      ]
+    }
+  },
+  "quality_gate": "fail",
+  "summary": {
+    "best_method": "exact_fuzzy",
+    "best_recall": 0.0182,
+    "improvement_vs_baseline": 0.0182
+  }
+}

@@ -1,0 +1,48 @@
+{"text":"Yes", "mode":"physician_portal", "expected_clarification": true}
+{"text":"Okay", "mode":"physician_portal", "expected_clarification": true}
+{"text":"Can you help?", "mode":"physician_portal", "expected_clarification": true}
+{"text":"Not sure", "mode":"physician_portal", "expected_clarification": true}
+{"text":"Continue", "mode":"physician_portal", "expected_clarification": true}
+{"text":"What do you mean?", "mode":"physician_portal", "expected_clarification": true}
+{"text":"Hmm", "mode":"medrep_training", "expected_clarification": true}
+{"text":"Go on", "mode":"medrep_training", "expected_clarification": true}
+{"text":"Could you be specific?", "mode":"medrep_training", "expected_clarification": true}
+{"text":"I need something useful", "mode":"medrep_training", "expected_clarification": true}
+{"text":"What is the dosage for Product K?", "mode":"physician_portal", "expected_clarification": false, "expected_intent": "dosage_question"}
+{"text":"Any contraindication for Product K?", "mode":"physician_portal", "expected_clarification": false, "expected_intent": "safety_question"}
+{"text":"Show me the latest clinical evidence for Product R", "mode":"physician_portal", "expected_clarification": false, "expected_intent": "product_information_request"}
+{"text":"I am worried about adverse effects", "mode":"physician_portal", "expected_clarification": false, "expected_intent": "objection_handling"}
+{"text":"Teach me objection handling techniques", "mode":"medrep_training", "expected_clarification": false, "expected_intent": "sales_methodology_request"}
+{"text":"Simulate a skeptical physician scenario", "mode":"medrep_training", "expected_clarification": false, "expected_intent": "training_simulation"}
+{"text":"Create a follow up CRM note for this visit", "mode":"medrep_training", "expected_clarification": false, "expected_intent": "crm_follow_up"}
+{"text":"Evaluate my competency level after this call", "mode":"medrep_training", "expected_clarification": false, "expected_intent": "competency_assessment"}
+{"text":"I need a flash visit structure", "mode":"medrep_training", "expected_clarification": false, "expected_intent": "visit_format_request"}
+{"text":"Hello doctor", "mode":"physician_portal", "expected_clarification": false, "expected_intent": "general_greeting"}
+{"text":"How often should I dose this medicine?", "mode":"physician_portal", "expected_clarification": false, "expected_intent": "dosage_question"}
+{"text":"Can this be used during pregnancy?", "mode":"physician_portal", "expected_clarification": false, "expected_intent": "safety_question"}
+{"text":"What is the mechanism of action of Product L?", "mode":"physician_portal", "expected_clarification": false, "expected_intent": "product_information_request"}
+{"text":"Price is too high for many physicians", "mode":"medrep_training", "expected_clarification": false, "expected_intent": "objection_handling"}
+{"text":"Sure", "mode":"physician_portal", "expected_clarification": true}
+{"text":"Can you clarify?", "mode":"physician_portal", "expected_clarification": true}
+{"text":"Maybe", "mode":"physician_portal", "expected_clarification": true}
+{"text":"Please continue", "mode":"physician_portal", "expected_clarification": true}
+{"text":"I don't follow", "mode":"physician_portal", "expected_clarification": true}
+{"text":"More details?", "mode":"physician_portal", "expected_clarification": true}
+{"text":"Not clear yet", "mode":"medrep_training", "expected_clarification": true}
+{"text":"Can we narrow this down?", "mode":"medrep_training", "expected_clarification": true}
+{"text":"I need guidance", "mode":"medrep_training", "expected_clarification": true}
+{"text":"That wasn't clear", "mode":"medrep_training", "expected_clarification": true}
+{"text":"Can you rephrase?", "mode":"medrep_training", "expected_clarification": true}
+{"text":"Still confused", "mode":"medrep_training", "expected_clarification": true}
+{"text":"What is the dosing schedule for Product M?", "mode":"physician_portal", "expected_clarification": false, "expected_intent": "dosage_question"}
+{"text":"How often is the dosage administered?", "mode":"physician_portal", "expected_clarification": false, "expected_intent": "dosage_question"}
+{"text":"List contraindications for Product A", "mode":"physician_portal", "expected_clarification": false, "expected_intent": "safety_question"}
+{"text":"Can I use this during breastfeeding?", "mode":"physician_portal", "expected_clarification": false, "expected_intent": "safety_question"}
+{"text":"Show me trial data for Product B", "mode":"physician_portal", "expected_clarification": false, "expected_intent": "product_information_request"}
+{"text":"What are the approved indications for Product C?", "mode":"physician_portal", "expected_clarification": false, "expected_intent": "product_information_request"}
+{"text":"Teach me a closing commitment framework", "mode":"medrep_training", "expected_clarification": false, "expected_intent": "sales_methodology_request"}
+{"text":"Walk me through objection handling method", "mode":"medrep_training", "expected_clarification": false, "expected_intent": "sales_methodology_request"}
+{"text":"Simulate a role-play with a skeptical physician", "mode":"medrep_training", "expected_clarification": false, "expected_intent": "training_simulation"}
+{"text":"Please write the follow-up in CRM", "mode":"medrep_training", "expected_clarification": false, "expected_intent": "crm_follow_up"}
+{"text":"Assess my competency level after this simulation", "mode":"medrep_training", "expected_clarification": false, "expected_intent": "competency_assessment"}
+{"text":"I need a standard visit flow", "mode":"medrep_training", "expected_clarification": false, "expected_intent": "visit_format_request"}

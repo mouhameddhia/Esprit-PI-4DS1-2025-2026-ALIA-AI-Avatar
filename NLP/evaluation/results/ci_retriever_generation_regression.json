@@ -1,0 +1,16 @@
+{
+  "result": {
+    "passed_checks": [
+      "reranker_integration",
+      "retrieval_non_verbatim_guardrail",
+      "physician_patient_advice_guardrail",
+      "clarification_prompt_prefix",
+      "clarification_option_mode_switch",
+      "nlp_event_language_logging"
+    ],
+    "failed_checks": [],
+    "total": 6,
+    "passed": true
+  },
+  "passed": true
+}

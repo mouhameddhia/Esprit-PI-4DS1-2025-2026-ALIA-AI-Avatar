@@ -1,0 +1,66 @@
+{
+  "generated_at": "2026-04-14T23:56:17.297172+00:00",
+  "manifest_path": "NLP/version_manifest.json",
+  "manifest_version": "v1",
+  "release_channel": "production",
+  "versions": {
+    "prompt_bundle": "v1",
+    "taxonomy": "v1",
+    "intent_router": "v1",
+    "entity_normalization": "v1",
+    "reranker": "v1",
+    "language_detector": "v1",
+    "safety_detector": "v1"
+  },
+  "assets": {
+    "prompt_system": {
+      "path": "NLP/prompts/nlp_extraction_system_prompt.txt",
+      "exists": true,
+      "sha256": "b347ef9fd8c06c1af77621c082c108a51cb1c18fb5b434040480231586805051",
+      "size_bytes": 698,
+      "modified_at_utc": "2026-04-13T18:50:29.686598+00:00"
+    },
+    "taxonomy_json": {
+      "path": "NLP/taxonomy/nlp_taxonomy.json",
+      "exists": true,
+      "sha256": "aafcff25ff4ac5b1e58aee987e64efb99b839a7bbf4699512c1e743e415e1eb1",
+      "size_bytes": 2068,
+      "modified_at_utc": "2026-04-13T19:11:37.931833+00:00"
+    },
+    "intent_router_py": {
+      "path": "NLP/pipeline/nlp.py",
+      "exists": true,
+      "sha256": "04872493c48dce5550d28ee3a19678ebef55da1eb78f3d1b2a6ae91da0742b26",
+      "size_bytes": 39047,
+      "modified_at_utc": "2026-04-14T23:32:52.156817+00:00"
+    },
+    "entity_normalization_json": {
+      "path": "NLP/taxonomy/entity_normalization.json",
+      "exists": true,
+      "sha256": "94b809e77ae570d31cd2c92a507d5a2dadb94bcbf7b140bce02617d579ca1a58",
+      "size_bytes": 987,
+      "modified_at_utc": "2026-04-14T22:41:04.653421+00:00"
+    },
+    "reranker_py": {
+      "path": "NLP/pipeline/reranker.py",
+      "exists": true,
+      "sha256": "42263897a0aa921393684058ec6af39572a1d5bb32194af7f4c3b802fbe385ff",
+      "size_bytes": 2651,
+      "modified_at_utc": "2026-04-14T23:11:10.040365+00:00"
+    },
+    "language_detector_py": {
+      "path": "NLP/pipeline/language.py",
+      "exists": true,
+      "sha256": "30e4092745cc5456a5a8fdea96f6bb3082a19d0d24965d9efa072d6f89ac86f2",
+      "size_bytes": 2625,
+      "modified_at_utc": "2026-04-14T23:34:40.414406+00:00"
+    },
+    "safety_detector_py": {
+      "path": "NLP/pipeline/safety.py",
+      "exists": true,
+      "sha256": "121ba38750510631d4abae0dccfd3859a86e5490eec3445c96c93af5caf105af",
+      "size_bytes": 4932,
+      "modified_at_utc": "2026-04-14T22:26:23.030402+00:00"
+    }
+  }
+}

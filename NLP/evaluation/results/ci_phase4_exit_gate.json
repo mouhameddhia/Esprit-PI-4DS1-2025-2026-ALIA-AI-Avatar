@@ -1,0 +1,168 @@
+{
+  "generated_at": "2026-04-18T13:34:20.934461+00:00",
+  "policy_version": "phase4_exit_v1",
+  "summary": {
+    "total_checks": 28,
+    "passed_checks": 28,
+    "failed_checks": 0,
+    "pass_ratio": 1.0
+  },
+  "quality_gate": "pass",
+  "failed_checks": [],
+  "checks": [
+    {
+      "name": "artifact:ci_eval",
+      "ok": true,
+      "detail": "exists",
+      "path": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\results\\ci_eval.json"
+    },
+    {
+      "name": "artifact:ci_shadow_eval",
+      "ok": true,
+      "detail": "exists",
+      "path": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\results\\ci_shadow_eval.json"
+    },
+    {
+      "name": "artifact:ci_clarification_eval",
+      "ok": true,
+      "detail": "exists",
+      "path": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\results\\ci_clarification_eval.json"
+    },
+    {
+      "name": "artifact:ci_retrieval_rerank_eval",
+      "ok": true,
+      "detail": "exists",
+      "path": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\results\\ci_retrieval_rerank_eval.json"
+    },
+    {
+      "name": "artifact:ci_language_eval",
+      "ok": true,
+      "detail": "exists",
+      "path": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\results\\ci_language_eval.json"
+    },
+    {
+      "name": "artifact:ci_retriever_generation_regression",
+      "ok": true,
+      "detail": "exists",
+      "path": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\results\\ci_retriever_generation_regression.json"
+    },
+    {
+      "name": "artifact:ci_retrieval_review_gate",
+      "ok": true,
+      "detail": "exists",
+      "path": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\results\\ci_retrieval_review_gate.json"
+    },
+    {
+      "name": "artifact:ci_retraining_trigger",
+      "ok": true,
+      "detail": "exists",
+      "path": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\results\\ci_retraining_trigger.json"
+    },
+    {
+      "name": "artifact:ci_version_snapshot",
+      "ok": true,
+      "detail": "exists",
+      "path": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\results\\ci_version_snapshot.json"
+    },
+    {
+      "name": "artifact:ci_trained_intent_shadow_eval",
+      "ok": true,
+      "detail": "exists",
+      "path": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\results\\ci_trained_intent_shadow_eval.json"
+    },
+    {
+      "name": "artifact:ci_trained_entity_shadow_eval",
+      "ok": true,
+      "detail": "exists",
+      "path": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\results\\ci_trained_entity_shadow_eval.json"
+    },
+    {
+      "name": "artifact:ci_trained_rerank_shadow_eval",
+      "ok": true,
+      "detail": "exists",
+      "path": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\results\\ci_trained_rerank_shadow_eval.json"
+    },
+    {
+      "name": "artifact:ci_intent_shadow_thresholds_next",
+      "ok": true,
+      "detail": "exists",
+      "path": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\results\\ci_intent_shadow_thresholds_next.json"
+    },
+    {
+      "name": "artifact:ci_entity_shadow_thresholds_next",
+      "ok": true,
+      "detail": "exists",
+      "path": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\results\\ci_entity_shadow_thresholds_next.json"
+    },
+    {
+      "name": "gate:ci_eval",
+      "ok": true,
+      "detail": "quality_gate"
+    },
+    {
+      "name": "gate:ci_shadow_eval",
+      "ok": true,
+      "detail": "quality_gate"
+    },
+    {
+      "name": "gate:ci_clarification_eval",
+      "ok": true,
+      "detail": "quality_gate"
+    },
+    {
+      "name": "gate:ci_retrieval_rerank_eval",
+      "ok": true,
+      "detail": "quality_gate"
+    },
+    {
+      "name": "gate:ci_language_eval",
+      "ok": true,
+      "detail": "quality_gate"
+    },
+    {
+      "name": "gate:ci_retriever_generation_regression",
+      "ok": true,
+      "detail": "passed/result.passed"
+    },
+    {
+      "name": "gate:ci_retrieval_review_gate",
+      "ok": true,
+      "detail": "quality_gate"
+    },
+    {
+      "name": "gate:ci_trained_intent_shadow_eval",
+      "ok": true,
+      "detail": "quality_gate"
+    },
+    {
+      "name": "gate:ci_trained_entity_shadow_eval",
+      "ok": true,
+      "detail": "quality_gate"
+    },
+    {
+      "name": "gate:ci_trained_rerank_shadow_eval",
+      "ok": true,
+      "detail": "quality_gate"
+    },
+    {
+      "name": "policy:retraining_not_required",
+      "ok": true,
+      "detail": "retraining_required=False"
+    },
+    {
+      "name": "policy:version_assets_exist",
+      "ok": true,
+      "detail": "asset_count=7"
+    },
+    {
+      "name": "ratchet:intent_health",
+      "ok": true,
+      "detail": "tightened_after_consistent_passes"
+    },
+    {
+      "name": "ratchet:entity_health",
+      "ok": true,
+      "detail": "tightened_after_consistent_passes"
+    }
+  ]
+}

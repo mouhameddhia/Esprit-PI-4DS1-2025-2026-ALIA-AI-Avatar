@@ -1,0 +1,16 @@
+{
+  "generated_at": "2026-04-18T01:28:49.489561+00:00",
+  "predictions_jsonl": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\results\\ci_finetune_candidate_qlora_v5_1p5b_hybrid2_on_v3_predictions.jsonl",
+  "evaluation_json": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\results\\ci_finetune_candidate_qlora_v5_1p5b_hybrid2_on_v3_eval.json",
+  "pr_comment_md": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\results\\ci_finetune_candidate_qlora_v5_1p5b_hybrid2_on_v3_pr_comment.md",
+  "quality_gate": "pass",
+  "result": {
+    "reference_rows": 34,
+    "matched_predictions": 34,
+    "coverage": 1.0,
+    "intent_accuracy": 0.8824,
+    "clarification_recall": 1.0,
+    "entity_recall": 0.697,
+    "missing_predictions": []
+  }
+}

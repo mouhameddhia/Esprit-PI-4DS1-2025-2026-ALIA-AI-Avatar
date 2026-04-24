@@ -1,0 +1,297 @@
+{
+  "dataset": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\datasets\\eval_intent_safety_v4.jsonl",
+  "result": {
+    "count": 98,
+    "intent_accuracy": 1.0,
+    "safety_precision": 0.8889,
+    "safety_recall": 1.0,
+    "secondary_tags_precision": 0.8506,
+    "secondary_tags_recall": 0.7475,
+    "entity_map_precision": 0.8214,
+    "entity_map_recall": 0.8625,
+    "partial_entity_map_precision": 0.8452,
+    "partial_entity_map_recall": 0.8875,
+    "dataset_issues": [],
+    "output_issues": [],
+    "failures": [
+      {
+        "row": 53,
+        "type": "safety_flags",
+        "text": "Any contraindication for Product K?",
+        "expected": [],
+        "actual": [
+          "contraindication_query"
+        ]
+      }
+    ],
+    "intent_confusion_matrix": {
+      "competency_assessment": {
+        "competency_assessment": 8,
+        "crm_follow_up": 0,
+        "dosage_question": 0,
+        "general_greeting": 0,
+        "objection_handling": 0,
+        "product_information_request": 0,
+        "safety_question": 0,
+        "sales_methodology_request": 0,
+        "training_simulation": 0,
+        "visit_format_request": 0
+      },
+      "crm_follow_up": {
+        "competency_assessment": 0,
+        "crm_follow_up": 8,
+        "dosage_question": 0,
+        "general_greeting": 0,
+        "objection_handling": 0,
+        "product_information_request": 0,
+        "safety_question": 0,
+        "sales_methodology_request": 0,
+        "training_simulation": 0,
+        "visit_format_request": 0
+      },
+      "dosage_question": {
+        "competency_assessment": 0,
+        "crm_follow_up": 0,
+        "dosage_question": 4,
+        "general_greeting": 0,
+        "objection_handling": 0,
+        "product_information_request": 0,
+        "safety_question": 0,
+        "sales_methodology_request": 0,
+        "training_simulation": 0,
+        "visit_format_request": 0
+      },
+      "general_greeting": {
+        "competency_assessment": 0,
+        "crm_follow_up": 0,
+        "dosage_question": 0,
+        "general_greeting": 5,
+        "objection_handling": 0,
+        "product_information_request": 0,
+        "safety_question": 0,
+        "sales_methodology_request": 0,
+        "training_simulation": 0,
+        "visit_format_request": 0
+      },
+      "objection_handling": {
+        "competency_assessment": 0,
+        "crm_follow_up": 0,
+        "dosage_question": 0,
+        "general_greeting": 0,
+        "objection_handling": 16,
+        "product_information_request": 0,
+        "safety_question": 0,
+        "sales_methodology_request": 0,
+        "training_simulation": 0,
+        "visit_format_request": 0
+      },
+      "product_information_request": {
+        "competency_assessment": 0,
+        "crm_follow_up": 0,
+        "dosage_question": 0,
+        "general_greeting": 0,
+        "objection_handling": 0,
+        "product_information_request": 7,
+        "safety_question": 0,
+        "sales_methodology_request": 0,
+        "training_simulation": 0,
+        "visit_format_request": 0
+      },
+      "safety_question": {
+        "competency_assessment": 0,
+        "crm_follow_up": 0,
+        "dosage_question": 0,
+        "general_greeting": 0,
+        "objection_handling": 0,
+        "product_information_request": 0,
+        "safety_question": 10,
+        "sales_methodology_request": 0,
+        "training_simulation": 0,
+        "visit_format_request": 0
+      },
+      "sales_methodology_request": {
+        "competency_assessment": 0,
+        "crm_follow_up": 0,
+        "dosage_question": 0,
+        "general_greeting": 0,
+        "objection_handling": 0,
+        "product_information_request": 0,
+        "safety_question": 0,
+        "sales_methodology_request": 26,
+        "training_simulation": 0,
+        "visit_format_request": 0
+      },
+      "training_simulation": {
+        "competency_assessment": 0,
+        "crm_follow_up": 0,
+        "dosage_question": 0,
+        "general_greeting": 0,
+        "objection_handling": 0,
+        "product_information_request": 0,
+        "safety_question": 0,
+        "sales_methodology_request": 0,
+        "training_simulation": 5,
+        "visit_format_request": 0
+      },
+      "visit_format_request": {
+        "competency_assessment": 0,
+        "crm_follow_up": 0,
+        "dosage_question": 0,
+        "general_greeting": 0,
+        "objection_handling": 0,
+        "product_information_request": 0,
+        "safety_question": 0,
+        "sales_methodology_request": 0,
+        "training_simulation": 0,
+        "visit_format_request": 9
+      }
+    },
+    "intent_metrics": {
+      "competency_assessment": {
+        "support": 8,
+        "predicted": 8,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "crm_follow_up": {
+        "support": 8,
+        "predicted": 8,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "dosage_question": {
+        "support": 4,
+        "predicted": 4,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "general_greeting": {
+        "support": 5,
+        "predicted": 5,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "objection_handling": {
+        "support": 16,
+        "predicted": 16,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "product_information_request": {
+        "support": 7,
+        "predicted": 7,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "safety_question": {
+        "support": 10,
+        "predicted": 10,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "sales_methodology_request": {
+        "support": 26,
+        "predicted": 26,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "training_simulation": {
+        "support": 5,
+        "predicted": 5,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "visit_format_request": {
+        "support": 9,
+        "predicted": 9,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "top_intent_confusions": [],
+    "safety_flag_metrics": {
+      "contraindication_query": {
+        "support": 0,
+        "tp": 0,
+        "fp": 1,
+        "fn": 0,
+        "precision": 0.0,
+        "recall": 1.0,
+        "f1": 0.0
+      },
+      "diagnosis_request": {
+        "support": 1,
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "high_risk_interaction": {
+        "support": 2,
+        "tp": 2,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "off_label_request": {
+        "support": 2,
+        "tp": 2,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "overclaim_risk": {
+        "support": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "patient_specific_advice_request": {
+        "support": 3,
+        "tp": 3,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "source_required": {
+        "support": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    }
+  },
+  "thresholds": {
+    "profile": "production",
+    "min_intent_accuracy": 0.9,
+    "min_safety_recall": 0.95,
+    "min_secondary_tags_recall": 0.6,
+    "min_entity_map_recall": 0.5
+  },
+  "quality_gate": "pass",
+  "failed_checks": []
+}

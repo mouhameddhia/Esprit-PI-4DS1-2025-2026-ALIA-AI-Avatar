@@ -1,0 +1,14 @@
+{
+  "generated_at": "2026-04-14T22:20:32.307879+00:00",
+  "input_rows": 11,
+  "disagreement_rows": 1,
+  "queue_rows": 0,
+  "min_pair_count": 2,
+  "max_rows": 200,
+  "top_pairs": [
+    {
+      "pair": "product_information_request -> general_greeting",
+      "count": 1
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+# Optional dependencies for Entity Extraction v2
+# Install with: pip install -r NLP/pipeline/requirements-entity-extraction-v2.txt
+
+# Fuzzy string matching (primary)
+# Enables high-quality fuzzy matching for misspellings
+fuzzywuzzy>=0.18.0
+python-Levenshtein>=0.20.0
+
+# Named Entity Recognition fallback (optional)
+# For out-of-dictionary entity detection
+# Download model after install: python -m spacy download fr_core_news_sm
+spacy>=3.5.0

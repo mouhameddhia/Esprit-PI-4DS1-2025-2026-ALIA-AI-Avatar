@@ -1,0 +1,43 @@
+{
+  "generated_at": "2026-04-16T22:14:25.858685+00:00",
+  "config_path": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\entity_shadow_thresholds.json",
+  "eval_path": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\results\\ci_trained_entity_shadow_eval.json",
+  "quality_gate": "pass",
+  "reason": "tightened_after_consistent_passes",
+  "observed": {
+    "shadow_entity_recall": 0.5385,
+    "divergence": 0.4737,
+    "train_test_gap": 0.423,
+    "recall_regression": 0.0
+  },
+  "before_thresholds": {
+    "min_shadow_entity_recall": 0.35,
+    "max_divergence": 0.75,
+    "max_train_test_gap": 0.45,
+    "max_recall_regression": 0.3
+  },
+  "after_thresholds": {
+    "min_shadow_entity_recall": 0.37,
+    "max_divergence": 0.73,
+    "max_train_test_gap": 0.45,
+    "max_recall_regression": 0.28
+  },
+  "tightened": {
+    "min_shadow_entity_recall": {
+      "from": 0.35,
+      "to": 0.37
+    },
+    "max_divergence": {
+      "from": 0.75,
+      "to": 0.73
+    },
+    "max_recall_regression": {
+      "from": 0.3,
+      "to": 0.28
+    }
+  },
+  "state": {
+    "required_consecutive_passes": 1,
+    "consecutive_passes": 0
+  }
+}

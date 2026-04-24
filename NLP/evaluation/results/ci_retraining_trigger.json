@@ -1,0 +1,79 @@
+{
+  "generated_at": "2026-04-14T23:54:31.885419+00:00",
+  "policy_version": "phase4_v1",
+  "policy": {
+    "min_intent_accuracy": 0.9,
+    "min_safety_recall": 0.95,
+    "min_entity_map_recall": 0.5,
+    "min_clear_intent_accuracy": 0.85,
+    "min_rerank_mrr": 0.85,
+    "min_language_accuracy": 0.9,
+    "max_shadow_divergence": 0.15
+  },
+  "retraining_required": false,
+  "severity": "none",
+  "reasons": [],
+  "checks": {
+    "eval_gate": {
+      "value": true,
+      "ok": true
+    },
+    "shadow_gate": {
+      "value": true,
+      "ok": true
+    },
+    "clarification_gate": {
+      "value": true,
+      "ok": true
+    },
+    "rerank_gate": {
+      "value": true,
+      "ok": true
+    },
+    "language_gate": {
+      "value": true,
+      "ok": true
+    },
+    "intent_accuracy": {
+      "value": 1.0,
+      "threshold": 0.9,
+      "ok": true
+    },
+    "safety_recall": {
+      "value": 1.0,
+      "threshold": 0.95,
+      "ok": true
+    },
+    "entity_map_recall": {
+      "value": 0.8625,
+      "threshold": 0.5,
+      "ok": true
+    },
+    "shadow_divergence": {
+      "value": 0.0,
+      "threshold": 0.15,
+      "ok": true
+    },
+    "clear_intent_accuracy": {
+      "value": 0.9231,
+      "threshold": 0.85,
+      "ok": true
+    },
+    "rerank_mrr": {
+      "value": 0.8639,
+      "threshold": 0.85,
+      "ok": true
+    },
+    "language_accuracy": {
+      "value": 1.0,
+      "threshold": 0.9,
+      "ok": true
+    }
+  },
+  "recommendation": {
+    "action": "no_retraining_needed",
+    "steps": [
+      "Continue monitoring with current production model"
+    ]
+  }
+}

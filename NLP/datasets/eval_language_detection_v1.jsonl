@@ -1,0 +1,30 @@
+{"text":"Hello doctor, can you summarize the efficacy data for this product?","expected_language":"en"}
+{"text":"Thanks, what is the recommended dosing frequency for adults?","expected_language":"en"}
+{"text":"Please compare safety and contraindications in elderly patients.","expected_language":"en"}
+{"text":"Can we role-play objection handling for a busy physician?","expected_language":"en"}
+{"text":"I need a short visit structure for tomorrow's call.","expected_language":"en"}
+{"text":"What are the main adverse effects and interactions?","expected_language":"en"}
+{"text":"How should I position this against a competitor?","expected_language":"en"}
+{"text":"Could you provide a concise product messaging script?","expected_language":"en"}
+{"text":"What evidence supports better efficacy in this indication?","expected_language":"en"}
+{"text":"Do we have any guidance for renal dosing adjustments?","expected_language":"en"}
+{"text":"Bonjour docteur, pouvez-vous resumer les donnees d'efficacite ?","expected_language":"fr"}
+{"text":"Merci, quelle est la posologie recommandee pour les patients ages ?","expected_language":"fr"}
+{"text":"Pouvez-vous expliquer les contre-indications principales ?","expected_language":"fr"}
+{"text":"Je veux une visite courte avec un message clair.","expected_language":"fr"}
+{"text":"Quels sont les effets secondaires les plus frequents ?","expected_language":"fr"}
+{"text":"Pouvez-vous simuler une objection d'un medecin presse ?","expected_language":"fr"}
+{"text":"Je cherche des preuves cliniques pour convaincre le medecin.","expected_language":"fr"}
+{"text":"Comment repondre a une question sur la tolerance ?","expected_language":"fr"}
+{"text":"Avez-vous un argumentaire pour cette indication ?","expected_language":"fr"}
+{"text":"Donnez-moi un plan de visite en deux minutes.","expected_language":"fr"}
+{"text":"مرحبا دكتور، هل يمكنك تلخيص بيانات الفعالية؟","expected_language":"ar"}
+{"text":"ما هي الجرعة الموصى بها للبالغين؟","expected_language":"ar"}
+{"text":"هل توجد موانع استعمال مهمة يجب ذكرها؟","expected_language":"ar"}
+{"text":"اريد تدريب على التعامل مع اعتراض الطبيب.","expected_language":"ar"}
+{"text":"ما هي الاثار الجانبية الاكثر شيوعا؟","expected_language":"ar"}
+{"text":"هل يمكن مقارنة السلامة مع العلاج المنافس؟","expected_language":"ar"}
+{"text":"اعطني هيكل زيارة قصير ومهني.","expected_language":"ar"}
+{"text":"كيف اشرح الدليل السريري بشكل مختصر؟","expected_language":"ar"}
+{"text":"ما هي التداخلات الدوائية المحتملة؟","expected_language":"ar"}
+{"text":"هل يوجد توجيه للمرضى كبار السن؟","expected_language":"ar"}

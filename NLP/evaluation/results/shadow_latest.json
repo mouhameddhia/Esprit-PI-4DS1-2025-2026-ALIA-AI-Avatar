@@ -1,0 +1,41 @@
+{
+  "generated_at": "2026-04-14T22:03:06.917505",
+  "thresholds": {
+    "max_divergence": 0.15
+  },
+  "result": {
+    "count": 11,
+    "valid_rows": 11,
+    "row_issues": [],
+    "divergence_rate": 0.0909,
+    "agreement_rate": 0.9091,
+    "avg_primary_confidence": 0.8636,
+    "avg_shadow_confidence": 0.8727,
+    "by_primary_intent": {
+      "dosage_question": {
+        "count": 1,
+        "disagreements": 0,
+        "divergence_rate": 0.0
+      },
+      "product_information_request": {
+        "count": 10,
+        "disagreements": 1,
+        "divergence_rate": 0.1
+      }
+    },
+    "top_disagreements": [
+      {
+        "pair": "product_information_request -> general_greeting",
+        "count": 1
+      }
+    ]
+  },
+  "quality_gate": "pass",
+  "meta": {
+    "processed_events": 11,
+    "skipped_events": 0,
+    "disagreements": 1,
+    "lookback_days": 7,
+    "max_rows": 2000
+  }
+}

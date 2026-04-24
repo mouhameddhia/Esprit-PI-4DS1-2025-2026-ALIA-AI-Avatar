@@ -1,0 +1,226 @@
+{
+  "generated_at": "2026-04-16T22:11:39.966670+00:00",
+  "model_version": "entity_lex_v1",
+  "train_dataset": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\results\\ci_entity_split_v1_train.jsonl",
+  "val_dataset": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\results\\ci_entity_split_v1_val.jsonl",
+  "training_config": {
+    "min_value_support": 1,
+    "max_values_per_entity": 200,
+    "strategy": "hybrid_lexicon"
+  },
+  "train_metrics": {
+    "samples": 99,
+    "entity_precision": 0.5435,
+    "entity_recall": 0.9615
+  },
+  "val_metrics": {
+    "samples": 22,
+    "entity_precision": 0.4375,
+    "entity_recall": 0.7368
+  },
+  "model": {
+    "model_type": "entity_phrase_lexicon",
+    "version": "entity_lex_v1",
+    "strategy": "hybrid_lexicon",
+    "meta": {
+      "rows_seen": 99,
+      "rows_used": 99,
+      "entity_types": [
+        "active_ingredient",
+        "adverse_event",
+        "benefit",
+        "competency_level",
+        "contraindication",
+        "dosage",
+        "indication",
+        "objection_phrase",
+        "patient_profile",
+        "priority",
+        "product_name",
+        "proof_reference",
+        "visit_format"
+      ],
+      "min_value_support": 1,
+      "max_values_per_entity": 200
+    },
+    "lexicon": {
+      "proof_reference": [
+        "clinical trial data",
+        "published evidence",
+        "clinical evidence",
+        "recommendation",
+        "trial evidence",
+        "clinical data",
+        "peer reviews",
+        "results data",
+        "guidelines",
+        "trial data",
+        "guideline",
+        "published",
+        "evidence",
+        "proof",
+        "data"
+      ],
+      "patient_profile": [
+        "patient population",
+        "breastfeeding",
+        "busy doctor",
+        "population",
+        "cirrhosis",
+        "pediatric",
+        "pregnancy",
+        "patients",
+        "elderly",
+        "patient",
+        "renal",
+        "case"
+      ],
+      "adverse_event": [
+        "drug-drug interaction",
+        "adverse reactions",
+        "black box warning",
+        "drug interactions",
+        "long-term effects",
+        "drug interaction",
+        "adverse effects",
+        "adverse effect",
+        "interactions",
+        "side effects",
+        "interaction",
+        "side effect",
+        "teratogenic",
+        "dialysis",
+        "ddi"
+      ],
+      "objection_phrase": [
+        "worried about adverse effects",
+        "outside my budget",
+        "price is too high",
+        "don't have time",
+        "don't believe",
+        "not convinced",
+        "not persuaded",
+        "too expensive",
+        "skeptical",
+        "generics",
+        "generic",
+        "no time"
+      ],
+      "active_ingredient": [
+        "active ingredient",
+        "active molecule",
+        "ingredient",
+        "mechanism",
+        "molecule"
+      ],
+      "product_name": [
+        "product a",
+        "product c",
+        "product f",
+        "product h",
+        "product i",
+        "product j",
+        "product k",
+        "product l",
+        "product m",
+        "product n",
+        "product o",
+        "product q",
+        "product s"
+      ],
+      "benefit": [
+        "advantages",
+        "advantage",
+        "benefits",
+        "benefit"
+      ],
+      "visit_format": [
+        "approfondie",
+        "standard",
+        "flash"
+      ],
+      "dosage": [
+        "adjustment",
+        "emergency",
+        "schedule",
+        "dosage",
+        "dosing",
+        "route"
+      ],
+      "competency_level": [
+        "confirme",
+        "expert",
+        "junior"
+      ],
+      "indication": [
+        "off-label"
+      ],
+      "contraindication": [
+        "contra indication",
+        "contra-indication",
+        "contraindications",
+        "contraindication"
+      ],
+      "priority": [
+        "fast results"
+      ]
+    },
+    "token_index": {
+      "adverse_event::effects": {
+        "adverse effects": 2
+      },
+      "benefit::product": {
+        "benefit": 2
+      },
+      "visit_format::flash": {
+        "flash": 3
+      },
+      "visit_format::visit": {
+        "flash": 3,
+        "approfondie": 2
+      },
+      "visit_format::seconds": {
+        "flash": 2
+      },
+      "adverse_event::about": {
+        "adverse effects": 2
+      },
+      "adverse_event::adverse": {
+        "adverse effects": 2
+      },
+      "patient_profile::pediatric": {
+        "pediatric": 3
+      },
+      "proof_reference::evidence": {
+        "evidence": 2
+      },
+      "competency_level::expert": {
+        "expert": 3
+      },
+      "competency_level::level": {
+        "expert": 2
+      },
+      "competency_level::junior": {
+        "junior": 2
+      },
+      "objection_phrase::too": {
+        "too expensive": 2
+      },
+      "competency_level::how": {
+        "expert": 2
+      },
+      "competency_level::for": {
+        "expert": 2
+      },
+      "visit_format::only": {
+        "flash": 2
+      },
+      "objection_phrase::that's": {
+        "too expensive": 2
+      },
+      "patient_profile::pregnancy": {
+        "pregnancy": 2
+      }
+    }
+  }
+}

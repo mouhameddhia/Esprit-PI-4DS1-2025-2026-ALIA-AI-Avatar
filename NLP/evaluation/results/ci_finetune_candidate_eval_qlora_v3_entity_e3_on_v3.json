@@ -1,0 +1,26 @@
+{
+  "generated_at": "2026-04-17T01:42:32.084473+00:00",
+  "reference_dataset": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\fine_tuning\\data\\nlp_sft_v3_entity_test_openai_messages.jsonl",
+  "candidate_predictions": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\fine_tuning\\data\\candidate_predictions_qlora_v3_entity_e3_on_v3.jsonl",
+  "result": {
+    "reference_rows": 34,
+    "matched_predictions": 34,
+    "coverage": 1.0,
+    "intent_accuracy": 0.2059,
+    "clarification_recall": 0.0,
+    "entity_recall": 0.0,
+    "missing_predictions": []
+  },
+  "thresholds": {
+    "min_intent_accuracy": 0.8,
+    "min_clarification_recall": 0.8,
+    "min_entity_recall": 0.45,
+    "min_coverage": 0.98
+  },
+  "quality_gate": "fail",
+  "failed_checks": [
+    "intent_accuracy",
+    "clarification_recall",
+    "entity_recall"
+  ]
+}

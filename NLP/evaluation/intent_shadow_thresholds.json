@@ -1,0 +1,30 @@
+{
+  "thresholds": {
+    "min_shadow_accuracy": 0.60,
+    "max_divergence": 0.45,
+    "max_train_test_gap": 0.40
+  },
+  "ratchet_policy": {
+    "required_consecutive_passes": 1,
+    "min_buffer": {
+      "shadow_accuracy": 0.02,
+      "divergence": 0.02,
+      "train_test_gap": 0.02
+    },
+    "step": {
+      "shadow_accuracy": 0.02,
+      "divergence": 0.02,
+      "train_test_gap": 0.02
+    },
+    "bounds": {
+      "max_shadow_accuracy": 0.85,
+      "min_divergence": 0.20,
+      "min_train_test_gap": 0.15
+    }
+  },
+  "state": {
+    "consecutive_passes": 0,
+    "last_updated_at": null,
+    "last_quality_gate": null
+  }
+}

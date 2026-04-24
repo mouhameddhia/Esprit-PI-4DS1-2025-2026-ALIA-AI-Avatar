@@ -1,0 +1,7 @@
+{
+  "endpoint_url": "https://your-endpoint.example/v1",
+  "api_key": "replace-with-secret",
+  "model_name": "your_fine_tuned_model_name",
+  "temperature": 0.0,
+  "max_tokens": 512
+}

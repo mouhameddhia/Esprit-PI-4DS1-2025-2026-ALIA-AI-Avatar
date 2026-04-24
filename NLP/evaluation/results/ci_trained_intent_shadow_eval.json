@@ -1,0 +1,74 @@
+{
+  "generated_at": "2026-04-15T00:09:31.864581+00:00",
+  "dataset": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\results\\ci_intent_split_v1_test.jsonl",
+  "model_json": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\results\\ci_intent_model_v1.json",
+  "result": {
+    "count": 16,
+    "shadow_intent_accuracy": 0.625,
+    "production_intent_accuracy": 1.0,
+    "shadow_accuracy_delta": -0.375,
+    "divergence_rate": 0.375,
+    "failures": [
+      {
+        "row": 5,
+        "text": "Active listening in practice?",
+        "expected": "sales_methodology_request",
+        "shadow_pred": "crm_follow_up",
+        "shadow_confidence": 0.1981,
+        "production_pred": "sales_methodology_request"
+      },
+      {
+        "row": 6,
+        "text": "What's the dosage of Product A?",
+        "expected": "dosage_question",
+        "shadow_pred": "product_information_request",
+        "shadow_confidence": 0.5732,
+        "production_pred": "dosage_question"
+      },
+      {
+        "row": 7,
+        "text": "Role-play an objection about cost.",
+        "expected": "training_simulation",
+        "shadow_pred": "objection_handling",
+        "shadow_confidence": 0.2068,
+        "production_pred": "training_simulation"
+      },
+      {
+        "row": 11,
+        "text": "What is the argumentation structure?",
+        "expected": "sales_methodology_request",
+        "shadow_pred": "objection_handling",
+        "shadow_confidence": 0.2912,
+        "production_pred": "sales_methodology_request"
+      },
+      {
+        "row": 14,
+        "text": "Can we structure this visit properly?",
+        "expected": "sales_methodology_request",
+        "shadow_pred": "crm_follow_up",
+        "shadow_confidence": 0.3698,
+        "production_pred": "sales_methodology_request"
+      },
+      {
+        "row": 16,
+        "text": "I'm in a rush.",
+        "expected": "objection_handling",
+        "shadow_pred": "crm_follow_up",
+        "shadow_confidence": 0.3405,
+        "production_pred": "objection_handling"
+      }
+    ]
+  },
+  "generalization": {
+    "train_accuracy": 0.9701,
+    "test_accuracy": 0.625,
+    "train_test_gap": 0.3451
+  },
+  "thresholds": {
+    "min_shadow_accuracy": 0.6,
+    "max_divergence": 0.45,
+    "max_train_test_gap": 0.4
+  },
+  "quality_gate": "pass",
+  "failed_checks": []
+}

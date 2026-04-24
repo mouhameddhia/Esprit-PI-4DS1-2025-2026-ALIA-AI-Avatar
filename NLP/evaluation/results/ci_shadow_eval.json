@@ -1,0 +1,73 @@
+{
+  "input": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\results\\ci_shadow_fixture.jsonl",
+  "result": {
+    "count": 98,
+    "valid_rows": 98,
+    "row_issues": [],
+    "divergence_rate": 0.0,
+    "agreement_rate": 1.0,
+    "avg_primary_confidence": null,
+    "avg_shadow_confidence": 0.5917,
+    "by_primary_intent": {
+      "competency_assessment": {
+        "count": 8,
+        "disagreements": 0,
+        "divergence_rate": 0.0
+      },
+      "crm_follow_up": {
+        "count": 8,
+        "disagreements": 0,
+        "divergence_rate": 0.0
+      },
+      "dosage_question": {
+        "count": 4,
+        "disagreements": 0,
+        "divergence_rate": 0.0
+      },
+      "general_greeting": {
+        "count": 5,
+        "disagreements": 0,
+        "divergence_rate": 0.0
+      },
+      "objection_handling": {
+        "count": 16,
+        "disagreements": 0,
+        "divergence_rate": 0.0
+      },
+      "product_information_request": {
+        "count": 7,
+        "disagreements": 0,
+        "divergence_rate": 0.0
+      },
+      "safety_question": {
+        "count": 10,
+        "disagreements": 0,
+        "divergence_rate": 0.0
+      },
+      "sales_methodology_request": {
+        "count": 26,
+        "disagreements": 0,
+        "divergence_rate": 0.0
+      },
+      "training_simulation": {
+        "count": 5,
+        "disagreements": 0,
+        "divergence_rate": 0.0
+      },
+      "visit_format_request": {
+        "count": 9,
+        "disagreements": 0,
+        "divergence_rate": 0.0
+      }
+    },
+    "top_disagreements": [],
+    "labeled_rows": 98,
+    "primary_intent_accuracy": 1.0,
+    "shadow_intent_accuracy": 1.0,
+    "shadow_accuracy_delta": 0.0
+  },
+  "thresholds": {
+    "max_divergence": 0.15
+  },
+  "quality_gate": "pass"
+}

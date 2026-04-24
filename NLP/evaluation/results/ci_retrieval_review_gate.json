@@ -1,0 +1,13 @@
+{
+  "dataset": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\datasets\\eval_retrieval_rerank_real_v1.jsonl",
+  "result": {
+    "total_rows": 38,
+    "verified_rows": 38,
+    "verified_ratio": 1.0
+  },
+  "thresholds": {
+    "min_verified_ratio": 1.0
+  },
+  "quality_gate": "pass",
+  "failed_checks": []
+}

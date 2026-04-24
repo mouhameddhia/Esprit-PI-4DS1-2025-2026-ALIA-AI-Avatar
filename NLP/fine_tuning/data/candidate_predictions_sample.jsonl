@@ -1,0 +1,3 @@
+{"mode":"physician_portal","text":"What is Product E indicated for?","prediction":{"intent":"product_information_request","needs_clarification":false,"safety_flags":[],"secondary_tags":[],"entity_map":{"product_name":["Product E"],"indication":["indicated for"]}}}
+{"mode":"medrep_training","text":"I\u2019m in a rush.","prediction":{"intent":"objection_handling","needs_clarification":false,"safety_flags":[],"secondary_tags":["objection_handling","no_time"],"entity_map":{"objection_phrase":["rush"]}}}
+{"mode":"physician_portal","text":"Can you help?","prediction":{"intent":"other","needs_clarification":true,"safety_flags":[],"secondary_tags":[],"entity_map":{}}}

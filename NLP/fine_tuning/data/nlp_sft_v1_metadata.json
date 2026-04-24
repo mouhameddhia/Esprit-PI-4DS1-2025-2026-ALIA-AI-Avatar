@@ -1,0 +1,81 @@
+{
+  "generated_at": "2026-04-16T22:37:57.315148+00:00",
+  "intent_dataset": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\datasets\\eval_intent_safety_v5.jsonl",
+  "clarification_dataset": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\datasets\\eval_intent_clarification_v1.jsonl",
+  "taxonomy": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\taxonomy\\nlp_taxonomy.json",
+  "seed": 42,
+  "ratios": {
+    "train": 0.8,
+    "val": 0.1,
+    "test": 0.1
+  },
+  "counts": {
+    "total_examples": 188,
+    "train": 150,
+    "val": 19,
+    "test": 19
+  },
+  "distribution": {
+    "all": {
+      "clarification::false": 26,
+      "clarification::true": 22,
+      "intent::competency_assessment": 13,
+      "intent::crm_follow_up": 11,
+      "intent::dosage_question": 8,
+      "intent::general_greeting": 8,
+      "intent::objection_handling": 22,
+      "intent::product_information_request": 10,
+      "intent::safety_question": 20,
+      "intent::sales_methodology_request": 28,
+      "intent::training_simulation": 10,
+      "intent::visit_format_request": 10
+    },
+    "train": {
+      "clarification::false": 21,
+      "clarification::true": 18,
+      "intent::competency_assessment": 10,
+      "intent::crm_follow_up": 9,
+      "intent::dosage_question": 6,
+      "intent::general_greeting": 6,
+      "intent::objection_handling": 18,
+      "intent::product_information_request": 8,
+      "intent::safety_question": 16,
+      "intent::sales_methodology_request": 22,
+      "intent::training_simulation": 8,
+      "intent::visit_format_request": 8
+    },
+    "val": {
+      "clarification::false": 3,
+      "clarification::true": 2,
+      "intent::competency_assessment": 1,
+      "intent::crm_follow_up": 1,
+      "intent::dosage_question": 1,
+      "intent::general_greeting": 1,
+      "intent::objection_handling": 2,
+      "intent::product_information_request": 1,
+      "intent::safety_question": 2,
+      "intent::sales_methodology_request": 3,
+      "intent::training_simulation": 1,
+      "intent::visit_format_request": 1
+    },
+    "test": {
+      "clarification::false": 2,
+      "clarification::true": 2,
+      "intent::competency_assessment": 2,
+      "intent::crm_follow_up": 1,
+      "intent::dosage_question": 1,
+      "intent::general_greeting": 1,
+      "intent::objection_handling": 2,
+      "intent::product_information_request": 1,
+      "intent::safety_question": 2,
+      "intent::sales_methodology_request": 3,
+      "intent::training_simulation": 1,
+      "intent::visit_format_request": 1
+    }
+  },
+  "format": "both",
+  "files": {
+    "output_dir": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\fine_tuning\\data",
+    "prefix": "nlp_sft_v1"
+  }
+}

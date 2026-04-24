@@ -1,0 +1,22 @@
+{
+  "generated_at": "2026-04-16T22:06:51.759654+00:00",
+  "source_dataset": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\datasets\\eval_retrieval_rerank_v3.jsonl",
+  "seed": 42,
+  "ratios": {
+    "train": 0.7,
+    "val": 0.15,
+    "test": 0.15
+  },
+  "counts": {
+    "source_rows": 60,
+    "valid_rows": 60,
+    "train": 42,
+    "val": 9,
+    "test": 9
+  },
+  "files": {
+    "train": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\results\\ci_rerank_split_v1_train.jsonl",
+    "val": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\results\\ci_rerank_split_v1_val.jsonl",
+    "test": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\results\\ci_rerank_split_v1_test.jsonl"
+  }
+}

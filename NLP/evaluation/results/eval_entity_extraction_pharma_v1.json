@@ -1,0 +1,368 @@
+{
+  "generated_at": "2026-04-18T21:21:01.481905+00:00",
+  "dataset": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\datasets\\eval_entity_extraction_pharma_v1.jsonl",
+  "methods": {
+    "exact_match": {
+      "tp": 40,
+      "fp": 13,
+      "fn": 5,
+      "precision": 0.7547,
+      "recall": 0.8889,
+      "f1": 0.8163,
+      "sample_failures": [
+        {
+          "row": 1,
+          "text": "Can you mention Omévie Oméga 3 -1000 B/30 Capsules?",
+          "expected": [
+            "30 capsules",
+            "cardiovascular",
+            "omévie oméga 3"
+          ],
+          "predicted": [
+            "30 capsules",
+            "cardiovascular",
+            "oméga 3",
+            "omévie oméga 3"
+          ],
+          "missed": [],
+          "false_positives": [
+            "oméga 3"
+          ]
+        },
+        {
+          "row": 2,
+          "text": "Talk to me about Pédiakids Apigrip 150 ml.",
+          "expected": [
+            "150 ml",
+            "pediatric",
+            "pédiakids apigrip"
+          ],
+          "predicted": [
+            "150 ml",
+            "apigrip",
+            "pediatric",
+            "pédiakids apigrip"
+          ],
+          "missed": [],
+          "false_positives": [
+            "apigrip"
+          ]
+        },
+        {
+          "row": 5,
+          "text": "What about Oligovit Zinc B/15?",
+          "expected": [
+            "15",
+            "energy",
+            "oligovit zinc"
+          ],
+          "predicted": [
+            "15",
+            "energy",
+            "oligovit zinc",
+            "zinc"
+          ],
+          "missed": [],
+          "false_positives": [
+            "zinc"
+          ]
+        },
+        {
+          "row": 6,
+          "text": "Tell me about Oligovit Vitamine C Boîte 30 gélules.",
+          "expected": [
+            "30 gélules",
+            "energy",
+            "oligovit vitamine c"
+          ],
+          "predicted": [
+            "30 gélules",
+            "energy",
+            "oligovit vitamine c",
+            "vitamine c"
+          ],
+          "missed": [],
+          "false_positives": [
+            "vitamine c"
+          ]
+        },
+        {
+          "row": 8,
+          "text": "Pédiakids Apitou N°1 (toux grasse) 150ml and N°2 (toux sèche) 150ml.",
+          "expected": [
+            "150ml",
+            "pédiakids apitou",
+            "respiratory"
+          ],
+          "predicted": [
+            "150 ml",
+            "apitou",
+            "pediatric",
+            "pédiakids apitou",
+            "respiratory"
+          ],
+          "missed": [
+            "150ml"
+          ],
+          "false_positives": [
+            "150 ml",
+            "apitou",
+            "pediatric"
+          ]
+        }
+      ]
+    },
+    "exact_fuzzy": {
+      "tp": 40,
+      "fp": 41,
+      "fn": 5,
+      "precision": 0.4938,
+      "recall": 0.8889,
+      "f1": 0.6349,
+      "sample_failures": [
+        {
+          "row": 1,
+          "text": "Can you mention Omévie Oméga 3 -1000 B/30 Capsules?",
+          "expected": [
+            "30 capsules",
+            "cardiovascular",
+            "omévie oméga 3"
+          ],
+          "predicted": [
+            "30 capsules",
+            "cardiovascular",
+            "mention omévie oméga",
+            "oméga 3",
+            "oméga 3 1000",
+            "omévie oméga 3"
+          ],
+          "missed": [],
+          "false_positives": [
+            "mention omévie oméga",
+            "oméga 3",
+            "oméga 3 1000"
+          ]
+        },
+        {
+          "row": 2,
+          "text": "Talk to me about Pédiakids Apigrip 150 ml.",
+          "expected": [
+            "150 ml",
+            "pediatric",
+            "pédiakids apigrip"
+          ],
+          "predicted": [
+            "150 ml",
+            "apigrip",
+            "apigrip 150 ml",
+            "pediatric",
+            "pédiakids apigrip",
+            "pédiakids apigrip 150"
+          ],
+          "missed": [],
+          "false_positives": [
+            "apigrip",
+            "apigrip 150 ml",
+            "pédiakids apigrip 150"
+          ]
+        },
+        {
+          "row": 3,
+          "text": "What's Vitonic Allaitement B/45 gélules?",
+          "expected": [
+            "45 gélules",
+            "pregnancy",
+            "vitonic allaitement"
+          ],
+          "predicted": [
+            "45 gélules",
+            "allaitement b/45",
+            "pregnancy",
+            "vitonic allaitement",
+            "vitonic allaitement b/45",
+            "what's vitonic allaitement"
+          ],
+          "missed": [],
+          "false_positives": [
+            "allaitement b/45",
+            "vitonic allaitement b/45",
+            "what's vitonic allaitement"
+          ]
+        },
+        {
+          "row": 4,
+          "text": "OK, what about Vitonic Conception B/30 gélules?",
+          "expected": [
+            "30 gélules",
+            "pregnancy",
+            "vitonic conception"
+          ],
+          "predicted": [
+            "30 gélules",
+            "conception b/30",
+            "pregnancy",
+            "vitonic conception",
+            "vitonic conception b/30"
+          ],
+          "missed": [],
+          "false_positives": [
+            "conception b/30",
+            "vitonic conception b/30"
+          ]
+        },
+        {
+          "row": 5,
+          "text": "What about Oligovit Zinc B/15?",
+          "expected": [
+            "15",
+            "energy",
+            "oligovit zinc"
+          ],
+          "predicted": [
+            "15",
+            "energy",
+            "oligovit zinc",
+            "oligovit zinc b/15",
+            "zinc",
+            "zinc b/15"
+          ],
+          "missed": [],
+          "false_positives": [
+            "oligovit zinc b/15",
+            "zinc",
+            "zinc b/15"
+          ]
+        }
+      ]
+    },
+    "exact_fuzzy_ner": {
+      "tp": 40,
+      "fp": 41,
+      "fn": 5,
+      "precision": 0.4938,
+      "recall": 0.8889,
+      "f1": 0.6349,
+      "sample_failures": [
+        {
+          "row": 1,
+          "text": "Can you mention Omévie Oméga 3 -1000 B/30 Capsules?",
+          "expected": [
+            "30 capsules",
+            "cardiovascular",
+            "omévie oméga 3"
+          ],
+          "predicted": [
+            "30 capsules",
+            "cardiovascular",
+            "mention omévie oméga",
+            "oméga 3",
+            "oméga 3 1000",
+            "omévie oméga 3"
+          ],
+          "missed": [],
+          "false_positives": [
+            "mention omévie oméga",
+            "oméga 3",
+            "oméga 3 1000"
+          ]
+        },
+        {
+          "row": 2,
+          "text": "Talk to me about Pédiakids Apigrip 150 ml.",
+          "expected": [
+            "150 ml",
+            "pediatric",
+            "pédiakids apigrip"
+          ],
+          "predicted": [
+            "150 ml",
+            "apigrip",
+            "apigrip 150 ml",
+            "pediatric",
+            "pédiakids apigrip",
+            "pédiakids apigrip 150"
+          ],
+          "missed": [],
+          "false_positives": [
+            "apigrip",
+            "apigrip 150 ml",
+            "pédiakids apigrip 150"
+          ]
+        },
+        {
+          "row": 3,
+          "text": "What's Vitonic Allaitement B/45 gélules?",
+          "expected": [
+            "45 gélules",
+            "pregnancy",
+            "vitonic allaitement"
+          ],
+          "predicted": [
+            "45 gélules",
+            "allaitement b/45",
+            "pregnancy",
+            "vitonic allaitement",
+            "vitonic allaitement b/45",
+            "what's vitonic allaitement"
+          ],
+          "missed": [],
+          "false_positives": [
+            "allaitement b/45",
+            "vitonic allaitement b/45",
+            "what's vitonic allaitement"
+          ]
+        },
+        {
+          "row": 4,
+          "text": "OK, what about Vitonic Conception B/30 gélules?",
+          "expected": [
+            "30 gélules",
+            "pregnancy",
+            "vitonic conception"
+          ],
+          "predicted": [
+            "30 gélules",
+            "conception b/30",
+            "pregnancy",
+            "vitonic conception",
+            "vitonic conception b/30"
+          ],
+          "missed": [],
+          "false_positives": [
+            "conception b/30",
+            "vitonic conception b/30"
+          ]
+        },
+        {
+          "row": 5,
+          "text": "What about Oligovit Zinc B/15?",
+          "expected": [
+            "15",
+            "energy",
+            "oligovit zinc"
+          ],
+          "predicted": [
+            "15",
+            "energy",
+            "oligovit zinc",
+            "oligovit zinc b/15",
+            "zinc",
+            "zinc b/15"
+          ],
+          "missed": [],
+          "false_positives": [
+            "oligovit zinc b/15",
+            "zinc",
+            "zinc b/15"
+          ]
+        }
+      ]
+    }
+  },
+  "quality_gate": "pass",
+  "summary": {
+    "best_method": "exact_fuzzy",
+    "best_recall": 0.8889,
+    "improvement_vs_baseline": 0.0
+  }
+}

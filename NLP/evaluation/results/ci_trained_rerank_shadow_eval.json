@@ -1,0 +1,28 @@
+{
+  "dataset": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\results\\ci_rerank_split_v1_test.jsonl",
+  "model_json": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\results\\ci_reranker_model_v1.json",
+  "result": {
+    "count": 9,
+    "baseline": {
+      "count": 9,
+      "hit_at_1": 0.2222,
+      "mrr": 0.5556
+    },
+    "reranked": {
+      "count": 9,
+      "hit_at_1": 1.0,
+      "mrr": 1.0
+    },
+    "delta": {
+      "hit_at_1": 0.7778,
+      "mrr": 0.4444
+    }
+  },
+  "thresholds": {
+    "min_rerank_hit_at_1": 0.6,
+    "min_rerank_mrr": 0.75,
+    "max_hit_at_1_regression": 0.15
+  },
+  "quality_gate": "pass",
+  "failed_checks": []
+}

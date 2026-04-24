@@ -1,0 +1,201 @@
+{
+  "generated_at": "2026-04-16T22:14:23.681823+00:00",
+  "dataset": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\results\\ci_entity_split_v1_test.jsonl",
+  "model_json": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\results\\ci_entity_model_v1.json",
+  "result": {
+    "count": 19,
+    "shadow_entity_precision": 0.2692,
+    "shadow_entity_recall": 0.5385,
+    "production_entity_recall": 0.5385,
+    "shadow_recall_delta": 0.0,
+    "divergence_rate": 0.4737,
+    "failures": [
+      {
+        "row": 1,
+        "text": "Can we do a standard visit in two minutes?",
+        "expected_pairs": [
+          "visit_format::standard"
+        ],
+        "shadow_pairs": [
+          "visit_format::flash",
+          "visit_format::standard"
+        ],
+        "production_pairs": [
+          "visit_format::flash",
+          "visit_format::standard"
+        ]
+      },
+      {
+        "row": 2,
+        "text": "What is Product E indicated for?",
+        "expected_pairs": [
+          "indication::indicated for",
+          "product_name::product e"
+        ],
+        "shadow_pairs": [
+          "benefit::benefit",
+          "competency_level::expert",
+          "indication::indicated for",
+          "product_name::product e"
+        ],
+        "production_pairs": [
+          "indication::indicated for",
+          "product_name::product e"
+        ]
+      },
+      {
+        "row": 3,
+        "text": "How do I secure next steps?",
+        "expected_pairs": [],
+        "shadow_pairs": [
+          "competency_level::expert"
+        ],
+        "production_pairs": []
+      },
+      {
+        "row": 4,
+        "text": "I'm in a rush.",
+        "expected_pairs": [
+          "objection_phrase::rush"
+        ],
+        "shadow_pairs": [],
+        "production_pairs": []
+      },
+      {
+        "row": 5,
+        "text": "Engagement questions for closing?",
+        "expected_pairs": [],
+        "shadow_pairs": [
+          "competency_level::expert"
+        ],
+        "production_pairs": []
+      },
+      {
+        "row": 6,
+        "text": "Score my competency level.",
+        "expected_pairs": [],
+        "shadow_pairs": [
+          "competency_level::expert"
+        ],
+        "production_pairs": []
+      },
+      {
+        "row": 8,
+        "text": "Off-label use of Product R for children?",
+        "expected_pairs": [
+          "patient_profile::children",
+          "product_name::product r"
+        ],
+        "shadow_pairs": [
+          "benefit::benefit",
+          "competency_level::expert",
+          "indication::off-label",
+          "patient_profile::child",
+          "product_name::product r"
+        ],
+        "production_pairs": [
+          "patient_profile::child",
+          "product_name::product r"
+        ]
+      },
+      {
+        "row": 10,
+        "text": "Contraindications in renal disease?",
+        "expected_pairs": [
+          "patient_profile::renal disease"
+        ],
+        "shadow_pairs": [
+          "adverse_event::contraindication",
+          "contraindication::contraindication",
+          "indication::indication",
+          "patient_profile::renal"
+        ],
+        "production_pairs": [
+          "adverse_event::contraindication",
+          "contraindication::contraindication",
+          "indication::indication",
+          "patient_profile::renal"
+        ]
+      },
+      {
+        "row": 11,
+        "text": "How do I close and get engagement?",
+        "expected_pairs": [],
+        "shadow_pairs": [
+          "competency_level::expert"
+        ],
+        "production_pairs": []
+      },
+      {
+        "row": 12,
+        "text": "Plan a follow-up visit for next week.",
+        "expected_pairs": [],
+        "shadow_pairs": [
+          "competency_level::expert",
+          "visit_format::flash"
+        ],
+        "production_pairs": []
+      },
+      {
+        "row": 14,
+        "text": "I have my usual product, no change needed.",
+        "expected_pairs": [
+          "objection_phrase::no change",
+          "objection_phrase::usual product"
+        ],
+        "shadow_pairs": [
+          "benefit::benefit",
+          "objection_phrase::no change",
+          "objection_phrase::usual product"
+        ],
+        "production_pairs": [
+          "objection_phrase::no change",
+          "objection_phrase::usual product"
+        ]
+      },
+      {
+        "row": 17,
+        "text": "I use what I know.",
+        "expected_pairs": [
+          "objection_phrase::use what i know"
+        ],
+        "shadow_pairs": [],
+        "production_pairs": []
+      },
+      {
+        "row": 18,
+        "text": "Geriatric considerations?",
+        "expected_pairs": [
+          "patient_profile::geriatric"
+        ],
+        "shadow_pairs": [],
+        "production_pairs": []
+      },
+      {
+        "row": 19,
+        "text": "What populations should avoid this?",
+        "expected_pairs": [
+          "patient_profile::populations"
+        ],
+        "shadow_pairs": [
+          "patient_profile::patient population"
+        ],
+        "production_pairs": []
+      }
+    ]
+  },
+  "generalization": {
+    "train_entity_recall": 0.9615,
+    "test_entity_recall": 0.5385,
+    "train_test_gap": 0.423,
+    "recall_regression_vs_production": 0.0
+  },
+  "thresholds": {
+    "min_shadow_entity_recall": 0.35,
+    "max_divergence": 0.75,
+    "max_train_test_gap": 0.45,
+    "max_recall_regression": 0.3
+  },
+  "quality_gate": "pass",
+  "failed_checks": []
+}

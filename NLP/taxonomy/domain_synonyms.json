@@ -1,0 +1,38 @@
+{
+  "drug-drug interaction": [
+    "ddi",
+    "drug interaction",
+    "drug-drug interactions"
+  ],
+  "adverse effects": [
+    "adverse events",
+    "aes",
+    "side effects",
+    "s/e"
+  ],
+  "mechanism of action": [
+    "moa",
+    "mode of action"
+  ],
+  "contraindication": [
+    "contra indication",
+    "contra-indication",
+    "contraindications"
+  ],
+  "follow up": [
+    "followup",
+    "f/u"
+  ],
+  "pregnancy": [
+    "preg",
+    "pregnant patients"
+  ],
+  "breastfeeding": [
+    "lactation",
+    "nursing"
+  ],
+  "physician": [
+    "hcp",
+    "doctor"
+  ]
+}

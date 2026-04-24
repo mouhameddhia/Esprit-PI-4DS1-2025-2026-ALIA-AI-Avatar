@@ -1,0 +1,22 @@
+{
+  "manifest_version": "v1",
+  "release_channel": "production",
+  "versions": {
+    "prompt_bundle": "v1",
+    "taxonomy": "v1",
+    "intent_router": "v1",
+    "entity_normalization": "v1",
+    "reranker": "v1",
+    "language_detector": "v1",
+    "safety_detector": "v1"
+  },
+  "assets": {
+    "prompt_system": "NLP/prompts/nlp_extraction_system_prompt.txt",
+    "taxonomy_json": "NLP/taxonomy/nlp_taxonomy.json",
+    "intent_router_py": "NLP/pipeline/nlp.py",
+    "entity_normalization_json": "NLP/taxonomy/entity_normalization.json",
+    "reranker_py": "NLP/pipeline/reranker.py",
+    "language_detector_py": "NLP/pipeline/language.py",
+    "safety_detector_py": "NLP/pipeline/safety.py"
+  }
+}

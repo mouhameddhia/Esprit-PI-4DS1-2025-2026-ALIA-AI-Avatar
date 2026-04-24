@@ -1,0 +1,29 @@
+{
+  "adapter_mode": "local_adapter_hybrid",
+  "base_model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "adapter_dir": "NLP/fine_tuning/models/intent_qlora_v6_1p5b_multiepoch",
+  "max_new_tokens": 220,
+  "taxonomy_json": "NLP/taxonomy/nlp_taxonomy.json",
+  "use_hybrid_fallback": true,
+  "hybrid_strategy": "baseline_first_intent",
+  "description": "Hybrid adapter v6 (1.5B QLoRA multi-epoch + baseline merger) passing all quality gates: intent 91.18%, clarification 100%, entity 72.73%",
+  "metrics": {
+    "intent_accuracy": 0.9118,
+    "clarification_recall": 1.0,
+    "entity_recall": 0.7273,
+    "coverage": 1.0,
+    "gate_status": "PASS"
+  },
+  "training_metadata": {
+    "base_model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+    "training_method": "QLoRA (4-bit)",
+    "epochs": 3,
+    "batch_size": 1,
+    "gradient_accumulation_steps": 8,
+    "max_seq_length": 384,
+    "training_datasets": [
+      "nlp_sft_v2_train_openai_messages.jsonl",
+      "nlp_sft_v3_entity_train_openai_messages.jsonl"
+    ]
+  }
+}

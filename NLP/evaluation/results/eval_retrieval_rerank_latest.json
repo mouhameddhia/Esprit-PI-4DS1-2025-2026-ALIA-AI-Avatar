@@ -1,0 +1,27 @@
+{
+  "dataset": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\datasets\\eval_retrieval_rerank_v3.jsonl",
+  "result": {
+    "count": 60,
+    "baseline": {
+      "count": 60,
+      "hit_at_1": 0.1833,
+      "mrr": 0.4917
+    },
+    "reranked": {
+      "count": 60,
+      "hit_at_1": 0.7333,
+      "mrr": 0.8639
+    },
+    "delta": {
+      "hit_at_1": 0.55,
+      "mrr": 0.3722
+    }
+  },
+  "thresholds": {
+    "min_rerank_hit_at_1": 0.7,
+    "min_rerank_mrr": 0.85,
+    "max_hit_at_1_regression": 0.01
+  },
+  "quality_gate": "pass",
+  "failed_checks": []
+}

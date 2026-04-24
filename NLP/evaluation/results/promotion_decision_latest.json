@@ -1,0 +1,47 @@
+{
+  "generated_at": "2026-04-14T22:46:58.227737+00:00",
+  "inputs": {
+    "baseline_eval": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\results\\eval_v4_latest.json",
+    "candidate_eval": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\results\\eval_v5_latest.json",
+    "shadow_eval": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\evaluation\\results\\shadow_latest.json"
+  },
+  "thresholds": {
+    "min_intent_delta": -0.1,
+    "min_safety_delta": 0.0,
+    "min_entity_delta": 0.0,
+    "max_shadow_divergence": 0.15
+  },
+  "promotion_gate": "pass",
+  "summary": {
+    "checks": {
+      "candidate_eval_gate": true,
+      "shadow_eval_gate": true,
+      "intent_delta": true,
+      "safety_delta": true,
+      "entity_delta": true,
+      "shadow_divergence": true
+    },
+    "metrics": {
+      "baseline": {
+        "intent_accuracy": 1.0,
+        "safety_recall": 1.0,
+        "entity_map_recall": 0.5625
+      },
+      "candidate": {
+        "intent_accuracy": 0.9071,
+        "safety_recall": 1.0,
+        "entity_map_recall": 0.6909
+      },
+      "delta": {
+        "intent_accuracy": -0.0929,
+        "safety_recall": 0.0,
+        "entity_map_recall": 0.1284
+      },
+      "shadow": {
+        "divergence_rate": 0.0909,
+        "quality_gate": "pass"
+      }
+    },
+    "reasons": []
+  }
+}

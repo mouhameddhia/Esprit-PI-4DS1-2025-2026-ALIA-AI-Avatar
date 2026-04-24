@@ -1,0 +1,147 @@
+{
+  "products": {
+    "omevie_omega_3": {
+      "names": ["Omévie Oméga 3", "Omevie Omega 3", "omevie omega"],
+      "category": "cardiovascular_support",
+      "form": "capsule"
+    },
+    "pediakids_omega3": {
+      "names": ["Pédiakids Oméga3", "Pediakids Omega3", "pediakids omega"],
+      "category": "pediatric_omega3",
+      "form": "liquid"
+    },
+    "pediakids_apigrip": {
+      "names": ["Pédiakids Apigrip", "Pediakids Apigrip", "apigrip"],
+      "category": "pediatric_seasonal",
+      "form": "liquid"
+    },
+    "pediakids_apitou": {
+      "names": ["Pédiakids Apitou", "Pediakids Apitou", "apitou"],
+      "category": "pediatric_cough",
+      "form": "liquid"
+    },
+    "vitonic_allaitement": {
+      "names": ["Vitonic Allaitement", "Vitonic Nursing", "vitonic allaitement"],
+      "category": "maternal_support",
+      "form": "capsule"
+    },
+    "vitonic_conception": {
+      "names": ["Vitonic Conception", "Vitonic Preconception", "vitonic conception"],
+      "category": "preconception_support",
+      "form": "capsule"
+    },
+    "vitonic_grossesse": {
+      "names": ["Vitonic Grossesse", "Vitonic Pregnancy", "vitonic grossesse"],
+      "category": "pregnancy_support",
+      "form": "capsule"
+    },
+    "lv_phytocalm": {
+      "names": ["LV Phytocalm", "Phytocalm", "lv phytocalm"],
+      "category": "stress_support",
+      "form": "capsule"
+    },
+    "lv_selenium_ace": {
+      "names": ["LV Selenium ACE", "Selenium ACE", "lv selenium"],
+      "category": "antioxidant_support",
+      "form": "capsule"
+    },
+    "lv_tetra_b": {
+      "names": ["LV Tétra B", "LV Tetra B", "tetra b"],
+      "category": "energy_metabolism",
+      "form": "capsule"
+    },
+    "lv_fersang": {
+      "names": ["LV Fersang", "Fersang", "lv fersang"],
+      "category": "iron_energy",
+      "form": "capsule"
+    },
+    "oligovit_zinc": {
+      "names": ["Oligovit Zinc", "Zinc", "oligovit zinc"],
+      "category": "mineral_support",
+      "form": "capsule"
+    },
+    "oligovit_vitamin_c": {
+      "names": ["Oligovit Vitamine C", "Oligovit Vitamin C", "vitamin c", "vitamine c"],
+      "category": "vitamin_c",
+      "form": "capsule"
+    },
+    "pulmax_antitussif": {
+      "names": ["PULMAX antitussif", "PULMAX", "pulmax"],
+      "category": "cough_syrup",
+      "form": "syrup"
+    },
+    "phytothera_goenzyme": {
+      "names": ["Phytothéra Goenzyme Q10", "Goenzyme Q10", "coenzyme q10"],
+      "category": "energy_support",
+      "form": "capsule"
+    }
+  },
+  "molecules": {
+    "omega_3": {
+      "names": ["omega-3", "omega 3", "omega3", "oméga-3", "oméga 3"],
+      "synonyms": ["epa", "dha", "polyunsaturated_fat"],
+      "category": "omega_fatty_acid"
+    },
+    "selenium": {
+      "names": ["selenium", "sélénium", "se"],
+      "synonyms": ["mineral", "trace_element"],
+      "category": "mineral"
+    },
+    "zinc": {
+      "names": ["zinc", "zn"],
+      "synonyms": ["mineral", "trace_element"],
+      "category": "mineral"
+    },
+    "iron": {
+      "names": ["iron", "fer", "fe"],
+      "synonyms": ["mineral", "micronutrient"],
+      "category": "mineral"
+    },
+    "vitamin_c": {
+      "names": ["vitamin c", "vitamine c", "ascorbic acid", "vit c"],
+      "synonyms": ["antioxidant", "ascorbate"],
+      "category": "vitamin"
+    },
+    "vitamin_b_complex": {
+      "names": ["vitamin b", "vitamine b", "b complex", "b vitamins"],
+      "synonyms": ["b-vitamins", "thiamine", "riboflavin", "niacin"],
+      "category": "vitamin"
+    },
+    "coenzyme_q10": {
+      "names": ["coenzyme q10", "coq10", "ubiquinone"],
+      "synonyms": ["energy_molecule"],
+      "category": "enzyme_cofactor"
+    }
+  },
+  "dosages": {
+    "capsule_sizes": ["150ml", "30 gélules", "45 gélules", "60 gélules", "15 gélules"],
+    "dosage_forms": ["capsule", "gélule", "liquid", "syrup", "sirop", "ml", "tab", "tablet"],
+    "common_amounts": ["1000mg", "1 prise", "1 gélule", "1 comprimé", "150 ml", "30 ml", "45 ml"]
+  },
+  "diseases_indications": {
+    "cardiovascular": {
+      "names": ["hypertension", "heart_failure", "arrhythmia", "cardiovascular_disease"],
+      "keywords": ["blood pressure", "heart", "cardiac", "cardiovascular"]
+    },
+    "respiratory": {
+      "names": ["cough", "toux", "bronchitis", "asthma", "copd"],
+      "keywords": ["respiratory", "lung", "bronchial", "toux sèche", "toux grasse"]
+    },
+    "pregnancy_postpartum": {
+      "names": ["pregnancy", "grossesse", "allaitement", "postpartum"],
+      "keywords": ["pregnant", "nursing", "enceinte", "allaitante"]
+    },
+    "pediatric": {
+      "names": ["child", "enfant", "pediatric", "baby", "bébé"],
+      "keywords": ["child", "enfant", "age", "kid", "infant"]
+    },
+    "stress_sleep": {
+      "names": ["stress", "anxiety", "insomnia", "sleep"],
+      "keywords": ["sleep", "sommeil", "anxiety", "stress", "calme"]
+    },
+    "energy_fatigue": {
+      "names": ["fatigue", "asthenia", "tiredness", "low_energy"],
+      "keywords": ["tired", "fatigue", "energy", "vitality", "vitalité"]
+    }
+  }
+}

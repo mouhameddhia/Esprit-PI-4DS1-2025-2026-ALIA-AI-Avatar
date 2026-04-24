@@ -1,0 +1,24 @@
+{
+  "dataset": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\datasets\\eval_intent_safety_v2.jsonl",
+  "result": {
+    "count": 58,
+    "intent_accuracy": 1.0,
+    "safety_precision": 1.0,
+    "safety_recall": 1.0,
+    "secondary_tags_precision": 0.803,
+    "secondary_tags_recall": 0.7571,
+    "entity_map_precision": 0.7143,
+    "entity_map_recall": 0.7432,
+    "dataset_issues": [],
+    "output_issues": [],
+    "failures": []
+  },
+  "thresholds": {
+    "min_intent_accuracy": 0.9,
+    "min_safety_recall": 0.95,
+    "min_secondary_tags_recall": 0.6,
+    "min_entity_map_recall": 0.5
+  },
+  "quality_gate": "pass",
+  "failed_checks": []
+}

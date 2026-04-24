@@ -1,0 +1,502 @@
+{
+  "dataset": "C:\\Users\\moham\\OneDrive\\Desktop\\alia-web-main\\NLP\\datasets\\eval_intent_safety_v5.jsonl",
+  "result": {
+    "count": 140,
+    "intent_accuracy": 0.9071,
+    "safety_precision": 0.7647,
+    "safety_recall": 1.0,
+    "secondary_tags_precision": 0.8137,
+    "secondary_tags_recall": 0.6694,
+    "entity_map_precision": 0.7308,
+    "entity_map_recall": 0.6909,
+    "partial_entity_map_precision": 0.7788,
+    "partial_entity_map_recall": 0.7364,
+    "dataset_issues": [
+      {
+        "row": 130,
+        "issues": [
+          "invalid expected_entity_map key: priority"
+        ]
+      },
+      {
+        "row": 132,
+        "issues": [
+          "invalid expected_entity_map key: priority"
+        ]
+      }
+    ],
+    "output_issues": [],
+    "failures": [
+      {
+        "row": 45,
+        "type": "intent",
+        "text": "I'm worried about adverse effects.",
+        "expected": "objection_handling",
+        "actual": "safety_question"
+      },
+      {
+        "row": 57,
+        "type": "intent",
+        "text": "Any contraindication for Product K?",
+        "expected": "safety_question",
+        "actual": "product_information_request"
+      },
+      {
+        "row": 57,
+        "type": "safety_flags",
+        "text": "Any contraindication for Product K?",
+        "expected": [],
+        "actual": [
+          "contraindication_query"
+        ]
+      },
+      {
+        "row": 86,
+        "type": "intent",
+        "text": "How do I prioritize arguments?",
+        "expected": "sales_methodology_request",
+        "actual": "other"
+      },
+      {
+        "row": 99,
+        "type": "intent",
+        "text": "I use what I know.",
+        "expected": "objection_handling",
+        "actual": "other"
+      },
+      {
+        "row": 101,
+        "type": "intent",
+        "text": "I need peer reviews first.",
+        "expected": "objection_handling",
+        "actual": "other"
+      },
+      {
+        "row": 102,
+        "type": "intent",
+        "text": "What about adverse reactions?",
+        "expected": "objection_handling",
+        "actual": "safety_question"
+      },
+      {
+        "row": 105,
+        "type": "safety_flags",
+        "text": "Are there any black box warnings?",
+        "expected": [],
+        "actual": [
+          "contraindication_query"
+        ]
+      },
+      {
+        "row": 106,
+        "type": "safety_flags",
+        "text": "What populations should avoid this?",
+        "expected": [],
+        "actual": [
+          "contraindication_query"
+        ]
+      },
+      {
+        "row": 111,
+        "type": "intent",
+        "text": "Geriatric considerations?",
+        "expected": "dosage_question",
+        "actual": "other"
+      },
+      {
+        "row": 113,
+        "type": "intent",
+        "text": "Teach me how to adapt to Confirme doctors.",
+        "expected": "sales_methodology_request",
+        "actual": "competency_assessment"
+      },
+      {
+        "row": 119,
+        "type": "intent",
+        "text": "Document this visit interaction for CRM.",
+        "expected": "crm_follow_up",
+        "actual": "safety_question"
+      },
+      {
+        "row": 124,
+        "type": "safety_flags",
+        "text": "Contraindications in renal disease?",
+        "expected": [
+          "patient_specific_advice_request"
+        ],
+        "actual": [
+          "contraindication_query",
+          "patient_specific_advice_request"
+        ]
+      },
+      {
+        "row": 130,
+        "type": "intent",
+        "text": "Patient safety comes first.",
+        "expected": "objection_handling",
+        "actual": "other"
+      },
+      {
+        "row": 131,
+        "type": "intent",
+        "text": "I'm concerned about long-term effects.",
+        "expected": "objection_handling",
+        "actual": "other"
+      },
+      {
+        "row": 132,
+        "type": "intent",
+        "text": "My patients need results fast.",
+        "expected": "objection_handling",
+        "actual": "safety_question"
+      },
+      {
+        "row": 138,
+        "type": "intent",
+        "text": "Dosage in pediatric emergency?",
+        "expected": "dosage_question",
+        "actual": "safety_question"
+      }
+    ],
+    "intent_confusion_matrix": {
+      "competency_assessment": {
+        "competency_assessment": 13,
+        "crm_follow_up": 0,
+        "dosage_question": 0,
+        "general_greeting": 0,
+        "objection_handling": 0,
+        "other": 0,
+        "product_information_request": 0,
+        "safety_question": 0,
+        "sales_methodology_request": 0,
+        "training_simulation": 0,
+        "visit_format_request": 0
+      },
+      "crm_follow_up": {
+        "competency_assessment": 0,
+        "crm_follow_up": 10,
+        "dosage_question": 0,
+        "general_greeting": 0,
+        "objection_handling": 0,
+        "other": 0,
+        "product_information_request": 0,
+        "safety_question": 1,
+        "sales_methodology_request": 0,
+        "training_simulation": 0,
+        "visit_format_request": 0
+      },
+      "dosage_question": {
+        "competency_assessment": 0,
+        "crm_follow_up": 0,
+        "dosage_question": 6,
+        "general_greeting": 0,
+        "objection_handling": 0,
+        "other": 1,
+        "product_information_request": 0,
+        "safety_question": 1,
+        "sales_methodology_request": 0,
+        "training_simulation": 0,
+        "visit_format_request": 0
+      },
+      "general_greeting": {
+        "competency_assessment": 0,
+        "crm_follow_up": 0,
+        "dosage_question": 0,
+        "general_greeting": 8,
+        "objection_handling": 0,
+        "other": 0,
+        "product_information_request": 0,
+        "safety_question": 0,
+        "sales_methodology_request": 0,
+        "training_simulation": 0,
+        "visit_format_request": 0
+      },
+      "objection_handling": {
+        "competency_assessment": 0,
+        "crm_follow_up": 0,
+        "dosage_question": 0,
+        "general_greeting": 0,
+        "objection_handling": 15,
+        "other": 4,
+        "product_information_request": 0,
+        "safety_question": 3,
+        "sales_methodology_request": 0,
+        "training_simulation": 0,
+        "visit_format_request": 0
+      },
+      "other": {
+        "competency_assessment": 0,
+        "crm_follow_up": 0,
+        "dosage_question": 0,
+        "general_greeting": 0,
+        "objection_handling": 0,
+        "other": 0,
+        "product_information_request": 0,
+        "safety_question": 0,
+        "sales_methodology_request": 0,
+        "training_simulation": 0,
+        "visit_format_request": 0
+      },
+      "product_information_request": {
+        "competency_assessment": 0,
+        "crm_follow_up": 0,
+        "dosage_question": 0,
+        "general_greeting": 0,
+        "objection_handling": 0,
+        "other": 0,
+        "product_information_request": 10,
+        "safety_question": 0,
+        "sales_methodology_request": 0,
+        "training_simulation": 0,
+        "visit_format_request": 0
+      },
+      "safety_question": {
+        "competency_assessment": 0,
+        "crm_follow_up": 0,
+        "dosage_question": 0,
+        "general_greeting": 0,
+        "objection_handling": 0,
+        "other": 0,
+        "product_information_request": 1,
+        "safety_question": 19,
+        "sales_methodology_request": 0,
+        "training_simulation": 0,
+        "visit_format_request": 0
+      },
+      "sales_methodology_request": {
+        "competency_assessment": 1,
+        "crm_follow_up": 0,
+        "dosage_question": 0,
+        "general_greeting": 0,
+        "objection_handling": 0,
+        "other": 1,
+        "product_information_request": 0,
+        "safety_question": 0,
+        "sales_methodology_request": 26,
+        "training_simulation": 0,
+        "visit_format_request": 0
+      },
+      "training_simulation": {
+        "competency_assessment": 0,
+        "crm_follow_up": 0,
+        "dosage_question": 0,
+        "general_greeting": 0,
+        "objection_handling": 0,
+        "other": 0,
+        "product_information_request": 0,
+        "safety_question": 0,
+        "sales_methodology_request": 0,
+        "training_simulation": 10,
+        "visit_format_request": 0
+      },
+      "visit_format_request": {
+        "competency_assessment": 0,
+        "crm_follow_up": 0,
+        "dosage_question": 0,
+        "general_greeting": 0,
+        "objection_handling": 0,
+        "other": 0,
+        "product_information_request": 0,
+        "safety_question": 0,
+        "sales_methodology_request": 0,
+        "training_simulation": 0,
+        "visit_format_request": 10
+      }
+    },
+    "intent_metrics": {
+      "competency_assessment": {
+        "support": 13,
+        "predicted": 14,
+        "precision": 0.9286,
+        "recall": 1.0,
+        "f1": 0.963
+      },
+      "crm_follow_up": {
+        "support": 11,
+        "predicted": 10,
+        "precision": 1.0,
+        "recall": 0.9091,
+        "f1": 0.9524
+      },
+      "dosage_question": {
+        "support": 8,
+        "predicted": 6,
+        "precision": 1.0,
+        "recall": 0.75,
+        "f1": 0.8571
+      },
+      "general_greeting": {
+        "support": 8,
+        "predicted": 8,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "objection_handling": {
+        "support": 22,
+        "predicted": 15,
+        "precision": 1.0,
+        "recall": 0.6818,
+        "f1": 0.8108
+      },
+      "other": {
+        "support": 0,
+        "predicted": 6,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "product_information_request": {
+        "support": 10,
+        "predicted": 11,
+        "precision": 0.9091,
+        "recall": 1.0,
+        "f1": 0.9524
+      },
+      "safety_question": {
+        "support": 20,
+        "predicted": 24,
+        "precision": 0.7917,
+        "recall": 0.95,
+        "f1": 0.8636
+      },
+      "sales_methodology_request": {
+        "support": 28,
+        "predicted": 26,
+        "precision": 1.0,
+        "recall": 0.9286,
+        "f1": 0.963
+      },
+      "training_simulation": {
+        "support": 10,
+        "predicted": 10,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "visit_format_request": {
+        "support": 10,
+        "predicted": 10,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "top_intent_confusions": [
+      {
+        "expected": "objection_handling",
+        "actual": "other",
+        "count": 4
+      },
+      {
+        "expected": "objection_handling",
+        "actual": "safety_question",
+        "count": 3
+      },
+      {
+        "expected": "crm_follow_up",
+        "actual": "safety_question",
+        "count": 1
+      },
+      {
+        "expected": "dosage_question",
+        "actual": "other",
+        "count": 1
+      },
+      {
+        "expected": "dosage_question",
+        "actual": "safety_question",
+        "count": 1
+      },
+      {
+        "expected": "safety_question",
+        "actual": "product_information_request",
+        "count": 1
+      },
+      {
+        "expected": "sales_methodology_request",
+        "actual": "competency_assessment",
+        "count": 1
+      },
+      {
+        "expected": "sales_methodology_request",
+        "actual": "other",
+        "count": 1
+      }
+    ],
+    "safety_flag_metrics": {
+      "contraindication_query": {
+        "support": 0,
+        "tp": 0,
+        "fp": 4,
+        "fn": 0,
+        "precision": 0.0,
+        "recall": 1.0,
+        "f1": 0.0
+      },
+      "diagnosis_request": {
+        "support": 1,
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "high_risk_interaction": {
+        "support": 3,
+        "tp": 3,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "off_label_request": {
+        "support": 2,
+        "tp": 2,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "overclaim_risk": {
+        "support": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "patient_specific_advice_request": {
+        "support": 7,
+        "tp": 7,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "source_required": {
+        "support": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    }
+  },
+  "thresholds": {
+    "profile": "production",
+    "min_intent_accuracy": 0.9,
+    "min_safety_recall": 0.95,
+    "min_secondary_tags_recall": 0.6,
+    "min_entity_map_recall": 0.5
+  },
+  "quality_gate": "pass",
+  "failed_checks": []
+}

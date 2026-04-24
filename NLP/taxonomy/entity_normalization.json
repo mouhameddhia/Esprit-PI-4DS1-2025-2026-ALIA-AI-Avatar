@@ -1,0 +1,27 @@
+{
+  "proof_reference": {
+    "evidence": ["clinical evidence", "trial evidence", "proof", "published evidence"],
+    "data": ["trial data", "clinical data", "results data"],
+    "guideline": ["guidelines", "recommendation"]
+  },
+  "adverse_event": {
+    "adverse effects": ["adverse effect", "side effect", "side effects", "adverse reactions"],
+    "drug-drug interaction": ["ddi", "drug interaction", "drug interactions"]
+  },
+  "contraindication": {
+    "contraindication": ["contraindications", "contra indication", "contra-indication"]
+  },
+  "active_ingredient": {
+    "active ingredient": ["active molecule", "molecule", "ingredient"]
+  },
+  "benefit": {
+    "benefit": ["benefits", "advantage", "advantages"]
+  },
+  "objection_phrase": {
+    "not convinced": ["not persuaded", "skeptical"],
+    "too expensive": ["price is too high", "outside my budget"]
+  },
+  "patient_profile": {
+    "patient population": ["population", "patients", "patient"]
+  }
+}
