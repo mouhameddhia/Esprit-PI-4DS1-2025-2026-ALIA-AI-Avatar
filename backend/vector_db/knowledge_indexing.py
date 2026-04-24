@@ -86,16 +86,7 @@ class KnowledgeDocumentIndexer:
                     logger.error(f"Error processing document {document.get('_id')}: {exc}")
                     continue
 
-            batch_size = 100
-            total_upserted = 0
-            for i in range(0, len(vectors_to_upsert), batch_size):
-                batch = vectors_to_upsert[i:i + batch_size]
-                success = await self.vector_client.upsert(batch)
-                if success:
-                    total_upserted += len(batch)
-                    logger.info(f"Upserted knowledge batch {i // batch_size + 1} ({len(batch)} vectors)")
-                else:
-                    logger.error(f"Failed to upsert knowledge batch {i // batch_size + 1}")
+            total_upserted = await self.vector_client.upsert_batched(vectors_to_upsert)
 
             return {
                 "success": True,

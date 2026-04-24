@@ -1,9 +1,13 @@
-﻿from fastapi import APIRouter, Depends, HTTPException, Header, status
+import base64
+import json
+import secrets
+
+from fastapi import APIRouter, Depends, HTTPException, Header, Query, status
 from fastapi.responses import RedirectResponse
 from fastapi.security import OAuth2PasswordRequestForm
 from authlib.integrations.requests_client import OAuth2Session
-import os
 from motor.motor_asyncio import AsyncIOMotorDatabase
+from .. import config
 from ..dependencies import get_database, get_current_user, require_roles
 from ..models.user import UserInDB, UserResponse, Token, UserCreate
 from ..utils.auth import create_access_token, verify_password, get_password_hash
@@ -12,67 +16,95 @@ from jwt import PyJWKClient
 import jwt
 from datetime import datetime
 
+_ALLOWED_ROLES = {"medrep", "physician"}
+
 router = APIRouter()
 
 def get_auth0_config():
-    domain = os.getenv("AUTH0_DOMAIN")
-    client_id = os.getenv("AUTH0_CLIENT_ID")
-    client_secret = os.getenv("AUTH0_CLIENT_SECRET")
-    if not domain:
+    if not config.AUTH0_DOMAIN:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Auth0 domain not configured")
-    if not client_id:
+    if not config.AUTH0_CLIENT_ID:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Auth0 client id not configured")
 
     return {
-        "domain": domain,
-        "issuer": f"https://{domain}/",
-        "authorize_url": f"https://{domain}/authorize",
-        "token_url": f"https://{domain}/oauth/token",
-        "userinfo_url": f"https://{domain}/userinfo",
-        "client_id": client_id,
-        "client_secret": client_secret,
+        "domain": config.AUTH0_DOMAIN,
+        "issuer": f"https://{config.AUTH0_DOMAIN}/",
+        "authorize_url": f"https://{config.AUTH0_DOMAIN}/authorize",
+        "token_url": f"https://{config.AUTH0_DOMAIN}/oauth/token",
+        "userinfo_url": f"https://{config.AUTH0_DOMAIN}/userinfo",
+        "callback_url": config.AUTH0_CALLBACK_URL,
+        "client_id": config.AUTH0_CLIENT_ID,
+        "client_secret": config.AUTH0_CLIENT_SECRET,
     }
 
 @router.get("/login")
-async def login():
-    config = get_auth0_config()
+async def login(role: str = Query("medrep")):
+    role = role.lower().replace(" ", "")
+    if role not in _ALLOWED_ROLES:
+        role = "medrep"
+
+    auth0_cfg = get_auth0_config()
+
+    # Encode role + CSRF nonce in state so the callback can read the role
+    # without a second round-trip to the frontend.
+    state_payload = {"nonce": secrets.token_urlsafe(16), "role": role}
+    state = base64.urlsafe_b64encode(json.dumps(state_payload).encode()).decode()
+
     auth0_oauth = OAuth2Session(
-        client_id=config["client_id"],
-        client_secret=config["client_secret"],
-        redirect_uri="http://localhost:8000/auth/callback",
+        client_id=auth0_cfg["client_id"],
+        client_secret=auth0_cfg["client_secret"],
+        redirect_uri=auth0_cfg["callback_url"],
         scope="openid profile email",
     )
-    authorize_url = config["authorize_url"]
-    authorization_url, state = auth0_oauth.create_authorization_url(authorize_url)
+    authorization_url, _ = auth0_oauth.create_authorization_url(
+        auth0_cfg["authorize_url"],
+        state=state,
+    )
     return RedirectResponse(authorization_url)
 
 @router.get("/callback", response_model=Token)
 async def auth_callback(code: str, state: str, db: AsyncIOMotorDatabase = Depends(get_database)):
-    config = get_auth0_config()
+    # Decode role from state (falls back to "medrep" if state is not our format)
+    role = "medrep"
+    try:
+        state_payload = json.loads(base64.urlsafe_b64decode(state.encode()).decode())
+        decoded_role = state_payload.get("role", "medrep").lower().replace(" ", "")
+        if decoded_role in _ALLOWED_ROLES:
+            role = decoded_role
+    except Exception:
+        pass
+
+    auth0_cfg = get_auth0_config()
     auth0_oauth = OAuth2Session(
-        client_id=config["client_id"],
-        client_secret=config["client_secret"],
-        redirect_uri="http://localhost:8000/auth/callback",
+        client_id=auth0_cfg["client_id"],
+        client_secret=auth0_cfg["client_secret"],
+        redirect_uri=auth0_cfg["callback_url"],
         scope="openid profile email",
     )
-    token_url = config["token_url"]
-    userinfo_url = config["userinfo_url"]
-    token = auth0_oauth.fetch_token(token_url, code=code)
-    user_info_response = auth0_oauth.get(userinfo_url)
-    user_info = user_info_response.json()
+    auth0_oauth.fetch_token(auth0_cfg["token_url"], code=code)
+    user_info = auth0_oauth.get(auth0_cfg["userinfo_url"]).json()
 
-    user = await db.users.find_one({"email": user_info["email"]})
+    email = user_info["email"]
+    name = user_info.get("name", "")
+    now = datetime.utcnow()
+
+    user = await db.users.find_one({"email": email})
     if not user:
-        user_data = {
-            "email": user_info["email"],
-            "name": user_info.get("name", ""),
-            "role": "medrep",
+        result = await db.users.insert_one({
+            "email": email,
+            "name": name,
+            "role": role,
             "hashed_password": "",
-            "created_at": datetime.utcnow(),
-            "updated_at": datetime.utcnow()
-        }
-        result = await db.users.insert_one(user_data)
+            "created_at": now,
+            "updated_at": now,
+        })
         user = await db.users.find_one({"_id": result.inserted_id})
+    else:
+        await db.users.update_one(
+            {"email": email},
+            {"$set": {"role": role, "name": name, "updated_at": now}},
+        )
+        user = await db.users.find_one({"email": email})
 
     access_token = create_access_token(data={"sub": user["email"]})
     return Token(access_token=access_token, token_type="bearer")
@@ -80,6 +112,12 @@ async def auth_callback(code: str, state: str, db: AsyncIOMotorDatabase = Depend
 class Auth0SyncRequest(BaseModel):
     role: str
     name: str | None = None
+
+
+class Auth0SyncResponse(BaseModel):
+    access_token: str
+    token_type: str
+    user: UserResponse
 
 
 def verify_auth0_id_token(id_token: str):
@@ -101,7 +139,34 @@ def verify_auth0_id_token(id_token: str):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=f"Invalid Auth0 token: {exc}")
 
 
-@router.post("/auth0-sync", response_model=UserResponse)
+def verify_auth0_token(auth_token: str):
+    """
+    Accept either an Auth0 ID token (preferred) or an Auth0 access token.
+    If JWT verification fails, fall back to /userinfo lookup.
+    """
+    try:
+        return verify_auth0_id_token(auth_token)
+    except HTTPException:
+        pass
+
+    config = get_auth0_config()
+    try:
+        auth0_oauth = OAuth2Session(token={"access_token": auth_token, "token_type": "Bearer"})
+        user_info_response = auth0_oauth.get(config["userinfo_url"])
+        if user_info_response.status_code != 200:
+            raise ValueError(f"userinfo request failed with status {user_info_response.status_code}")
+        payload = user_info_response.json()
+        if not payload.get("email"):
+            raise ValueError("Auth0 token missing email")
+        return payload
+    except Exception as exc:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=f"Invalid Auth0 token: {exc}",
+        )
+
+
+@router.post("/auth0-sync", response_model=Auth0SyncResponse)
 async def auth0_sync_profile(
     sync_data: Auth0SyncRequest,
     authorization: str | None = Header(None),
@@ -110,8 +175,8 @@ async def auth0_sync_profile(
     if not authorization or not authorization.startswith("Bearer "):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Missing Auth0 ID token")
 
-    id_token = authorization.split(" ", 1)[1]
-    payload = verify_auth0_id_token(id_token)
+    auth_token = authorization.split(" ", 1)[1]
+    payload = verify_auth0_token(auth_token)
     email = payload.get("email")
     if not email:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Auth0 token missing email")
@@ -139,7 +204,12 @@ async def auth0_sync_profile(
         )
         user = await db.users.find_one({"email": email})
 
-    return UserResponse(**user)
+    access_token = create_access_token(data={"sub": user["email"]})
+    return Auth0SyncResponse(
+        access_token=access_token,
+        token_type="bearer",
+        user=UserResponse(**user),
+    )
 
 @router.post("/login/jwt", response_model=Token)
 async def login_jwt(form_data: OAuth2PasswordRequestForm = Depends(), db: AsyncIOMotorDatabase = Depends(get_database)):

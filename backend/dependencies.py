@@ -35,6 +35,17 @@ def get_knowledge_document_indexer():
     from .main import knowledge_document_indexer
     return knowledge_document_indexer
 
+
+def get_rag_pipeline():
+    """Get the RAG pipeline singleton."""
+    from .main import rag_pipeline
+    return rag_pipeline
+
+def get_rep_scoring_service():
+    """Get the representative response scoring service singleton."""
+    from .services import get_rep_scoring_service as _get_service
+    return _get_service()
+
 async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security), db: AsyncIOMotorDatabase = Depends(get_database)) -> UserInDB:
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,

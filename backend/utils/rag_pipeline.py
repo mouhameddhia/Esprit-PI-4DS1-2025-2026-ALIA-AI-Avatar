@@ -5,6 +5,8 @@ from typing import List, Optional
 from motor.motor_asyncio import AsyncIOMotorDatabase
 from bson import ObjectId
 
+from NLP.pipeline.reranker import rerank_candidates
+
 logger = logging.getLogger(__name__)
 
 
@@ -61,19 +63,23 @@ class RAGPipeline:
 
             context_parts: List[str] = []
 
+            fetch_k = max(top_k * 4, top_k)
+
             product_results = await self.vector_client.search(
                 query_vector=query_embedding,
-                top_k=top_k,
+                top_k=fetch_k,
                 include_metadata=True,
                 filter_dict={'type': {'$eq': 'product'}}
             )
 
             document_results = await self.vector_client.search(
                 query_vector=query_embedding,
-                top_k=top_k,
+                top_k=fetch_k,
                 include_metadata=True,
                 filter_dict={'type': {'$eq': 'document'}}
             )
+
+            candidates: List[dict] = []
 
             for result in product_results:
                 if result.get('score', 0) < min_score:
@@ -87,9 +93,24 @@ class RAGPipeline:
                     if not product:
                         logger.warning(f"Product {product_id} not found in MongoDB")
                         continue
-
-                    context_parts.append(
-                        self._format_product_info(product, result.get('score', 0))
+                    rerank_text = " ".join(
+                        part
+                        for part in [
+                            product.get('name', ''),
+                            product.get('description', ''),
+                            ' '.join(product.get('indications', [])),
+                            product.get('category', ''),
+                        ]
+                        if isinstance(part, str) and part.strip()
+                    )
+                    candidates.append(
+                        {
+                            "kind": "product",
+                            "score": result.get('score', 0),
+                            "metadata": result.get('metadata', {}),
+                            "text": rerank_text,
+                            "payload": product,
+                        }
                     )
                 except Exception as e:
                     logger.error(f"Error fetching product details: {e}")
@@ -107,15 +128,32 @@ class RAGPipeline:
                         logger.warning(f"Document {document_id} not found in MongoDB")
                         continue
 
-                    context_parts.append(
-                        self._format_document_info(document, result.get('score', 0))
+                    candidates.append(
+                        {
+                            "kind": "document",
+                            "score": result.get('score', 0),
+                            "metadata": result.get('metadata', {}),
+                            "text": document.get('chunk_text', ''),
+                            "payload": document,
+                        }
                     )
                 except Exception as e:
                     logger.error(f"Error fetching document details: {e}")
 
-            if not context_parts:
+            if not candidates:
                 logger.info("No relevant products or documents found above score threshold")
                 return ""
+
+            reranked = rerank_candidates(query=query, candidates=candidates, top_k=top_k)
+            for item in reranked:
+                if item.get("kind") == "product":
+                    context_parts.append(
+                        self._format_product_info(item.get("payload", {}), item.get("rerank_score", item.get("score", 0)))
+                    )
+                else:
+                    context_parts.append(
+                        self._format_document_info(item.get("payload", {}), item.get("rerank_score", item.get("score", 0)))
+                    )
 
             context = self._format_context(context_parts)
             logger.info(f"Generated context from {len(context_parts)} sources")
@@ -142,7 +180,8 @@ class RAGPipeline:
 **RELEVANT PRODUCT INFORMATION:**
 {chr(10).join(product_infos)}
 
-**Instructions:** Use the above product information to provide accurate, evidence-based responses. 
+**Instructions:** Use the above product information to provide accurate, evidence-based responses in a natural, human tone. 
+Do not copy the source text verbatim unless the user explicitly asks for it. Summarize the relevant points clearly and conversationally. 
 Always cite the product information when available. Do not provide medical advice for individual patients.
 """.strip()
 
@@ -157,9 +196,9 @@ Always cite the product information when available. Do not provide medical advic
         language = document.get('language', 'N/A')
 
         return f"""
-### Document source: {source_name} (Page {page_number}, Relevance: {relevance_score:.2%})
+    ### Source note: {source_name} (Page {page_number}, Relevance: {relevance_score:.2%})
 **Language:** {language}
-**Excerpt:** {chunk_text}
+    **Key points to synthesize naturally:** {chunk_text}
 """
 
     async def get_related_conversations(

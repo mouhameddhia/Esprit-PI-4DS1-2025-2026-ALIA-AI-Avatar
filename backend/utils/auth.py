@@ -1,10 +1,11 @@
 from datetime import datetime, timedelta
 from typing import Optional
 import jwt
-import os
 from passlib.context import CryptContext
 
-SECRET_KEY = os.getenv("JWT_SECRET", "your_secret_key")
+from .. import config
+
+SECRET_KEY = config.JWT_SECRET
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 

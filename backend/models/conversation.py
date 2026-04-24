@@ -37,16 +37,7 @@ class NLPEventEntry(BaseModel):
     rewritten_query: str
     confidence: float
     taxonomy_version: Optional[str] = None
-
-
-class NLPCompetencyEvaluation(BaseModel):
-    level: Literal["Debutant", "Junior", "Confirme", "Expert"]
-    score: float
-    dimensions: dict[str, float]
-    strengths: List[str] = []
-    gaps: List[str] = []
-    notes: List[str] = []
-    evaluated_at: datetime
+    explainability: dict[str, Any] = Field(default_factory=dict)
 
 
 class ConversationResponse(BaseModel):
@@ -60,7 +51,13 @@ class ConversationResponse(BaseModel):
     summary_triggered_by: Optional[str] = None
     rolling_summaries: List[RollingSummaryEntry] = []
     nlp_events: List[NLPEventEntry] = []
-    nlp_evaluation: Optional[NLPCompetencyEvaluation] = None
+    competency_level: Optional[str] = None
+    evaluation_score: Optional[float] = None
+    evaluation_dimensions: dict = {}
+    evaluation_strengths: List[str] = []
+    evaluation_gaps: List[str] = []
+    evaluation_notes: List[str] = []
+    evaluation_completed_at: Optional[datetime] = None
     topics: List[str] = []
     objections: List[str] = []
     action_items: List[str] = []
@@ -83,6 +80,7 @@ class SessionListItem(BaseModel):
     updated_at: datetime
     summary: Optional[str] = None
     summary_created_at: Optional[datetime] = None
+    rolling_summaries: List[RollingSummaryEntry] = []
     status: str
     preview: str
     nlp_event_count: int = 0

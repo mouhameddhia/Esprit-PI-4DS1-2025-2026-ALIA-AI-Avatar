@@ -1,21 +1,23 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
-from dotenv import load_dotenv
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-import os
 import logging
-from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent
-load_dotenv(dotenv_path=BASE_DIR / ".env")
+# config.py calls load_dotenv() on import, so it must come before any module
+# that reads os.getenv() at module scope.
+from . import config
 from .routes import auth, chat, admin
-from .utils.background_tasks import auto_finalize_idle_sessions
+from .utils.background_tasks import (
+    auto_finalize_idle_sessions,
+    auto_generate_shadow_monitoring_snapshot,
+)
 from .vector_db import VectorDBClient
 from .embeddings import EmbeddingEncoder
 from .vector_db.indexing import ProductIndexer
 from .vector_db.knowledge_indexing import KnowledgeDocumentIndexer
 from .utils.conversation_embeddings import ConversationEmbedder
+from .utils.rag_pipeline import RAGPipeline
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -33,8 +35,7 @@ app.add_middleware(
 )
 
 # MongoDB client
-mongodb_url = os.getenv("MONGODB_URL", "mongodb://localhost:27017/alia")
-client = AsyncIOMotorClient(mongodb_url)
+client = AsyncIOMotorClient(config.MONGODB_URL)
 db = client.alia
 
 # Vector Database and Embedding initialization
@@ -43,9 +44,23 @@ embedding_encoder = EmbeddingEncoder()
 product_indexer = ProductIndexer(vector_client, embedding_encoder)
 knowledge_document_indexer = KnowledgeDocumentIndexer(vector_client, embedding_encoder)
 conversation_embedder = ConversationEmbedder(vector_client, embedding_encoder)
+rag_pipeline = RAGPipeline(vector_client, embedding_encoder, db)
 
 # Task scheduler
 scheduler = AsyncIOScheduler()
+
+
+async def _run_shadow_monitoring_job() -> None:
+    try:
+        result = await auto_generate_shadow_monitoring_snapshot(db)
+        logger.info(
+            "Shadow monitoring snapshot complete: rows=%s divergence=%.2f%% gate=%s",
+            result.get("rows", 0),
+            float(result.get("divergence_rate", 0.0)) * 100,
+            result.get("quality_gate", "unknown"),
+        )
+    except Exception as exc:
+        logger.error(f"Shadow monitoring snapshot failed: {exc}")
 
 # Include routers
 app.include_router(auth.router, prefix="/auth", tags=["auth"])
@@ -64,6 +79,19 @@ async def startup_event():
         logger.info("Connected to MongoDB")
     except Exception as e:
         logger.error(f"MongoDB connection failed: {e}")
+
+    # Ensure MongoDB indexes
+    try:
+        await db.users.create_index("email", unique=True, background=True)
+        await db.conversations.create_index("user_email", background=True)
+        await db.conversations.create_index("status", background=True)
+        await db.conversations.create_index(
+            [("user_email", 1), ("updated_at", -1)], background=True
+        )
+        await db.conversations.create_index("nlp_events.intent", background=True)
+        logger.info("MongoDB indexes ensured")
+    except Exception as e:
+        logger.warning(f"MongoDB index creation warning: {e}")
     
     # Initialize Vector Database and Embeddings
     logger.info("Initializing Vector Database and Embeddings...")
@@ -119,6 +147,15 @@ async def startup_event():
             args=(db,),
             id="auto_finalize_idle_sessions",
             name="Auto-finalize idle conversations",
+            replace_existing=True,
+        )
+        scheduler.add_job(
+            _run_shadow_monitoring_job,
+            "cron",
+            hour=config.SHADOW_JOB_HOUR_UTC,
+            minute=config.SHADOW_JOB_MINUTE_UTC,
+            id="auto_shadow_monitoring_snapshot",
+            name="Auto-generate daily shadow monitoring snapshot",
             replace_existing=True,
         )
         scheduler.start()

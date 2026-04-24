@@ -93,21 +93,8 @@ class ProductIndexer:
                     logger.error(f"Error processing product {product.get('_id')}: {e}")
                     continue
             
-            # Upsert vectors in batches (Pinecone has limits)
-            batch_size = 100
-            total_upserted = 0
-            
-            for i in range(0, len(vectors_to_upsert), batch_size):
-                batch = vectors_to_upsert[i:i + batch_size]
-                success = await self.vector_client.upsert(batch)
-                
-                if success:
-                    total_upserted += len(batch)
-                    logger.info(f"Upserted batch {i // batch_size + 1} ({len(batch)} vectors)")
-                else:
-                    logger.error(f"Failed to upsert batch {i // batch_size + 1}")
-            
-            logger.info(f"Indexing complete. Total vectors upserted: {total_upserted}")
+            total_upserted = await self.vector_client.upsert_batched(vectors_to_upsert)
+            logger.info("Indexing complete. Total vectors upserted: %d", total_upserted)
             
             return {
                 'success': True,

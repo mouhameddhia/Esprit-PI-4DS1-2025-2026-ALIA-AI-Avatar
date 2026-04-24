@@ -1,29 +1,30 @@
-import os
-import json
 import hashlib
+import json
+import logging
 import time
-from datetime import datetime, timedelta
-from typing import Optional, List, Dict, Any
+from datetime import datetime
+from typing import Any, Dict, List, Optional
 
 import redis
 from fastapi import HTTPException, status
 
+from .. import config
+from .groq_client import get_groq_client
 
-# Retry configuration
+logger = logging.getLogger(__name__)
+
 MAX_RETRIES = 3
 INITIAL_RETRY_DELAY = 1  # seconds
 MAX_RETRY_DELAY = 10  # seconds
 
 
-def _get_redis_client() -> redis.Redis:
-    """Get or create Redis client for caching."""
+def _get_redis_client() -> Optional[redis.Redis]:
+    """Return a connected Redis client, or None if Redis is unavailable."""
     try:
-        redis_url = os.getenv("REDIS_URL", "redis://localhost:6379/0")
-        client = redis.from_url(redis_url, decode_responses=True)
+        client = redis.from_url(config.REDIS_URL, decode_responses=True)
         client.ping()
         return client
     except redis.ConnectionError:
-        # If Redis is not available, return None (caching will be skipped)
         return None
 
 
@@ -52,51 +53,26 @@ def _chunk_messages(messages: List[Dict[str, Any]], chunk_size: int = 10) -> Lis
     return chunk_transcripts
 
 
-def _groq_client():
-    """Get Groq client."""
-    try:
-        from groq import Groq
-    except ImportError as exc:
-        raise HTTPException(
-            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-            detail="Groq SDK not installed. Run: pip install groq",
-        ) from exc
-    
-    key = os.getenv("GROQ_API_KEY")
-    if not key:
-        raise HTTPException(
-            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-            detail="GROQ_API_KEY not configured",
-        )
-    return Groq(api_key=key)
-
-
 def _call_with_retry(api_call_func, max_retries=MAX_RETRIES):
-    """
-    Wrapper to call API with exponential backoff retry logic.
-    
-    Args:
-        api_call_func: Callable that makes the API call
-        max_retries: Number of retries before giving up
-        
-    Returns:
-        API response or raises exception
-    """
+    """Call *api_call_func* with exponential-backoff retry logic."""
     delay = INITIAL_RETRY_DELAY
     last_error = None
-    
+
     for attempt in range(max_retries):
         try:
             return api_call_func()
-        except Exception as e:
-            last_error = e
+        except Exception as exc:
+            last_error = exc
             if attempt < max_retries - 1:
-                print(f"API call failed (attempt {attempt + 1}/{max_retries}), retrying in {delay}s: {e}")
+                logger.warning(
+                    "API call failed (attempt %d/%d), retrying in %ds: %s",
+                    attempt + 1, max_retries, delay, exc,
+                )
                 time.sleep(delay)
-                delay = min(delay * 2, MAX_RETRY_DELAY)  # Exponential backoff
+                delay = min(delay * 2, MAX_RETRY_DELAY)
             else:
-                print(f"API call failed after {max_retries} attempts: {e}")
-    
+                logger.error("API call failed after %d attempts: %s", max_retries, exc)
+
     raise last_error or HTTPException(
         status_code=status.HTTP_502_BAD_GATEWAY,
         detail="Failed to reach language model after retries",
@@ -106,9 +82,9 @@ def _call_with_retry(api_call_func, max_retries=MAX_RETRIES):
 def _summary_completion(transcript: str) -> str:
     """Generate summary from transcript using Groq with retry logic."""
     def api_call():
-        client = _groq_client()
+        client = get_groq_client()
         completion = client.chat.completions.create(
-            model=os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile"),
+            model=config.GROQ_MODEL,
             messages=[
                 {
                     "role": "system",
@@ -139,14 +115,11 @@ def _summary_completion(transcript: str) -> str:
 
 
 def _extract_metadata(transcript: str) -> Dict[str, List[str]]:
-    """
-    Extract structured metadata (topics, objections, action items) from transcript.
-    Uses LLM to identify key information with retry logic.
-    """
+    """Extract structured metadata (topics, objections, action items) from transcript."""
     def api_call():
-        client = _groq_client()
+        client = get_groq_client()
         completion = client.chat.completions.create(
-            model=os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile"),
+            model=config.GROQ_MODEL,
             messages=[
                 {
                     "role": "system",
@@ -182,8 +155,8 @@ def _extract_metadata(transcript: str) -> Dict[str, List[str]]:
             "objections": metadata.get("objections", []),
             "action_items": metadata.get("action_items", []),
         }
-    except (json.JSONDecodeError, ValueError, Exception) as e:
-        print(f"Error extracting metadata: {e}")
+    except (json.JSONDecodeError, ValueError, Exception) as exc:
+        logger.warning("Error extracting metadata: %s", exc)
         return {"topics": [], "objections": [], "action_items": []}
 
 
@@ -267,15 +240,15 @@ async def generate_summary_with_caching(
         else:
             # For smaller conversations, summarize directly
             summary = _summary_completion(full_transcript)
-    except Exception as e:
-        print(f"Summary generation failed: {e}, using fallback preview")
+    except Exception as exc:
+        logger.warning("Summary generation failed, using fallback preview: %s", exc)
         summary = _generate_fallback_preview(messages)
     
     # Extract metadata from the full transcript with error handling
     try:
         metadata = _extract_metadata(full_transcript)
-    except Exception as e:
-        print(f"Metadata extraction failed: {e}")
+    except Exception as exc:
+        logger.warning("Metadata extraction failed: %s", exc)
         metadata = {"topics": [], "objections": [], "action_items": []}
     
     # Generate incremental/rolling summaries every 10 messages
@@ -292,11 +265,10 @@ async def generate_summary_with_caching(
                     "generated_at": datetime.utcnow().isoformat(),
                     "message_count": i,
                 })
-            except Exception as e:
-                print(f"Rolling summary generation at message {i} failed: {e}")
-                # Continue with the next batch
-    except Exception as e:
-        print(f"Rolling summary generation error: {e}")
+            except Exception as exc:
+                logger.warning("Rolling summary at message %d failed: %s", i, exc)
+    except Exception as exc:
+        logger.warning("Rolling summary generation error: %s", exc)
     
     # Cache the result
     if redis_client:

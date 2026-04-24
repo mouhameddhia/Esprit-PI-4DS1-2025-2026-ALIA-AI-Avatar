@@ -1,24 +1,20 @@
 """Vector database client for Pinecone integration."""
 
-import os
 import logging
-from typing import List, Dict, Any, Optional
-from datetime import datetime
+from typing import Any, Dict, List, Optional
+
+from .. import config
 
 logger = logging.getLogger(__name__)
 
 
 class VectorDBClient:
-    """
-    Handles vector database operations with Pinecone.
-    Manages connection, upserting, searching, and deleting vectors.
-    """
+    """Handles vector database operations with Pinecone."""
 
     def __init__(self):
-        """Initialize Pinecone client and index."""
-        self.db_type = os.getenv("VECTOR_DB_TYPE", "pinecone")
-        self.api_key = os.getenv("PINECONE_API_KEY")
-        self.index_name = os.getenv("PINECONE_INDEX_NAME", "alia-knowledge")
+        self.db_type = config.VECTOR_DB_TYPE
+        self.api_key = config.PINECONE_API_KEY
+        self.index_name = config.PINECONE_INDEX_NAME
         self.client = None
         self.index = None
         
@@ -79,6 +75,29 @@ class VectorDBClient:
         except Exception as e:
             logger.error(f"Failed to upsert vectors: {e}")
             return False
+
+    async def upsert_batched(
+        self,
+        vectors: List[Dict[str, Any]],
+        batch_size: int = 100,
+    ) -> int:
+        """Upsert vectors in fixed-size batches.
+
+        Returns the total number of vectors successfully upserted.
+        Logs an error for each failing batch but continues with the rest.
+        """
+        total_upserted = 0
+        for i in range(0, len(vectors), batch_size):
+            batch = vectors[i : i + batch_size]
+            if await self.upsert(batch):
+                total_upserted += len(batch)
+            else:
+                logger.error(
+                    "Failed to upsert batch starting at index %d (%d vectors)",
+                    i,
+                    len(batch),
+                )
+        return total_upserted
 
     async def search(
         self,
