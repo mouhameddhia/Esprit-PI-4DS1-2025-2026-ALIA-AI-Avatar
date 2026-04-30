@@ -1,0 +1,31 @@
+{
+  "659e4c5663ab2f87cdbeacf7a52d0ab96fee2fe718ab9d78d7e30f38e8296479": {
+    "answer": "Jus d\u00a0oignon rouge, Extrait de pomme, Huile essentielle de romarin, Extrait sec de Thym, Huile essentielle de c\u00e9dre, Vitamine B8",
+    "citations": [
+      "Gamme PHYTOPHANE.pptx#page=5"
+    ],
+    "supporting_evidence": [
+      {
+        "doc_id": "Gamme PHYTOPHANE_p5_c1",
+        "text": "INDICATIONS\nCOMPOSITION LOTION\nPHYTOPHANE ANTICHUTE LOTION\nRalentit la chute des cheveux",
+        "source": "Gamme PHYTOPHANE.pptx",
+        "page": 5
+      }
+    ],
+    "retrieved_docs": [],
+    "diagnostics": {
+      "low_confidence": false,
+      "quality": "correct",
+      "reasons": [],
+      "fallback_triggered": false,
+      "query_variants": [
+        "Give the composition for Gamme PHYTOPHANE."
+      ],
+      "confidence_score": 0.7116556505773914
+    },
+    "answer_confidence": 1.0,
+    "uncertainty": "",
+    "conflict_notes": [],
+    "latency_ms": 31509.596700008842
+  }
+}

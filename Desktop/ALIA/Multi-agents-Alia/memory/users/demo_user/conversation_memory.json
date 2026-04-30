@@ -1,0 +1,97 @@
+{
+  "summary_memory": {
+    "user_profile": {
+      "name": "",
+      "company": "",
+      "role": "",
+      "preferences": []
+    },
+    "medical_topics": [],
+    "questions": [],
+    "decisions": [],
+    "source_message_ids": [],
+    "last_updated": ""
+  },
+  "recent_messages": [
+    {
+      "id": "msg_4da61a4637d648edab0cf7c554d41ab9",
+      "role": "user",
+      "content": "good morning ",
+      "topic": null,
+      "mode": "training",
+      "timestamp": "2026-04-28T09:06:51.431959Z"
+    },
+    {
+      "id": "msg_bb4bcaa382a14769a6ebbca094ba0ab6",
+      "role": "assistant",
+      "content": "Good morning! I'm a professional medical information assistant. I'd be happy to help you with any product-specific medical or pharmaceutical questions you may have. Please feel free to ask away!",
+      "topic": null,
+      "mode": "training",
+      "source": "assistant",
+      "citations": [],
+      "timestamp": "2026-04-28T09:06:51.431979Z"
+    },
+    {
+      "id": "msg_0bb801ee492e415fb08dcf2e6244a027",
+      "role": "user",
+      "content": "what time is it ",
+      "topic": null,
+      "mode": "training",
+      "timestamp": "2026-04-28T09:08:59.286997Z"
+    },
+    {
+      "id": "msg_74743134338b41eaa7b77f5db8cea7a2",
+      "role": "assistant",
+      "content": "I'm happy to help with your product-specific medical or pharmaceutical questions! However, I don't have information on the current time.",
+      "topic": null,
+      "mode": "training",
+      "source": "assistant",
+      "citations": [],
+      "timestamp": "2026-04-28T09:08:59.287025Z"
+    },
+    {
+      "id": "msg_36e02ed3974443b6bf11ec3ea0898176",
+      "role": "user",
+      "content": "what is the capital of india?",
+      "topic": null,
+      "mode": "training",
+      "timestamp": "2026-04-28T09:09:25.972242Z"
+    },
+    {
+      "id": "msg_53e007e3dced44d5b150c5e8820dc94e",
+      "role": "assistant",
+      "content": "I can help with medical detailing and clinical product discussions. Let us refocus on indications, dosage, safety, or product use.",
+      "topic": null,
+      "mode": "training",
+      "source": "assistant",
+      "citations": [],
+      "timestamp": "2026-04-28T09:09:25.972261Z"
+    },
+    {
+      "id": "msg_57598dd4fb9a4491af41b12bd659d266",
+      "role": "user",
+      "content": "i'm bob ",
+      "topic": null,
+      "mode": "training",
+      "timestamp": "2026-04-28T09:09:50.589192Z"
+    },
+    {
+      "id": "msg_07b89ab404834047ac4149514af6911d",
+      "role": "assistant",
+      "content": "Good morning! I'm a professional medical information assistant. I'd be happy to help you with any product-specific medical or pharmaceutical questions you may have. Please feel free to ask away!",
+      "topic": null,
+      "mode": "training",
+      "source": "assistant",
+      "citations": [],
+      "timestamp": "2026-04-28T09:09:50.589216Z"
+    }
+  ],
+  "user_facts": {
+    "name": "bob",
+    "company": "",
+    "role": "",
+    "preferences": []
+  },
+  "turn_count": 4,
+  "last_sync_event_id": "evt_763d969f21f34a4ca90f9faafd6080e4"
+}

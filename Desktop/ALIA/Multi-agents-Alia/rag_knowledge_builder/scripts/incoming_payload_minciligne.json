@@ -1,0 +1,75 @@
+{
+  "document_name": "Laboratoires Vital - MINCILIGNE product line",
+  "drug_name": "MINCILIGNE (9 PLANTES, JEUNE & ADO, COUPE FAIM, BRÛLE GRAISSE, VITAMINE, DRAINEUR)",
+  "type": "Food supplements for weight management",
+  "indications": {
+    "en": "Metabolic drainage support in overweight and obesity management; Weight loss diet adjuvant; Appetite suppressant, promotes satiety and appetite control; Improves digestive comfort; Limits sugar and fat intestinal absorption; Promotes weight loss with adapted nutritional management; Stimulates thermogenesis and increases energy expenditure; Stimulates elimination and mobilization of stored fat via lipolysis; Provides essential vitamins to maintain metabolism and tone during dieting; Liver detoxification; Promotes renal elimination; Stimulates fat burning.",
+    "fr": "Soutien de drainage métabolique dans la prise en charge de surpoids et de l'obésité; Adjuvant de régime amaigrissant; Effet coupe-faim, favorise la sensation de satiété et contribue au contrôle de l'appétit; Aide à améliorer le confort digestif; Contribue à limiter l'absorption des sucres et des graisses au niveau intestinal; Favorise la perte de poids dans le cadre d'une prise en charge nutritionnelle adaptée au régime amaigrissant; Contribue à stimuler la thermogenèse et augmenter les dépenses énergétiques; Stimule l'élimination et la mobilisation des graisses stockées par phénomène de lipolyse; Apport en vitamines essentielles pour maintenir le métabolisme et le tonus lors du régime; Détoxification du foie; Favorise l'élimination rénale; Stimule la combustion des graisses."
+  },
+  "composition": {
+    "en": "MINCILIGNE 9 PLANTES syrup per 30 mL: Fennel dry extract 260 mg, Artichoke dry extract 260 mg, Couch grass dry extract 260 mg, Green tea dry extract 260 mg, Mate dry extract 100 mg, Pineapple dry extract 33 mg, Mouse-ear hawkweed dry extract 26 mg, Orthosiphon dry extract 26 mg, Guarana dry extract 8.33 mg. MINCI LIGNE JEUNE & ADO syrup per 30 mL: Fennel dry extract 60 mg, Fumitory dry extract 60 mg, Ash dry extract 60 mg, Artichoke dry extract 60 mg, Green tea dry extract 60 mg, Dandelion dry extract 60 mg, Orthosiphon dry extract 60 mg, Birch dry extract 60 mg. MINCILIGNE COUPE FAIM capsule: Fucus dry extract 90 mg, Mate dry extract 90 mg, Konjac dry extract 90 mg. MINCILIGNE BRÛLE GRAISSE capsule: Pineapple dry extract 142 mg, Dandelion dry extract 142 mg, Guarana dry extract 100 mg. MINCILIGNE VITAMINE sachet per 10 mL: Vitamin C 80 mg, L-carnitine 50 mg, Green tea dry extract 40 mg, Fennel dry extract 40 mg, Couch grass dry extract 20 mg, Pineapple dry extract 15 mg, Iron 14 mg, Mate dry extract 10 mg, Mouse-ear hawkweed dry extract 10 mg, Orthosiphon dry extract 10 mg, Guarana dry extract 4 mg, Vitamin B2 1.4 mg, Vitamin B6 1.4 mg, Vitamin B1 1.1 mg, Selenium 55 µg, Vitamin B12 2.5 µg, Vitamin A (quantity not specified). MINCILIGNE DRAINEUR capsule: Couch grass dry extract 57.6 mg, Rosemary dry extract 57.6 mg, Dandelion dry extract 57.6 mg, Mouse-ear hawkweed dry extract 57.6 mg, Konjac dry extract 57.6 mg.",
+    "fr": "MINCILIGNE 9 PLANTES sirop pour 30 mL : Extrait sec de Fenouil 260 mg, Extrait sec d'Artichaut 260 mg, Extrait sec de Chiendent 260 mg, Extrait sec de Thé vert 260 mg, Extrait sec de Maté 100 mg, Extrait sec d'Ananas 33 mg, Extrait sec de Piloselle 26 mg, Extrait sec d'Orthosiphon 26 mg, Extrait sec de Guarana 8,33 mg. MINCI LIGNE JEUNE & ADO sirop pour 30 mL : Extrait sec de Fenouil 60 mg, Extrait sec de Fumeterre 60 mg, Extrait sec de Frêne 60 mg, Extrait sec d'Artichaut 60 mg, Extrait sec de Thé vert 60 mg, Extrait sec de Pissenlit 60 mg, Extrait sec d'Orthosiphon 60 mg, Extrait sec de Bouleau 60 mg. MINCILIGNE COUPE FAIM gélule : Extrait sec de Fucus 90 mg, Extrait sec de Maté 90 mg, Extrait sec de Konjac 90 mg. MINCILIGNE BRÛLE GRAISSE gélule : Extrait sec d'Ananas 142 mg, Extrait sec de Pissenlit 142 mg, Extrait sec de Guarana 100 mg. MINCILIGNE VITAMINE sachet pour 10 mL : Vitamine C 80 mg, L-carnitine 50 mg, Extrait sec de Thé vert 40 mg, Extrait sec de Fenouil 40 mg, Extrait sec de Chiendent 20 mg, Extrait sec d'Ananas 15 mg, Fer 14 mg, Extrait sec de Maté 10 mg, Extrait sec de Piloselle 10 mg, Extrait sec d'Orthosiphon 10 mg, Extrait sec de Guarana 4 mg, Vitamine B2 1,4 mg, Vitamine B6 1,4 mg, Vitamine B1 1,1 mg, Sélénium 55 µg, Vitamine B12 2,5 µg, Vitamine A (quantité non précisée). MINCILIGNE DRAINEUR gélule : Extrait sec de Chiendent 57,6 mg, Extrait sec de Romarin 57,6 mg, Extrait sec de Pissenlit 57,6 mg, Extrait sec de Piloselle 57,6 mg, Extrait sec de Konjac 57,6 mg."
+  },
+  "mechanism_of_action": {
+    "en": "Plant extracts (green tea, mate, guarana) provide caffeine and polyphenols that stimulate thermogenesis and increase energy expenditure. Konjac (glucomannan) swells in the stomach, promoting satiety and reducing appetite. Fucus contains iodine and alginates that may interfere with fat absorption. Pineapple (bromelain) and artichoke (cynarin) support digestive function and lipid metabolism. Dandelion, orthosiphon, couch grass, and birch have diuretic properties promoting renal elimination. L-carnitine facilitates fatty acid transport into mitochondria for beta-oxidation. B vitamins act as cofactors in energy metabolism. Vitamin C and selenium provide antioxidant effects.",
+    "fr": "Les extraits de plantes (thé vert, maté, guarana) apportent de la caféine et des polyphénols qui stimulent la thermogenèse et augmentent les dépenses énergétiques. Le Konjac (glucomannane) gonfle dans l'estomac, favorisant la satiété et réduisant l'appétit. Le Fucus contient de l'iode et des alginates qui peuvent interférer avec l'absorption des graisses. L'Ananas (bromélaïne) et l'Artichaut (cynarine) soutiennent la fonction digestive et le métabolisme des lipides. Le Pissenlit, l'Orthosiphon, le Chiendent et le Bouleau ont des propriétés diurétiques favorisant l'élimination rénale. La L-carnitine facilite le transport des acides gras dans les mitochondries pour la bêta-oxydation. Les vitamines B agissent comme cofacteurs dans le métabolisme énergétique. La vitamine C et le sélénium offrent des effets antioxydants."
+  },
+  "age": "Adults for all products. MINCI LIGNE JEUNE & ADO: adolescents from 12 years. Not specified for children under 12.",
+  "dosage": {
+    "en": "MINCILIGNE 9 PLANTES syrup: Adults dilute 20 mL in 1.5 L water, drink throughout the day away from meals. MINCI LIGNE JEUNE & ADO syrup: Adolescents from 12 years dilute 30 mL in 1.5 L water, drink throughout the day away from meals. MINCILIGNE COUPE FAIM capsules: Adults 1 capsule morning and 1 capsule evening. MINCILIGNE BRÛLE GRAISSE capsules: Adults 1 capsule morning and 1 capsule evening. MINCILIGNE VITAMINE sachets: Adults 1 sachet per day pure or diluted in 1.5 L water, drink throughout the day away from meals. MINCILIGNE DRAINEUR capsules: Adults 1 capsule morning and 1 capsule evening.",
+    "fr": "MINCILIGNE 9 PLANTES sirop : Adulte diluer une dose de 20 ml dans 1,5 L d'eau, les boire le long de la journée, loin des repas. MINCI LIGNE JEUNE & ADO sirop : Jeunes et adolescents à partir de 12 ans diluer une dose de 30 ml dans 1,5 L d'eau, les boire le long de la journée, loin des repas. MINCILIGNE COUPE FAIM gélules : Adulte 1 gélule matin et 1 gélule soir. MINCILIGNE BRÛLE GRAISSE gélules : Adulte 1 gélule matin et 1 gélule soir. MINCILIGNE VITAMINE sachets : Adulte 1 sachet par jour pur ou dilué dans 1,5 L d'eau, à boire le long de la journée, loin des repas. MINCILIGNE DRAINEUR gélules : Adulte 1 gélule matin et 1 gélule soir."
+  },
+  "administration": {
+    "en": "Oral syrup to be diluted in water and consumed throughout the day away from meals. Oral capsules to be taken morning and evening. Oral sachet to be taken pure or diluted in water throughout the day away from meals.",
+    "fr": "Sirop oral à diluer dans l'eau et à consommer le long de la journée, loin des repas. Gélules orales à prendre le matin et le soir. Sachet oral à prendre pur ou dilué dans l'eau tout au long de la journée, loin des repas."
+  },
+  "warnings": {
+    "en": null,
+    "fr": null
+  },
+  "side_effects": {
+    "en": null,
+    "fr": null
+  },
+  "additional_sections": {},
+  "variations": {
+    "statements_en": [
+      "MINCILIGNE 9 PLANTES is indicated for metabolic drainage support in overweight and obesity management as a weight loss diet adjuvant.",
+      "The product MINCI LIGNE JEUNE & ADO is designed for adolescents aged 12 and older to support weight management.",
+      "MINCILIGNE COUPE FAIM contains Fucus, Mate, and Konjac extracts to suppress appetite and promote satiety.",
+      "MINCILIGNE BRÛLE GRAISSE stimulates thermogenesis and increases energy expenditure through lipolysis of stored fat.",
+      "MINCILIGNE VITAMINE provides essential vitamins, L-carnitine, iron, selenium, and plant extracts to support metabolism during dieting.",
+      "MINCILIGNE DRAINEUR promotes liver detoxification, renal elimination, and fat burning with couch grass, rosemary, dandelion, piloselle, and konjac.",
+      "Adults should take MINCILIGNE COUPE FAIM as one capsule in the morning and one in the evening."
+    ],
+    "statements_fr": [
+      "MINCILIGNE 9 PLANTES est indiqué pour le soutien du drainage métabolique dans la prise en charge du surpoids et de l'obésité comme adjuvant de régime amaigrissant.",
+      "Le produit MINCI LIGNE JEUNE & ADO est conçu pour les adolescents à partir de 12 ans pour soutenir la gestion du poids.",
+      "MINCILIGNE COUPE FAIM contient des extraits de Fucus, Maté et Konjac pour couper la faim et favoriser la satiété.",
+      "MINCILIGNE BRÛLE GRAISSE stimule la thermogenèse et augmente les dépenses énergétiques par lipolyse des graisses stockées.",
+      "MINCILIGNE VITAMINE fournit des vitamines essentielles, de la L-carnitine, du fer, du sélénium et des extraits de plantes pour maintenir le métabolisme pendant un régime.",
+      "MINCILIGNE DRAINEUR favorise la détoxification du foie, l'élimination rénale et la combustion des graisses avec du chiendent, romarin, pissenlit, piloselle et konjac.",
+      "Les adultes doivent prendre MINCILIGNE COUPE FAIM à raison d'une gélule le matin et d'une gélule le soir."
+    ],
+    "questions_en": [
+      "What is MINCILIGNE 9 PLANTES used for?",
+      "At what age can MINCI LIGNE JEUNE & ADO be used?",
+      "Which plant extracts are in MINCILIGNE COUPE FAIM?",
+      "How does MINCILIGNE BRÛLE GRAISSE work for weight loss?",
+      "What nutrients are in MINCILIGNE VITAMINE sachets?",
+      "What is the dosage of MINCILIGNE DRAINEUR for adults?",
+      "How should MINCILIGNE 9 PLANTES syrup be prepared and taken?",
+      "Is MINCILIGNE VITAMINE taken with meals?"
+    ],
+    "questions_fr": [
+      "Quelles sont les indications de MINCILIGNE 9 PLANTES ?",
+      "À partir de quel âge peut-on utiliser MINCI LIGNE JEUNE & ADO ?",
+      "Quels extraits de plantes contient MINCILIGNE COUPE FAIM ?",
+      "Comment MINCILIGNE BRÛLE GRAISSE agit-il pour la perte de poids ?",
+      "Quels nutriments trouve-t-on dans les sachets de MINCILIGNE VITAMINE ?",
+      "Quelle est la posologie de MINCILIGNE DRAINEUR pour les adultes ?",
+      "Comment préparer et prendre le sirop MINCILIGNE 9 PLANTES ?",
+      "Prend-on MINCILIGNE VITAMINE pendant les repas ?"
+    ]
+  }
+}

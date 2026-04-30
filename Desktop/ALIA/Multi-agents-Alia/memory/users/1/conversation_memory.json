@@ -1,0 +1,104 @@
+{
+  "summary_memory": {
+    "user_profile": {
+      "name": "claud",
+      "company": "vital company",
+      "role": "doctor",
+      "preferences": []
+    },
+    "medical_topics": [],
+    "questions": [
+      "i need to ask you about the weather ?"
+    ],
+    "decisions": [],
+    "source_message_ids": [
+      "msg_660c9f1158c94a6cb648f0193c3efd64",
+      "msg_af7fcb8cbe9e4e58a727535298a7e9d1",
+      "msg_55db09f375b442258f3558691a6f22e6",
+      "msg_8e264ce1ff9c49afadcbbfc7894dea04"
+    ],
+    "last_updated": "2026-04-30T10:16:20.583705Z"
+  },
+  "recent_messages": [
+    {
+      "id": "msg_b1eec685cfe541148019fa68eb6b5143",
+      "role": "user",
+      "content": "what i have today ",
+      "topic": null,
+      "mode": "training",
+      "timestamp": "2026-04-30T10:17:21.170566Z"
+    },
+    {
+      "id": "msg_711fa87da6e64a0ab4c72906db0445f9",
+      "role": "assistant",
+      "content": "As a professional medical information assistant, I can assist you with product-specific medical or pharmaceutical questions. Since we've discussed your company and role earlier, I don't have any specific information about what you have today. If you're looking for information on a particular topic or product, please feel free to ask, and I'll do my best to provide accurate and reliable information based on the evidence context.",
+      "topic": null,
+      "mode": "training",
+      "source": "assistant",
+      "citations": [],
+      "timestamp": "2026-04-30T10:17:21.170590Z"
+    },
+    {
+      "id": "msg_69e605a44b4b4f5eb7327d58bf3f13e6",
+      "role": "user",
+      "content": "it is bactlo ",
+      "topic": "other",
+      "mode": "training",
+      "timestamp": "2026-04-30T10:18:57.907999Z"
+    },
+    {
+      "id": "msg_9c63406791b74eaca971ee23e5c79cd9",
+      "role": "assistant",
+      "content": "You mentioned 'Bactlo', could you please clarify what you mean by that? Is it a specific medication or condition you'd like to discuss?",
+      "topic": "other",
+      "mode": "training",
+      "source": "assistant",
+      "citations": [],
+      "timestamp": "2026-04-30T10:18:57.908021Z"
+    },
+    {
+      "id": "msg_c80501ddb39a4504ae0a8731af25e750",
+      "role": "user",
+      "content": "yes ofc",
+      "topic": "other",
+      "mode": "training",
+      "timestamp": "2026-04-30T10:28:21.302127Z"
+    },
+    {
+      "id": "msg_cc497cead0bd4f24909935acb7f50c0f",
+      "role": "assistant",
+      "content": "Which product would you like to discuss so I can keep the coaching grounded?",
+      "topic": "other",
+      "mode": "training",
+      "source": "assistant",
+      "citations": [],
+      "timestamp": "2026-04-30T10:28:21.302142Z"
+    },
+    {
+      "id": "msg_78d89218115944828c7d276bc5877f94",
+      "role": "user",
+      "content": "i want to disuss about the capital pf tunis ",
+      "topic": null,
+      "mode": "training",
+      "timestamp": "2026-04-30T10:41:16.071548Z"
+    },
+    {
+      "id": "msg_9af6eada2f3745d7b4b66f5949202e59",
+      "role": "assistant",
+      "content": "I can help with medical detailing and clinical product discussions. Let us refocus on indications, dosage, safety, or product use.",
+      "topic": null,
+      "mode": "training",
+      "source": "assistant",
+      "citations": [],
+      "timestamp": "2026-04-30T10:41:16.071568Z"
+    }
+  ],
+  "user_facts": {
+    "name": "claud",
+    "company": "vital company",
+    "role": "doctor",
+    "preferences": []
+  },
+  "turn_count": 12,
+  "last_sync_event_id": "evt_9a838101943a41fc891e1ed95c8edf36"
+}
