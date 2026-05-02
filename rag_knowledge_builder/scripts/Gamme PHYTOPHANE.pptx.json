@@ -1,0 +1,88 @@
+{
+  "document": "Gamme PHYTOPHANE.pptx",
+  "updated_at": "2026-04-13T10:01:00+00:00",
+  "topics": {
+    "composition": {
+      "topic": "composition",
+      "content": "Jus d\u00a0oignon rouge\nExtrait de pomme\nHuile essentielle de romarin\nExtrait sec de Thym\nHuile essentielle de c\u00e9dre\nVitamine B8",
+      "points": [
+        "Jus d\u00a0oignon rouge",
+        "Extrait de pomme",
+        "Huile essentielle de romarin",
+        "Extrait sec de Thym",
+        "Huile essentielle de c\u00e9dre",
+        "Vitamine B8"
+      ],
+      "confidence": 1.0,
+      "queries": [
+        "Give the composition for Gamme PHYTOPHANE.",
+        "Gamme PHYTOPHANE composition",
+        "What are the composition of Gamme PHYTOPHANE?",
+        "Gamme PHYTOPHANE composition details",
+        "State the composition of Gamme PHYTOPHANE.",
+        "Quelles sont les composition de Gamme PHYTOPHANE ?",
+        "Donne les composition de Gamme PHYTOPHANE.",
+        "Gamme PHYTOPHANE composition d\u00e9taill\u00e9es",
+        "Indique les composition de Gamme PHYTOPHANE."
+      ],
+      "citations": [
+        "Gamme PHYTOPHANE.pptx#page=5"
+      ],
+      "source_chunks": [
+        {
+          "doc_id": "Gamme PHYTOPHANE_p5_c1",
+          "text": "INDICATIONS\nCOMPOSITION LOTION\nPHYTOPHANE ANTICHUTE LOTION\nRalentit la chute des cheveux",
+          "source": "Gamme PHYTOPHANE.pptx",
+          "page": 5
+        }
+      ],
+      "multilingual_content": {
+        "en": "Jus d\u00a0oignon rouge\nExtrait de pomme\nHuile essentielle de romarin\nExtrait sec de Thym\nHuile essentielle de c\u00e9dre\nVitamine B8",
+        "fr": "Jus d\u00a0oignon rouge\nExtrait de pomme\nHuile essentielle de romarin\nExtrait sec de Thym\nHuile essentielle de c\u00e9dre\nVitamine B8"
+      }
+    },
+    "indications": {
+      "topic": "indications",
+      "content": "INDICATIONS COMPOSITION LOTION PHYTOPHANE ANTICHUTE LOTION Ralentit la chute des cheveux\nRalentit la chute des cheveux\nStimule la repouse des cheveux",
+      "points": [
+        "INDICATIONS COMPOSITION LOTION PHYTOPHANE ANTICHUTE LOTION Ralentit la chute des cheveux",
+        "Ralentit la chute des cheveux",
+        "Stimule la repouse des cheveux"
+      ],
+      "confidence": 1.0,
+      "queries": [
+        "What are the indications of Gamme PHYTOPHANE?",
+        "Gamme PHYTOPHANE indications",
+        "Give the indications for Gamme PHYTOPHANE.",
+        "Gamme PHYTOPHANE indications details",
+        "State the indications of Gamme PHYTOPHANE.",
+        "Quelles sont les indications de Gamme PHYTOPHANE ?",
+        "Donne les indications de Gamme PHYTOPHANE.",
+        "Gamme PHYTOPHANE indications d\u00e9taill\u00e9es",
+        "Indique les indications de Gamme PHYTOPHANE."
+      ],
+      "citations": [
+        "Gamme PHYTOPHANE.pptx#page=5",
+        "Gamme PHYTOPHANE.pptx#page=4"
+      ],
+      "source_chunks": [
+        {
+          "doc_id": "Gamme PHYTOPHANE_p5_c1",
+          "text": "INDICATIONS\nCOMPOSITION LOTION\nPHYTOPHANE ANTICHUTE LOTION\nRalentit la chute des cheveux",
+          "source": "Gamme PHYTOPHANE.pptx",
+          "page": 5
+        },
+        {
+          "doc_id": "Gamme PHYTOPHANE_p4_c1",
+          "text": "INDICATIONS\nRalentit la chute des cheveux\nStimule la repouse des cheveux\nCOMPOSITION SHAMPOOING",
+          "source": "Gamme PHYTOPHANE.pptx",
+          "page": 4
+        }
+      ],
+      "multilingual_content": {
+        "en": "INDICATIONS COMPOSITION LOTION PHYTOPHANE ANTICHUTE LOTION Ralentit la chute des cheveux",
+        "fr": "INDICATIONS COMPOSITION LOTION PHYTOPHANE ANTICHUTE LOTION Ralentit la chute des cheveux"
+      }
+    }
+  }
+}

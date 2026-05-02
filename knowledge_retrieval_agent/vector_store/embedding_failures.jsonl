@@ -1,0 +1,71 @@
+{"stage": "chunk_filter", "doc_id": "Gamme BACTOL_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme CALMOSS_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme COSMOPHARMA_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme BACTOL_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme CALMOSS_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme COSMOPHARMA_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme FERBIOTIC_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme HEALTHCARE_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme HYDRA_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme LABORATOIRE VITAL_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme MINCILIGNE_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme MINCIVIT_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme OLIGOVIT_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme OMEVIE_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme PEDIAKIDS_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme PHYTOL_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme PHYTOPHANE_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme PHYTOTHERA_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme PLANTHERAPIE_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme TC2000 et SPS ARNICA_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme Tidol_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme UNIDERM_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme VITONIC_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme Vitosine_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Matrice_progression_ALIA_V1_p1_c1", "reason": "non_printable_noise"}
+{"stage": "chunk_filter", "doc_id": "Matrice_progression_ALIA_V1_p1_c2", "reason": "non_printable_noise"}
+{"stage": "chunk_filter", "doc_id": "Matrice_progression_ALIA_V1_p1_c3", "reason": "non_printable_noise"}
+{"stage": "chunk_filter", "doc_id": "Matrice_progression_ALIA_V1_p1_c4", "reason": "non_printable_noise"}
+{"stage": "chunk_filter", "doc_id": "Matrice_progression_ALIA_V1_p1_c5", "reason": "non_printable_noise"}
+{"stage": "chunk_filter", "doc_id": "Matrice_progression_ALIA_V1_p1_c6", "reason": "non_printable_noise"}
+{"stage": "chunk_filter", "doc_id": "Matrice_progression_ALIA_V1_p1_c7", "reason": "non_printable_noise"}
+{"stage": "chunk_filter", "doc_id": "Matrice_progression_ALIA_V1_p1_c8", "reason": "non_printable_noise"}
+{"stage": "chunk_filter", "doc_id": "Matrice_progression_ALIA_V1_p1_c9", "reason": "non_printable_noise"}
+{"stage": "chunk_filter", "doc_id": "Matrice_progression_ALIA_V1_p1_c10", "reason": "non_printable_noise"}
+{"stage": "chunk_filter", "doc_id": "Matrice_progression_ALIA_V1_p1_c11", "reason": "non_printable_noise"}
+{"stage": "chunk_filter", "doc_id": "Matrice_progression_ALIA_V1_p1_c12", "reason": "non_printable_noise"}
+{"stage": "chunk_filter", "doc_id": "Matrice_progression_ALIA_V1_p1_c13", "reason": "non_printable_noise"}
+{"stage": "chunk_filter", "doc_id": "Gamme BACTOL_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme CALMOSS_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme COSMOPHARMA_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme FERBIOTIC_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme HEALTHCARE_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme HYDRA_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme LABORATOIRE VITAL_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme MINCILIGNE_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme MINCIVIT_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme OLIGOVIT_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme OMEVIE_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme PEDIAKIDS_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme PHYTOL_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme PHYTOPHANE_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme PHYTOTHERA_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme PLANTHERAPIE_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme TC2000 et SPS ARNICA_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme Tidol_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme UNIDERM_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme VITONIC_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Gamme Vitosine_p1_c1", "reason": "too_short"}
+{"stage": "chunk_filter", "doc_id": "Matrice_progression_ALIA_V1_p1_c1", "reason": "non_printable_noise"}
+{"stage": "chunk_filter", "doc_id": "Matrice_progression_ALIA_V1_p1_c2", "reason": "non_printable_noise"}
+{"stage": "chunk_filter", "doc_id": "Matrice_progression_ALIA_V1_p1_c3", "reason": "non_printable_noise"}
+{"stage": "chunk_filter", "doc_id": "Matrice_progression_ALIA_V1_p1_c4", "reason": "non_printable_noise"}
+{"stage": "chunk_filter", "doc_id": "Matrice_progression_ALIA_V1_p1_c5", "reason": "non_printable_noise"}
+{"stage": "chunk_filter", "doc_id": "Matrice_progression_ALIA_V1_p1_c6", "reason": "non_printable_noise"}
+{"stage": "chunk_filter", "doc_id": "Matrice_progression_ALIA_V1_p1_c7", "reason": "non_printable_noise"}
+{"stage": "chunk_filter", "doc_id": "Matrice_progression_ALIA_V1_p1_c8", "reason": "non_printable_noise"}
+{"stage": "chunk_filter", "doc_id": "Matrice_progression_ALIA_V1_p1_c9", "reason": "non_printable_noise"}
+{"stage": "chunk_filter", "doc_id": "Matrice_progression_ALIA_V1_p1_c10", "reason": "non_printable_noise"}
+{"stage": "chunk_filter", "doc_id": "Matrice_progression_ALIA_V1_p1_c11", "reason": "non_printable_noise"}
+{"stage": "chunk_filter", "doc_id": "Matrice_progression_ALIA_V1_p1_c12", "reason": "non_printable_noise"}
+{"stage": "chunk_filter", "doc_id": "Matrice_progression_ALIA_V1_p1_c13", "reason": "non_printable_noise"}
