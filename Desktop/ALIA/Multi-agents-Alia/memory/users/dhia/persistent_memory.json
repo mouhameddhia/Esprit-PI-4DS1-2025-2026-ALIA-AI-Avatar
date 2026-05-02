@@ -1,0 +1,21 @@
+{
+  "memory": [
+    {
+      "type": "qa",
+      "input": "hey I'm present to you the composition on bactol.",
+      "output": "Hello! Thank you for reaching out. I'm happy to help with any product-specific medical/pharmaceutical questions you may have. What would you like to know about Bactol?",
+      "metadata": {
+        "mode": "training",
+        "source": "assistant",
+        "topic": "composition",
+        "drug_name": "BACTOL",
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T19:35:30.752802Z",
+      "event_id": "evt_ab995786fe7e430eb2b46b69edeca78b"
+    }
+  ]
+}

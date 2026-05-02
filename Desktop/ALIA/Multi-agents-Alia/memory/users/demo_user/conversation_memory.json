@@ -1,97 +1,118 @@
 {
   "summary_memory": {
     "user_profile": {
-      "name": "",
+      "name": "raef",
       "company": "",
-      "role": "",
+      "role": "rep",
       "preferences": []
     },
-    "medical_topics": [],
-    "questions": [],
-    "decisions": [],
-    "source_message_ids": [],
-    "last_updated": ""
+    "medical_topics": [
+      "indications",
+      "mechanism_of_action"
+    ],
+    "questions": [
+      "what is the capital of india?",
+      "la composition est elle correcte ?"
+    ],
+    "decisions": [
+      "For BACTOL, state your core clinical claim in one sentence, then justify it with one evidence-backed point.",
+      "Je comprends que vous allez présenter un nouveau médicament nommé BACTOL. Pouvez-vous me dire ce qui rend BACTOL particulièrement intéressant pour les patients ou les professionnels de la santé ? Quels sont les avantages clés que vous souhaitez mettre en évidence ?",
+      "Pour BACTOL, formulez votre message clinique central en une phrase, puis justifiez-le avec un point appuye par les donnees.",
+      "Pouvez-vous expliquer comment la composition de BACTOL est liée à ses avantages cliniques pour les patients ? Quels sont les mécanismes d'action impliqués dans son mode d'action ?",
+      "Allons un cran plus loin sur BACTOL: quel benefice clinique principal mettriez-vous en avant, et pourquoi ?",
+      "You mentioned that the composition of BACTOL includes milk and Vitamin C. Can you elaborate on how these ingredients contribute to its benefits for weight management?"
+    ],
+    "source_message_ids": [
+      "msg_36e02ed3974443b6bf11ec3ea0898176",
+      "msg_53e007e3dced44d5b150c5e8820dc94e",
+      "msg_57598dd4fb9a4491af41b12bd659d266",
+      "msg_07b89ab404834047ac4149514af6911d",
+      "msg_95ec4420c868475c9cbe147ee6c16e91",
+      "msg_9a924fe55fad4ccc956ebb179b352fcc",
+      "msg_d2e4802bcb2b4f01949d4341b7b7131b",
+      "msg_bd5c65f4bbac4f1a9c41ac7e9558a0ce",
+      "msg_fb7878e7e3dc4dbc8a9a46c9160082d9",
+      "msg_0c145b80e8dc48b1bf86070ad84c8963",
+      "msg_52e80c3e728b4fcbb6b28a75dbc74af3",
+      "msg_1488cc5ec52c400fafbee78d77100649",
+      "msg_7ebd590ee0d0485cbb3a422be93cb3db",
+      "msg_66de3ce40a8c493b94679f914e750d08",
+      "msg_fb423df257df4d0180bfc21b06e28b20",
+      "msg_8e0e4365e1584489ac23424bec63d003",
+      "msg_431804e81f5648a0b5b848e0d9cac731",
+      "msg_71a90861285e459bbd0d103b8fe3e960",
+      "msg_fad72eda0d1146b0aed3776cfbee2a5b",
+      "msg_8bde2d2eb70f4604ac83f11104f66c68",
+      "msg_6ec50a15a0dc4dcfa8a05cd98c1564e5",
+      "msg_97bdae346eef400e8193a56b74dcb271",
+      "msg_77bd22b950fa4d03871410fc3a1258bb",
+      "msg_f21b842c42b94db9a830d1637ecaa97e"
+    ],
+    "last_updated": "2026-05-02T20:09:42.383038Z"
   },
   "recent_messages": [
     {
-      "id": "msg_4da61a4637d648edab0cf7c554d41ab9",
+      "id": "msg_cf5d574bd747446f87c77321bf8305e9",
       "role": "user",
-      "content": "good morning ",
-      "topic": null,
+      "content": "I 'm here to present bactol",
+      "topic": "other",
       "mode": "training",
-      "timestamp": "2026-04-28T09:06:51.431959Z"
+      "timestamp": "2026-05-02T19:17:03.944824Z"
     },
     {
-      "id": "msg_bb4bcaa382a14769a6ebbca094ba0ab6",
+      "id": "msg_a0409032e2d646bba1e2e519ece7bf5f",
       "role": "assistant",
-      "content": "Good morning! I'm a professional medical information assistant. I'd be happy to help you with any product-specific medical or pharmaceutical questions you may have. Please feel free to ask away!",
+      "content": "For BACTOL, state your core clinical claim in one sentence, then justify it with one evidence-backed point.",
+      "topic": "other",
+      "mode": "training",
+      "source": "json",
+      "citations": [],
+      "timestamp": "2026-05-02T19:17:03.944846Z"
+    },
+    {
+      "id": "msg_4aa6f7d71fa047e19fc081df0b414040",
+      "role": "user",
+      "content": "It is is composed of  100 ml of milk and 100 g of vitamin C",
+      "topic": "mechanism_of_action",
+      "mode": "training",
+      "timestamp": "2026-05-02T19:19:43.982266Z"
+    },
+    {
+      "id": "msg_20199f75e9a940a5a9d6aca249d095df",
+      "role": "assistant",
+      "content": "Can you elaborate on how the composition of BACTOL contributes to its benefits for weight management?",
+      "topic": "mechanism_of_action",
+      "mode": "training",
+      "source": "json",
+      "citations": [],
+      "timestamp": "2026-05-02T19:19:43.982291Z"
+    },
+    {
+      "id": "msg_10764e9b172341068cf2f3d6ca138ca0",
+      "role": "user",
+      "content": "hey i'm raef a medical representative ",
+      "topic": null,
+      "mode": "training",
+      "timestamp": "2026-05-02T20:09:42.382876Z"
+    },
+    {
+      "id": "msg_1c3517a8c86748f7b61da994f6888979",
+      "role": "assistant",
+      "content": "Hello Raef! It's great to meet you. I'm happy to help with any product-specific medical or pharmaceutical questions you may have. What brings you here today?",
       "topic": null,
       "mode": "training",
       "source": "assistant",
       "citations": [],
-      "timestamp": "2026-04-28T09:06:51.431979Z"
-    },
-    {
-      "id": "msg_0bb801ee492e415fb08dcf2e6244a027",
-      "role": "user",
-      "content": "what time is it ",
-      "topic": null,
-      "mode": "training",
-      "timestamp": "2026-04-28T09:08:59.286997Z"
-    },
-    {
-      "id": "msg_74743134338b41eaa7b77f5db8cea7a2",
-      "role": "assistant",
-      "content": "I'm happy to help with your product-specific medical or pharmaceutical questions! However, I don't have information on the current time.",
-      "topic": null,
-      "mode": "training",
-      "source": "assistant",
-      "citations": [],
-      "timestamp": "2026-04-28T09:08:59.287025Z"
-    },
-    {
-      "id": "msg_36e02ed3974443b6bf11ec3ea0898176",
-      "role": "user",
-      "content": "what is the capital of india?",
-      "topic": null,
-      "mode": "training",
-      "timestamp": "2026-04-28T09:09:25.972242Z"
-    },
-    {
-      "id": "msg_53e007e3dced44d5b150c5e8820dc94e",
-      "role": "assistant",
-      "content": "I can help with medical detailing and clinical product discussions. Let us refocus on indications, dosage, safety, or product use.",
-      "topic": null,
-      "mode": "training",
-      "source": "assistant",
-      "citations": [],
-      "timestamp": "2026-04-28T09:09:25.972261Z"
-    },
-    {
-      "id": "msg_57598dd4fb9a4491af41b12bd659d266",
-      "role": "user",
-      "content": "i'm bob ",
-      "topic": null,
-      "mode": "training",
-      "timestamp": "2026-04-28T09:09:50.589192Z"
-    },
-    {
-      "id": "msg_07b89ab404834047ac4149514af6911d",
-      "role": "assistant",
-      "content": "Good morning! I'm a professional medical information assistant. I'd be happy to help you with any product-specific medical or pharmaceutical questions you may have. Please feel free to ask away!",
-      "topic": null,
-      "mode": "training",
-      "source": "assistant",
-      "citations": [],
-      "timestamp": "2026-04-28T09:09:50.589216Z"
+      "timestamp": "2026-05-02T20:09:42.382907Z"
     }
   ],
   "user_facts": {
-    "name": "bob",
+    "name": "raef",
     "company": "",
-    "role": "",
-    "preferences": []
+    "role": "rep",
+    "preferences": [],
+    "competency_level": "2"
   },
-  "turn_count": 4,
-  "last_sync_event_id": "evt_763d969f21f34a4ca90f9faafd6080e4"
+  "turn_count": 17,
+  "last_sync_event_id": "evt_d0db2cf3a43f4b66b2a0011b20a5983b"
 }

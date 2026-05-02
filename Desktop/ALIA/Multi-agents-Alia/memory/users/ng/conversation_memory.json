@@ -1,0 +1,43 @@
+{
+  "summary_memory": {
+    "user_profile": {
+      "name": "",
+      "company": "",
+      "role": "",
+      "preferences": []
+    },
+    "medical_topics": [],
+    "questions": [],
+    "decisions": [],
+    "source_message_ids": [],
+    "last_updated": ""
+  },
+  "recent_messages": [
+    {
+      "id": "msg_7f8f7f69d1eb4ee797b5763ec4657f08",
+      "role": "user",
+      "content": "je vais presenter bactol ",
+      "topic": "mechanism_of_action",
+      "mode": "training",
+      "timestamp": "2026-05-02T19:29:23.256195Z"
+    },
+    {
+      "id": "msg_b09811853b514ab59ebce950e87c0ec3",
+      "role": "assistant",
+      "content": "What specific aspects of BACTOL's disinfectant properties would you like to discuss?",
+      "topic": "mechanism_of_action",
+      "mode": "training",
+      "source": "json",
+      "citations": [],
+      "timestamp": "2026-05-02T19:29:23.256231Z"
+    }
+  ],
+  "user_facts": {
+    "name": "",
+    "company": "",
+    "role": "",
+    "preferences": []
+  },
+  "turn_count": 1,
+  "last_sync_event_id": "evt_1c96720a47e54e13942cde3356216964"
+}

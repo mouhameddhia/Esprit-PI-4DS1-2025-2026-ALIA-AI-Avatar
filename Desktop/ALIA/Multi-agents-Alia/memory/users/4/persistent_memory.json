@@ -1,0 +1,153 @@
+{
+  "memory": [
+    {
+      "type": "user_fact",
+      "content": "User name is Raef",
+      "key": "name",
+      "value": "Raef",
+      "timestamp": "2026-05-02T16:55:12.388831Z",
+      "event_id": "evt_5e6aee98842c4d88b2523873df99fcd2"
+    },
+    {
+      "type": "user_fact",
+      "content": "User role is rep",
+      "key": "role",
+      "value": "rep",
+      "timestamp": "2026-05-02T16:55:12.424666Z",
+      "event_id": "evt_8f85cd8a720948b1994bdbaed84a5d9b"
+    },
+    {
+      "type": "statement",
+      "content": "My name is Raef , I'm medical representative",
+      "timestamp": "2026-05-02T16:55:12.500948Z",
+      "event_id": "evt_c8709834d83f49228afaf18bc3d1b513"
+    },
+    {
+      "type": "qa",
+      "input": "My name is Raef , I'm medical representative",
+      "output": "Nice to meet you, Raef! As a senior medical doctor, I'm happy to help with any product-specific medical/pharmaceutical questions you may have. What's on your mind today?",
+      "metadata": {
+        "mode": "training",
+        "source": "assistant",
+        "topic": null,
+        "drug_name": null,
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T16:56:00.910489Z",
+      "event_id": "evt_79feab4655b04f84ade592980dcfa869"
+    },
+    {
+      "type": "user_fact",
+      "content": "User role is doctor",
+      "key": "role",
+      "value": "doctor",
+      "timestamp": "2026-05-02T16:56:35.302588Z",
+      "event_id": "evt_aeb9497bfa9b49e9a6b91075e9552333"
+    },
+    {
+      "type": "qa",
+      "input": "I'm here to present a medecine.",
+      "output": "What type of medicine are you here to present today?",
+      "metadata": {
+        "mode": "training",
+        "source": "assistant",
+        "topic": "other",
+        "drug_name": null,
+        "confidence": 0.85,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T16:57:48.936618Z",
+      "event_id": "evt_df76fcd499974e90a4018b581a348af4"
+    },
+    {
+      "type": "qa",
+      "input": "Bactol",
+      "output": "For BACTOL, state your core clinical claim in one sentence, then justify it with one evidence-backed point.",
+      "metadata": {
+        "mode": "training",
+        "source": "json",
+        "topic": "other",
+        "drug_name": "BACTOL",
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T16:59:47.338155Z",
+      "event_id": "evt_15eb7a3286614c2a8399e05f9660afae"
+    },
+    {
+      "type": "qa",
+      "input": "Bactol is composed of 100g Zinc and its forbidden  for adults.",
+      "output": "For BACTOL, state your core clinical claim in one sentence, then justify it with one evidence-backed point.",
+      "metadata": {
+        "mode": "training",
+        "source": "json",
+        "topic": "other",
+        "drug_name": "BACTOL",
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T17:02:01.716056Z",
+      "event_id": "evt_02fdb5776d1b4461bedbad3f7a7a4ebd"
+    },
+    {
+      "type": "qa",
+      "input": "i'm happy to know you ",
+      "output": "Nice to meet you too, Raef! As a senior medical doctor, I'm here to help you with any product-specific medical/pharmaceutical questions. Since we're just starting our conversation, let's take it one step at a time. What would you like to discuss about Bactol today?",
+      "metadata": {
+        "mode": "training",
+        "source": "assistant",
+        "topic": null,
+        "drug_name": "BACTOL",
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T17:03:25.005515Z",
+      "event_id": "evt_eaed54a72d284a9ba57cc29ed4f4dd68"
+    },
+    {
+      "type": "qa",
+      "input": "i m happy to know you",
+      "output": "Nice to meet you too! As a senior medical doctor, I'm here to help with any product-specific medical/pharmaceutical questions you may have. Let's get started! What would you like to know about Bactol or its usage?",
+      "metadata": {
+        "mode": "training",
+        "source": "assistant",
+        "topic": null,
+        "drug_name": "BACTOL",
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T17:04:12.678840Z",
+      "event_id": "evt_d553083e09674d7d824b0bd595fe814c"
+    },
+    {
+      "type": "qa",
+      "input": "what is the usage of bactol",
+      "output": "BACTOL is indicated for disinfection of hands and skin surfaces. It comes in three forms: Professional Soap, Disinfectant Spray, and Disinfectant Gel. Each product has its own usage instructions.",
+      "metadata": {
+        "mode": "training",
+        "source": "json",
+        "topic": "indications",
+        "drug_name": "BACTOL",
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T17:06:35.867358Z",
+      "event_id": "evt_b0d1fa2b4eed45babcb2d181618630d1"
+    }
+  ]
+}

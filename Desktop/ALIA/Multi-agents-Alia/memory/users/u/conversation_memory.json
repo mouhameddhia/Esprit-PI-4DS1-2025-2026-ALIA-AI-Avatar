@@ -1,0 +1,97 @@
+{
+  "summary_memory": {
+    "user_profile": {
+      "name": "",
+      "company": "",
+      "role": "",
+      "preferences": []
+    },
+    "medical_topics": [],
+    "questions": [],
+    "decisions": [],
+    "source_message_ids": [],
+    "last_updated": ""
+  },
+  "recent_messages": [
+    {
+      "id": "msg_ce97efdf67e64b248bc6678dcd941c5e",
+      "role": "user",
+      "content": "hi i m reaef medical rep froùm siliana",
+      "topic": null,
+      "mode": "training",
+      "timestamp": "2026-05-02T17:08:34.968338Z"
+    },
+    {
+      "id": "msg_1ea012c29078475a9c0e0c2aa2c6af41",
+      "role": "assistant",
+      "content": "Bonjour Reaef ! Je suis ravi de vous rencontrer. Pour commencer, pouvez-vous me dire ce qui vous amène aujourd'hui ? Quels sont les produits ou les thématiques médicales que vous souhaitez discuter ?",
+      "topic": null,
+      "mode": "training",
+      "source": "assistant",
+      "citations": [],
+      "timestamp": "2026-05-02T17:08:34.968382Z"
+    },
+    {
+      "id": "msg_af021a78f10549a5b10f9ee91e98f33f",
+      "role": "user",
+      "content": "bactol",
+      "topic": "other",
+      "mode": "training",
+      "timestamp": "2026-05-02T17:10:43.756546Z"
+    },
+    {
+      "id": "msg_29edff2717764713b6ebf66e7189861e",
+      "role": "assistant",
+      "content": "Can you tell me more about what brings you to discuss BACTOL today? Are there any specific clinical scenarios or patient profiles you'd like to explore?",
+      "topic": "other",
+      "mode": "training",
+      "source": "json",
+      "citations": [],
+      "timestamp": "2026-05-02T17:10:43.756579Z"
+    },
+    {
+      "id": "msg_441241ab9a954d54ae20da39be31cee7",
+      "role": "user",
+      "content": "it is composed of fer i guess",
+      "topic": "composition",
+      "mode": "training",
+      "timestamp": "2026-05-02T17:14:28.980202Z"
+    },
+    {
+      "id": "msg_b806f8d5d05b4a988ba0c429b29217d4",
+      "role": "assistant",
+      "content": "Can you elaborate on what you mean by 'it is composed of fer i guess'? Are you referring to the composition of BACTOL or something else?",
+      "topic": "composition",
+      "mode": "training",
+      "source": "json",
+      "citations": [],
+      "timestamp": "2026-05-02T17:14:28.980240Z"
+    },
+    {
+      "id": "msg_c6e23576a5e84591a77aab0fc00df4ee",
+      "role": "user",
+      "content": "it is composed of fer ",
+      "topic": "composition",
+      "mode": "training",
+      "timestamp": "2026-05-02T17:20:44.798933Z"
+    },
+    {
+      "id": "msg_57038280f5e14461a98724fba104495e",
+      "role": "assistant",
+      "content": "You mentioned that BACTOL is composed of fer. Can you elaborate on what you mean by 'fer'? Is it a specific ingredient or a type of material?",
+      "topic": "composition",
+      "mode": "training",
+      "source": "json",
+      "citations": [],
+      "timestamp": "2026-05-02T17:20:44.798971Z"
+    }
+  ],
+  "user_facts": {
+    "name": "",
+    "company": "",
+    "role": "rep",
+    "preferences": []
+  },
+  "turn_count": 4,
+  "last_sync_event_id": "evt_b36555ac19eb46c9b0c88510d22e76e4"
+}

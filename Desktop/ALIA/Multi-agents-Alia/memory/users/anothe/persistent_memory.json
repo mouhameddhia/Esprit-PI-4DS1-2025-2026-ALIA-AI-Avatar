@@ -1,0 +1,21 @@
+{
+  "memory": [
+    {
+      "type": "qa",
+      "input": "Hello  I'm going to present bactol",
+      "output": "Welcome! It's great to connect with you. I'm here to help with any product-specific medical or pharmaceutical questions related to Bactol. What would you like to discuss about this product?",
+      "metadata": {
+        "mode": "training",
+        "source": "assistant",
+        "topic": null,
+        "drug_name": "BACTOL",
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T19:36:47.649535Z",
+      "event_id": "evt_6b77785191d2415e991f01798614ec5d"
+    }
+  ]
+}

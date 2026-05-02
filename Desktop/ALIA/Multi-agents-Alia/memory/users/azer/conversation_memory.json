@@ -1,0 +1,97 @@
+{
+  "summary_memory": {
+    "user_profile": {
+      "name": "",
+      "company": "",
+      "role": "",
+      "preferences": []
+    },
+    "medical_topics": [],
+    "questions": [],
+    "decisions": [],
+    "source_message_ids": [],
+    "last_updated": ""
+  },
+  "recent_messages": [
+    {
+      "id": "msg_57ad7b27e54748a8811e9de3fd3cccf6",
+      "role": "user",
+      "content": "hi ",
+      "topic": null,
+      "mode": "training",
+      "timestamp": "2026-05-02T19:02:14.215043Z"
+    },
+    {
+      "id": "msg_29b74a1452c24b20bf5721625285890e",
+      "role": "assistant",
+      "content": "Hello! It's great to connect with you. I'm a senior medical doctor here to help with any product-specific medical or pharmaceutical questions you may have. What's on your mind today?",
+      "topic": null,
+      "mode": "training",
+      "source": "assistant",
+      "citations": [],
+      "timestamp": "2026-05-02T19:02:14.215102Z"
+    },
+    {
+      "id": "msg_673149b71a9443ada576e2e437c9080a",
+      "role": "user",
+      "content": "i m azer",
+      "topic": null,
+      "mode": "training",
+      "timestamp": "2026-05-02T19:03:25.110585Z"
+    },
+    {
+      "id": "msg_d9e373fabd4545f7a5dc3513f3e22c1b",
+      "role": "assistant",
+      "content": "Hello! It seems like there might be some technical issue with your message. Could you please rephrase or provide more context about what you're trying to discuss? I'm here to help with any product-specific medical or pharmaceutical questions you may have. Let's get started!",
+      "topic": null,
+      "mode": "training",
+      "source": "assistant",
+      "citations": [],
+      "timestamp": "2026-05-02T19:03:25.110623Z"
+    },
+    {
+      "id": "msg_33d3eb9a0ca640c1ba2df3f3c9d1643d",
+      "role": "user",
+      "content": "i m going to present bactol ",
+      "topic": "indications",
+      "mode": "training",
+      "timestamp": "2026-05-02T19:04:59.524605Z"
+    },
+    {
+      "id": "msg_93bda14be62945dfbb9fd3e814ee7a98",
+      "role": "assistant",
+      "content": "Great! You're going to present Bactol. Can you tell me more about what you'd like to discuss regarding this product? Are there any specific questions or concerns you have?",
+      "topic": "indications",
+      "mode": "training",
+      "source": "json",
+      "citations": [],
+      "timestamp": "2026-05-02T19:04:59.524676Z"
+    },
+    {
+      "id": "msg_1b0995d10a91463a858e33abf48113a6",
+      "role": "user",
+      "content": "So the bactol is composed of 100 ml of milk and 100 mg of vitamin C",
+      "topic": "other",
+      "mode": "training",
+      "timestamp": "2026-05-02T19:06:53.897487Z"
+    },
+    {
+      "id": "msg_ff2c059fb6124a4c8e9585320731fcc9",
+      "role": "assistant",
+      "content": "For BACTOL, state your core clinical claim in one sentence, then justify it with one evidence-backed point.",
+      "topic": "other",
+      "mode": "training",
+      "source": "json",
+      "citations": [],
+      "timestamp": "2026-05-02T19:06:53.897518Z"
+    }
+  ],
+  "user_facts": {
+    "name": "",
+    "company": "",
+    "role": "",
+    "preferences": []
+  },
+  "turn_count": 4,
+  "last_sync_event_id": "evt_857716968481434ba834bd35f7733ffc"
+}

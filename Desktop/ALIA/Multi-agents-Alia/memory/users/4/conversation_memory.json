@@ -1,0 +1,86 @@
+{
+  "summary_memory": {
+    "user_profile": {
+      "name": "Raef",
+      "company": "",
+      "role": "doctor",
+      "preferences": []
+    },
+    "medical_topics": [],
+    "questions": [],
+    "decisions": [
+      "For BACTOL, state your core clinical claim in one sentence, then justify it with one evidence-backed point."
+    ],
+    "source_message_ids": [
+      "msg_983185da4ad24511905a60c7959e0a59",
+      "msg_8854e1df38cc418fb4ef70402c717481",
+      "msg_ff27e3fa56f046db93c83b0c6e2a3f70",
+      "msg_16181aa9005b4d39b9082f36b88e9bfc"
+    ],
+    "last_updated": "2026-05-02T17:06:35.871979Z"
+  },
+  "recent_messages": [
+    {
+      "id": "msg_1fb98d605d504b21867b01bb64eb9a5f",
+      "role": "user",
+      "content": "i'm happy to know you ",
+      "topic": null,
+      "mode": "training",
+      "timestamp": "2026-05-02T17:03:25.010021Z"
+    },
+    {
+      "id": "msg_e33f38b90dee48d98c2356623c8aa499",
+      "role": "assistant",
+      "content": "Nice to meet you too, Raef! As a senior medical doctor, I'm here to help you with any product-specific medical/pharmaceutical questions. Since we're just starting our conversation, let's take it one step at a time. What would you like to discuss about Bactol today?",
+      "topic": null,
+      "mode": "training",
+      "source": "assistant",
+      "citations": [],
+      "timestamp": "2026-05-02T17:03:25.010050Z"
+    },
+    {
+      "id": "msg_6779e8a408a946b1a7d0eeb15e3ccd2f",
+      "role": "user",
+      "content": "i m happy to know you",
+      "topic": null,
+      "mode": "training",
+      "timestamp": "2026-05-02T17:04:12.683982Z"
+    },
+    {
+      "id": "msg_cc9fa9899f2f490ba931065c807876b9",
+      "role": "assistant",
+      "content": "Nice to meet you too! As a senior medical doctor, I'm here to help with any product-specific medical/pharmaceutical questions you may have. Let's get started! What would you like to know about Bactol or its usage?",
+      "topic": null,
+      "mode": "training",
+      "source": "assistant",
+      "citations": [],
+      "timestamp": "2026-05-02T17:04:12.684016Z"
+    },
+    {
+      "id": "msg_c6110dbf287949f7bae9ca2b7eeb199d",
+      "role": "user",
+      "content": "what is the usage of bactol",
+      "topic": "indications",
+      "mode": "training",
+      "timestamp": "2026-05-02T17:06:35.871485Z"
+    },
+    {
+      "id": "msg_437b6a8b593c4c9da66cdf281943b626",
+      "role": "assistant",
+      "content": "BACTOL is indicated for disinfection of hands and skin surfaces. It comes in three forms: Professional Soap, Disinfectant Spray, and Disinfectant Gel. Each product has its own usage instructions.",
+      "topic": "indications",
+      "mode": "training",
+      "source": "json",
+      "citations": [],
+      "timestamp": "2026-05-02T17:06:35.871532Z"
+    }
+  ],
+  "user_facts": {
+    "name": "Raef",
+    "company": "",
+    "role": "doctor",
+    "preferences": []
+  },
+  "turn_count": 7,
+  "last_sync_event_id": "evt_b0d1fa2b4eed45babcb2d181618630d1"
+}

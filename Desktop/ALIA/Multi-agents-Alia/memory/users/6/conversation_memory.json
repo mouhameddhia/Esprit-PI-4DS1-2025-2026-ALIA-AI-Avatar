@@ -1,0 +1,97 @@
+{
+  "summary_memory": {
+    "user_profile": {
+      "name": "",
+      "company": "",
+      "role": "",
+      "preferences": []
+    },
+    "medical_topics": [],
+    "questions": [],
+    "decisions": [],
+    "source_message_ids": [],
+    "last_updated": ""
+  },
+  "recent_messages": [
+    {
+      "id": "msg_6798b13a3e914a82ba9db253835e2809",
+      "role": "user",
+      "content": "what's up",
+      "topic": null,
+      "mode": "training",
+      "timestamp": "2026-05-02T17:40:26.234527Z"
+    },
+    {
+      "id": "msg_cbf45a0d62384087829b43fbe8a4578d",
+      "role": "assistant",
+      "content": "Good morning! It's great to meet you. I'm happy to help with any product-specific medical or pharmaceutical questions you may have. What brings you here today?",
+      "topic": null,
+      "mode": "training",
+      "source": "assistant",
+      "citations": [],
+      "timestamp": "2026-05-02T17:40:26.234571Z"
+    },
+    {
+      "id": "msg_c07d8c2a5236483eaf78b2f2b469787f",
+      "role": "user",
+      "content": "i m going top present bactol ",
+      "topic": "other",
+      "mode": "training",
+      "timestamp": "2026-05-02T17:42:06.854271Z"
+    },
+    {
+      "id": "msg_aef314312a144034ba16a3853c30dfba",
+      "role": "assistant",
+      "content": "For BACTOL, state your core clinical claim in one sentence, then justify it with one evidence-backed point.",
+      "topic": "other",
+      "mode": "training",
+      "source": "json",
+      "citations": [],
+      "timestamp": "2026-05-02T17:42:06.854306Z"
+    },
+    {
+      "id": "msg_9831d4493a054763948b9c7e13e28c31",
+      "role": "user",
+      "content": "it is composed of  5ml of xwater and 140 g  of c vitamine",
+      "topic": "mechanism_of_action",
+      "mode": "training",
+      "timestamp": "2026-05-02T17:45:07.848872Z"
+    },
+    {
+      "id": "msg_4ecadcd6358d458db2a8e29e5390423e",
+      "role": "assistant",
+      "content": "You mentioned that the product contains Vitamin C. Can you elaborate on how this vitamin contributes to the overall benefits of MINCILIGNE VITAMINE?",
+      "topic": "mechanism_of_action",
+      "mode": "training",
+      "source": "json",
+      "citations": [],
+      "timestamp": "2026-05-02T17:45:07.848918Z"
+    },
+    {
+      "id": "msg_778fdf0079734cd3ab3a6af08375fd4e",
+      "role": "user",
+      "content": "is it true   w<ha tis the composition of bactol savon",
+      "topic": "composition",
+      "mode": "training",
+      "timestamp": "2026-05-02T17:48:36.071641Z"
+    },
+    {
+      "id": "msg_6e5b730404d7446dbc288c0d03125c81",
+      "role": "assistant",
+      "content": "Can you elaborate on what you mean by 'composition' in the context of BACTOL? Are you referring to its chemical makeup or something else?",
+      "topic": "composition",
+      "mode": "training",
+      "source": "json",
+      "citations": [],
+      "timestamp": "2026-05-02T17:48:36.071692Z"
+    }
+  ],
+  "user_facts": {
+    "name": "",
+    "company": "",
+    "role": "",
+    "preferences": []
+  },
+  "turn_count": 6,
+  "last_sync_event_id": "evt_6333b13887ec400c8c1bec734e7d7c97"
+}

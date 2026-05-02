@@ -96,6 +96,7 @@ class PersistentMemoryStore:
                 "company": "",
                 "role": "",
                 "preferences": [],
+                "competency_level": "",
             },
             "turn_count": 0,
             "last_sync_event_id": "",
@@ -568,6 +569,7 @@ class PersistentMemoryStore:
             sanitized["name"] = ""
 
         sanitized["company"] = str(sanitized.get("company", "")).strip()
+        sanitized["competency_level"] = str(sanitized.get("competency_level", "")).strip()
 
         preferences = sanitized.get("preferences", [])
         if not isinstance(preferences, list):
@@ -575,6 +577,34 @@ class PersistentMemoryStore:
         else:
             sanitized["preferences"] = [str(item).strip() for item in preferences if str(item).strip()]
         return sanitized
+
+    def get_competency_level(self) -> str | None:
+        """Return the stored competency level for the current user, if any."""
+
+        value = self.get_latest_user_fact("competency_level")
+        if value:
+            return value
+
+        data = self.get_user_facts()
+        direct_value = str(data.get("competency_level", "")).strip()
+        return direct_value or None
+
+    def set_competency_level(self, level: str) -> None:
+        """Persist the user's selected competency level when it changes."""
+
+        normalized_level = str(level).strip()
+        if not normalized_level:
+            return
+
+        current_level = self.get_competency_level()
+        if current_level and current_level.strip().lower() == normalized_level.lower():
+            return
+
+        self.add_user_fact(
+            content=f"User selected competency level {normalized_level}",
+            key="competency_level",
+            value=normalized_level,
+        )
 
     def reset_session_memory(self, keep_user_facts: bool = True) -> None:
         """Reset short-term conversation memory while optionally preserving user facts."""

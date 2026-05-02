@@ -1,0 +1,80 @@
+{
+  "summary_memory": {
+    "user_profile": {
+      "name": "",
+      "company": "",
+      "role": "",
+      "preferences": []
+    },
+    "medical_topics": [],
+    "questions": [],
+    "decisions": [],
+    "source_message_ids": [],
+    "last_updated": ""
+  },
+  "recent_messages": [
+    {
+      "id": "msg_4e15efe025ca491caf0577fad7836e7f",
+      "role": "user",
+      "content": "hello",
+      "topic": null,
+      "mode": "training",
+      "timestamp": "2026-05-02T20:34:21.927027Z"
+    },
+    {
+      "id": "msg_bd87b261c67744829ae74e2269e26c43",
+      "role": "assistant",
+      "content": "Hello! It's great to connect with you today. I'm here to help with any product-specific medical or pharmaceutical questions you may have. What's on your mind?",
+      "topic": null,
+      "mode": "training",
+      "source": "assistant",
+      "citations": [],
+      "timestamp": "2026-05-02T20:34:21.927065Z"
+    },
+    {
+      "id": "msg_da98500a8f274eda900f32fe3f857da7",
+      "role": "user",
+      "content": "i'm going to present bactol",
+      "topic": "other",
+      "mode": "training",
+      "timestamp": "2026-05-02T20:36:12.987056Z"
+    },
+    {
+      "id": "msg_607af0e5ab784fd3952a08008fe8e104",
+      "role": "assistant",
+      "content": "What specific aspects of BACTOL would you like to discuss today? Its indications, dosage, composition, or perhaps something else?",
+      "topic": "other",
+      "mode": "training",
+      "source": "json",
+      "citations": [],
+      "timestamp": "2026-05-02T20:36:12.987088Z"
+    },
+    {
+      "id": "msg_750592d4b8be4b01bf723c2eb176a22e",
+      "role": "user",
+      "content": "the composition of bactol is 100 ml milk and 100 mg vitamin C",
+      "topic": "other",
+      "mode": "training",
+      "timestamp": "2026-05-02T20:38:23.736702Z"
+    },
+    {
+      "id": "msg_16f1bb3a6d0c41fd87ec278deb7a006a",
+      "role": "assistant",
+      "content": "This is incorrect. The composition of BACTOL products does not include milk and vitamin C. According to the product context, the composition of BACTOL Professional Soap (90g) is Benzalkonium chloride 0.18g, while the Disinfectant Spray (125ml) contains Alcohol 95° at 65%, and the Disinfectant Gel (125ml) contains Alcohol 70%, Benzalkonium chloride 0.2%. \n\nPlease restate the corrected composition of BACTOL products in one sentence:",
+      "topic": "other",
+      "mode": "training",
+      "source": "validator",
+      "citations": [],
+      "timestamp": "2026-05-02T20:38:23.736738Z"
+    }
+  ],
+  "user_facts": {
+    "name": "",
+    "company": "",
+    "role": "",
+    "preferences": [],
+    "competency_level": "4"
+  },
+  "turn_count": 3,
+  "last_sync_event_id": "evt_ae3ed6a0063b48c48ed55047f96ce266"
+}

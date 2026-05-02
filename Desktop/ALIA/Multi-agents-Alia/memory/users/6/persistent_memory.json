@@ -1,0 +1,95 @@
+{
+  "memory": [
+    {
+      "type": "statement",
+      "content": "hello doctor",
+      "timestamp": "2026-05-02T17:38:06.532987Z",
+      "event_id": "evt_91391f34fcdd4e5db204ea55c16eec17"
+    },
+    {
+      "type": "qa",
+      "input": "hello doctor",
+      "output": "Good morning! It's great to meet you. I'm happy to help with any product-specific medical or pharmaceutical questions you may have. What brings you here today?",
+      "metadata": {
+        "mode": "training",
+        "source": "assistant",
+        "topic": null,
+        "drug_name": null,
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T17:38:34.375600Z",
+      "event_id": "evt_6e15e9c32ffd4227a021e9dc47be1c3a"
+    },
+    {
+      "type": "qa",
+      "input": "what's up",
+      "output": "Good morning! It's great to meet you. I'm happy to help with any product-specific medical or pharmaceutical questions you may have. What brings you here today?",
+      "metadata": {
+        "mode": "training",
+        "source": "assistant",
+        "topic": null,
+        "drug_name": null,
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T17:39:31.400446Z",
+      "event_id": "evt_409a2316c183403fa1b400232e9a37c2"
+    },
+    {
+      "type": "qa",
+      "input": "i m going top present bactol ",
+      "output": "For BACTOL, state your core clinical claim in one sentence, then justify it with one evidence-backed point.",
+      "metadata": {
+        "mode": "training",
+        "source": "json",
+        "topic": "other",
+        "drug_name": "BACTOL",
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T17:42:06.851426Z",
+      "event_id": "evt_2c307a2270cd4669b4b6ff074c225f3c"
+    },
+    {
+      "type": "qa",
+      "input": "it is composed of  5ml of xwater and 140 g  of c vitamine",
+      "output": "You mentioned that the product contains Vitamin C. Can you elaborate on how this vitamin contributes to the overall benefits of MINCILIGNE VITAMINE?",
+      "metadata": {
+        "mode": "training",
+        "source": "json",
+        "topic": "mechanism_of_action",
+        "drug_name": "VITAMINE",
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T17:45:07.845493Z",
+      "event_id": "evt_406356a907b041659b0de68bffb0505e"
+    },
+    {
+      "type": "qa",
+      "input": "is it true   w<ha tis the composition of bactol savon",
+      "output": "Can you elaborate on what you mean by 'composition' in the context of BACTOL? Are you referring to its chemical makeup or something else?",
+      "metadata": {
+        "mode": "training",
+        "source": "json",
+        "topic": "composition",
+        "drug_name": "BACTOL",
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T17:48:36.066673Z",
+      "event_id": "evt_6333b13887ec400c8c1bec734e7d7c97"
+    }
+  ]
+}

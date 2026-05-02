@@ -8,6 +8,8 @@ from dataclasses import dataclass
 from typing import Any
 from urllib import request
 
+from .competency_framework import coerce_competency_level, get_competency_training_brief
+
 DEFAULT_BRAIN_ACTIONS = {"ask_question", "respond", "clarify", "challenge"}
 DEFAULT_BRAIN_TOPICS = {
     "indications",
@@ -132,6 +134,9 @@ class TrainingBrain:
         if response_language == "fr":
             language_instruction = "Reponds en francais."
 
+        competency_level = coerce_competency_level(alia_level)
+        competency_brief = get_competency_training_brief(competency_level)
+
         return f"""You are the dynamic training brain of a senior medical doctor coaching a pharmaceutical representative.
 
     You are dual-role at the same time:
@@ -162,6 +167,9 @@ BEHAVIOR RULES:
 - Never assume a specific person name or product name from prior examples. Use only the current conversation state and detected product.
 - Always reply in the same language as the current user message (French or English).
 - Output a single JSON object only.
+
+COMPETENCY BRIEF:
+{competency_brief}
 
 INPUTS:
 - ALIA level: {alia_level}
@@ -208,6 +216,78 @@ If the user is greeting or making small talk, respond naturally and continue the
         if start != -1 and end != -1 and end > start:
             return text[start : end + 1]
         return text
+
+    def _detect_contradiction(
+        self,
+        user_message: str,
+        knowledge_context: str,
+        detected_product: str | None,
+    ) -> tuple[bool, str | None]:
+        """Detect simple contradictions between a user's claim and JSON knowledge.
+
+        Returns (is_contradiction, corrected_statement_or_None).
+        This is a best-effort check that parses knowledge_context as JSON when
+        possible and looks for obvious mismatches in composition/active
+        ingredient declarations.
+        """
+        if not knowledge_context or not knowledge_context.strip():
+            return False, None
+
+        # Try to parse knowledge_context as JSON and look for common keys.
+        try:
+            kc = json.loads(knowledge_context)
+        except Exception:
+            kc = None
+
+        # Simple claim extraction: look for phrases like "contains X", "active ingredient is X"
+        m = re.search(r"(?:contains|contain|contains:|active ingredient is|active ingredient:|composed of|contains the active|it contains)\s+([A-Za-z0-9\-\s%]+)", user_message, flags=re.IGNORECASE)
+        if not m:
+            # try a looser pattern: "is X" after product mention
+            if detected_product and detected_product.lower() in user_message.lower():
+                m2 = re.search(rf"{re.escape(detected_product)}\s+(?:is|contains|has)\s+([A-Za-z0-9\-\s%]+)", user_message, flags=re.IGNORECASE)
+                if m2:
+                    m = m2
+
+        if not m:
+            return False, None
+
+        claimed = m.group(1).strip().lower()
+
+        # If we have JSON parsed, check common fields
+        if isinstance(kc, dict):
+            # normalize keys to search
+            candidates = []
+            for key in ("composition", "active_ingredient", "active", "ingredients", "components"):
+                val = kc.get(key)
+                if isinstance(val, str):
+                    candidates.append(val.lower())
+                elif isinstance(val, list):
+                    candidates.extend([str(x).lower() for x in val])
+
+            # also search nested product payloads
+            if not candidates:
+                # flatten any string values
+                for v in kc.values():
+                    if isinstance(v, str):
+                        candidates.append(v.lower())
+
+            for cand in candidates:
+                # if claimed appears in candidate -> no contradiction
+                if claimed in cand or cand in claimed:
+                    return False, None
+
+            # If none matched, produce a corrected short statement from JSON if possible
+            if candidates:
+                corrected = candidates[0]
+                return True, f"According to our JSON knowledge, the composition/active ingredient is: {corrected}."
+
+        # If knowledge_context is plain text, do a case-insensitive search
+        txt = knowledge_context.lower()
+        if claimed in txt:
+            return False, None
+
+        # No match found -> contradiction detected but no corrective text available
+        return True, None
 
     def _sanitize_action(self, action: Any) -> str:
         value = str(action).strip().lower()
@@ -295,6 +375,27 @@ If the user is greeting or making small talk, respond naturally and continue the
         user_message: str,
         forced_language: str | None = None,
     ) -> TrainingBrainDecision:
+        # Early contradiction detection against JSON knowledge (deterministic guard)
+        is_contra, correction_text = self._detect_contradiction(
+            user_message=user_message, knowledge_context=knowledge_context, detected_product=detected_product
+        )
+        if is_contra:
+            # Choose tone based on ALIA level
+            level = coerce_competency_level(alia_level)
+            if correction_text is None:
+                correction_text = "I will confirm this information."
+
+            if level.name == "BEGINNER":
+                message = f"This is incorrect. {correction_text}"
+            elif level.name == "JUNIOR":
+                message = f"This is incorrect. {correction_text}"
+            elif level.name == "CONFIRMED":
+                message = f"This is incorrect. {correction_text}"
+            else:  # EXPERT
+                message = f"This is incorrect. {correction_text}"
+
+            return TrainingBrainDecision(action="respond", message=message, topic="other")
+
         prompt = self._build_prompt(
             conversation_history=conversation_history,
             conversation_state=conversation_state,

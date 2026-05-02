@@ -26,6 +26,7 @@ class Settings(BaseSettings):
     llm_judge_model: str = Field(default="smollm2:135m", description="Ollama model name for LLM-as-judge evaluation.")
     llm_num_ctx: int = Field(default=8192, ge=1024, description="Context window for the local LLM.")
     llm_max_output_tokens: int = Field(default=512, ge=64, description="Reserved output budget in tokens.")
+    fast_answer_mode: bool = Field(default=False, description="Use extractive fast answers instead of LLM generation.")
 
     prompt_name: str = Field(default="pharma_answer_v1", description="Registered prompt template to use.")
     max_doc_age_days: int = Field(default=3650, ge=1, description="Soft recency horizon for metadata scoring.")

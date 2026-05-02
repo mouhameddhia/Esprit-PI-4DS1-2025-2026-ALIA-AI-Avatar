@@ -1,0 +1,72 @@
+{
+  "memory": [
+    {
+      "type": "qa",
+      "input": "hi ",
+      "output": "Hello! It's great to connect with you. I'm a senior medical doctor here to help with any product-specific medical or pharmaceutical questions you may have. What's on your mind today?",
+      "metadata": {
+        "mode": "training",
+        "source": "assistant",
+        "topic": null,
+        "drug_name": null,
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T19:02:14.209845Z",
+      "event_id": "evt_73c36ca5e92d4117a8c4c80efab907d2"
+    },
+    {
+      "type": "qa",
+      "input": "i m azer",
+      "output": "Hello! It seems like there might be some technical issue with your message. Could you please rephrase or provide more context about what you're trying to discuss? I'm here to help with any product-specific medical or pharmaceutical questions you may have. Let's get started!",
+      "metadata": {
+        "mode": "training",
+        "source": "assistant",
+        "topic": null,
+        "drug_name": null,
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T19:03:25.103941Z",
+      "event_id": "evt_3eb803109a40492e91adf9c8bd80b756"
+    },
+    {
+      "type": "qa",
+      "input": "i m going to present bactol ",
+      "output": "Great! You're going to present Bactol. Can you tell me more about what you'd like to discuss regarding this product? Are there any specific questions or concerns you have?",
+      "metadata": {
+        "mode": "training",
+        "source": "json",
+        "topic": "indications",
+        "drug_name": "BACTOL",
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T19:04:59.520066Z",
+      "event_id": "evt_57da54be78074d87b549cf469d791287"
+    },
+    {
+      "type": "qa",
+      "input": "So the bactol is composed of 100 ml of milk and 100 mg of vitamin C",
+      "output": "For BACTOL, state your core clinical claim in one sentence, then justify it with one evidence-backed point.",
+      "metadata": {
+        "mode": "training",
+        "source": "json",
+        "topic": "other",
+        "drug_name": "BACTOL",
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T19:06:53.893204Z",
+      "event_id": "evt_857716968481434ba834bd35f7733ffc"
+    }
+  ]
+}

@@ -7,6 +7,12 @@ from dataclasses import dataclass
 from typing import Any
 from urllib import request
 
+from .competency_framework import (
+    CompetencyLevel,
+    get_competency_system_prompt,
+    get_competency_training_brief,
+)
+
 COMMERCIAL_DOCTOR_SYSTEM_PROMPT = """You are a professional medical information assistant.
 
 RULES:
@@ -62,10 +68,17 @@ class IntentClassification:
 class DoctorLLM:
     """Minimal Ollama HTTP client for doctor-persona generation."""
 
-    def __init__(self, model: str = "llama3:8b", base_url: str = "http://localhost:11434", timeout_seconds: int = 90) -> None:
+    def __init__(
+        self,
+        model: str = "llama3:8b",
+        base_url: str = "http://localhost:11434",
+        timeout_seconds: int = 90,
+        competency_level: CompetencyLevel | None = None,
+    ) -> None:
         self.model = model
         self.base_url = base_url.rstrip("/")
         self.timeout_seconds = timeout_seconds
+        self.competency_level = competency_level or CompetencyLevel.JUNIOR
 
     @staticmethod
     def _format_history(conversation_history: list[dict[str, str]] | None) -> str:
@@ -92,8 +105,17 @@ class DoctorLLM:
         history_text = self._format_history(conversation_history)
         fact_section = fact_memory.strip() if fact_memory and fact_memory.strip() else "(empty)"
         summary_section = conversation_summary.strip() if conversation_summary and conversation_summary.strip() else "(empty)"
+
+        # Use competency-level system prompt if available and append the
+        # level-specific training brief (which contains the global generation
+        # constraints such as JSON-first, RAG fallback, no-hallucination,
+        # and level-adapted objection rules). This ensures all direct LLM
+        # generations strictly follow those constraints.
+        system_prompt = get_competency_system_prompt(self.competency_level)
+        competency_brief = get_competency_training_brief(self.competency_level)
+
         return (
-            f"SYSTEM:\n{DOCTOR_SYSTEM_PROMPT}\n\n"
+            f"SYSTEM:\n{system_prompt}\n\nGLOBAL_CONSTRAINTS:\n{competency_brief}\n\n"
             "FACT MEMORY (trusted user profile only; never use for medical claims):\n"
             f"{fact_section}\n\n"
             "CONVERSATION SUMMARY (compressed history, may be incomplete):\n"

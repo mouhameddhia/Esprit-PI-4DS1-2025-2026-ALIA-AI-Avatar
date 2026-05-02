@@ -1,0 +1,86 @@
+{
+  "memory": [
+    {
+      "type": "user_fact",
+      "content": "User role is rep",
+      "key": "role",
+      "value": "rep",
+      "timestamp": "2026-05-02T17:08:20.459740Z",
+      "event_id": "evt_a1ff63d5bc934404a269da5faf107081"
+    },
+    {
+      "type": "statement",
+      "content": "hi i m reaef medical rep froùm siliana",
+      "timestamp": "2026-05-02T17:08:20.524426Z",
+      "event_id": "evt_6aaecf1968c74cd39e57c0c4a5185475"
+    },
+    {
+      "type": "qa",
+      "input": "hi i m reaef medical rep froùm siliana",
+      "output": "Bonjour Reaef ! Je suis ravi de vous rencontrer. Pour commencer, pouvez-vous me dire ce qui vous amène aujourd'hui ? Quels sont les produits ou les thématiques médicales que vous souhaitez discuter ?",
+      "metadata": {
+        "mode": "training",
+        "source": "assistant",
+        "topic": null,
+        "drug_name": null,
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T17:08:34.963721Z",
+      "event_id": "evt_da649aa01e3e4a119a6d7a24efb1a2fe"
+    },
+    {
+      "type": "qa",
+      "input": "bactol",
+      "output": "Can you tell me more about what brings you to discuss BACTOL today? Are there any specific clinical scenarios or patient profiles you'd like to explore?",
+      "metadata": {
+        "mode": "training",
+        "source": "json",
+        "topic": "other",
+        "drug_name": "BACTOL",
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T17:10:43.752652Z",
+      "event_id": "evt_cbcd21ece0b44dd98d0e62e8006c67e1"
+    },
+    {
+      "type": "qa",
+      "input": "it is composed of fer i guess",
+      "output": "Can you elaborate on what you mean by 'it is composed of fer i guess'? Are you referring to the composition of BACTOL or something else?",
+      "metadata": {
+        "mode": "training",
+        "source": "json",
+        "topic": "composition",
+        "drug_name": "BACTOL",
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T17:14:28.976219Z",
+      "event_id": "evt_d429c9f69b0f488d8e85b482196eaf02"
+    },
+    {
+      "type": "qa",
+      "input": "it is composed of fer ",
+      "output": "You mentioned that BACTOL is composed of fer. Can you elaborate on what you mean by 'fer'? Is it a specific ingredient or a type of material?",
+      "metadata": {
+        "mode": "training",
+        "source": "json",
+        "topic": "composition",
+        "drug_name": "BACTOL",
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T17:20:44.794962Z",
+      "event_id": "evt_b36555ac19eb46c9b0c88510d22e76e4"
+    }
+  ]
+}

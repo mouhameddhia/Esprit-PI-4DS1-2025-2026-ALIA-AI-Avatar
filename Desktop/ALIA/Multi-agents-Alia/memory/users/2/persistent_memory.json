@@ -1,0 +1,157 @@
+{
+  "memory": [
+    {
+      "type": "statement",
+      "content": "hello doctor",
+      "timestamp": "2026-05-02T15:56:22.306174Z",
+      "event_id": "evt_cf4f28de356b434da8e41e5be69901bd"
+    },
+    {
+      "type": "qa",
+      "input": "hello doctor",
+      "output": "Hello! Nice to meet you. I'm a senior medical doctor here to help with any product-specific medical or pharmaceutical questions you may have. What's on your mind today?",
+      "metadata": {
+        "mode": "training",
+        "source": "assistant",
+        "topic": null,
+        "drug_name": null,
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T15:57:08.250513Z",
+      "event_id": "evt_acc7f2090d6b4a9e8a67f83b98163c4a"
+    },
+    {
+      "type": "user_fact",
+      "content": "User name is Raef",
+      "key": "name",
+      "value": "Raef",
+      "timestamp": "2026-05-02T15:58:10.347345Z",
+      "event_id": "evt_ee433dac97ab407caaa9baa50f35bfb9"
+    },
+    {
+      "type": "user_fact",
+      "content": "User role is rep",
+      "key": "role",
+      "value": "rep",
+      "timestamp": "2026-05-02T15:58:10.392158Z",
+      "event_id": "evt_af33cd887c36431d86416dc1565634f2"
+    },
+    {
+      "type": "statement",
+      "content": "My name is Raef , I'm a medical representative in vital company",
+      "timestamp": "2026-05-02T15:58:10.466078Z",
+      "event_id": "evt_766abff4bce946fbb600824ab0c084d5"
+    },
+    {
+      "type": "qa",
+      "input": "My name is Raef , I'm a medical representative in vital company",
+      "output": "Hello Raef! Nice to meet you. As a senior medical doctor, I'm here to help with any product-specific medical or pharmaceutical questions you may have. What brings you to this conversation today?",
+      "metadata": {
+        "mode": "training",
+        "source": "assistant",
+        "topic": null,
+        "drug_name": null,
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T15:59:01.209445Z",
+      "event_id": "evt_bd83ca6fa4294315a744018a93562e73"
+    },
+    {
+      "type": "qa",
+      "input": "what is capitat of India?",
+      "output": "I can help with medical detailing and clinical product discussions. Let us refocus on indications, dosage, safety, or product use.",
+      "metadata": {
+        "mode": "training",
+        "source": "assistant",
+        "topic": null,
+        "drug_name": null,
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T15:59:50.079201Z",
+      "event_id": "evt_63be21a6f7244f14890b3ec1395696a0"
+    },
+    {
+      "type": "qa",
+      "input": "I have collection of medicines that I will represent today",
+      "output": "Which product would you like to discuss so I can keep the coaching grounded?",
+      "metadata": {
+        "mode": "training",
+        "source": "assistant",
+        "topic": "other",
+        "drug_name": null,
+        "confidence": 0.85,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T16:02:58.356031Z",
+      "event_id": "evt_5c88300534c54e80aa13308fa1e4e453"
+    },
+    {
+      "type": "statement",
+      "content": "I'm going to present Hydra",
+      "timestamp": "2026-05-02T16:03:32.217191Z",
+      "event_id": "evt_186ae459d8e344adb26b128db953a1f0"
+    },
+    {
+      "type": "qa",
+      "input": "I'm going to present Hydra",
+      "output": "So you're going to present Hydra. That's a great product for skincare. Can you tell me more about what specific aspects of Hydra you'd like to discuss today?",
+      "metadata": {
+        "mode": "training",
+        "source": "json",
+        "topic": "indications",
+        "drug_name": "HYDRA",
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T16:05:05.245929Z",
+      "event_id": "evt_82da776ea62b442fa06aaa40b4fd4086"
+    },
+    {
+      "type": "qa",
+      "input": "I think it is composed of vitamin C , B12 and its not dedicated for adults",
+      "output": "Hello Raef! So you're going to present Hydra. That's a great product for skincare. Can you tell me more about what specific aspects of Hydra you'd like to discuss today?\n\n(Note: I'll ask a question to build on your previous answer)\n\nWhat do you mean by \"not dedicated for adults\"?",
+      "metadata": {
+        "mode": "training",
+        "source": "assistant",
+        "topic": null,
+        "drug_name": "HYDRA",
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T16:06:19.834430Z",
+      "event_id": "evt_f1a005945da04fcaafe3a3267e66e9dd"
+    },
+    {
+      "type": "qa",
+      "input": "I mean it's forbidden for adults",
+      "output": "So you're saying Hydra is not dedicated for adults. Can you elaborate on what specific concerns or limitations you have in mind?",
+      "metadata": {
+        "mode": "training",
+        "source": "json",
+        "topic": "indications",
+        "drug_name": "HYDRA",
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T16:08:55.343129Z",
+      "event_id": "evt_534eeaa598f54052b7bda66d426a7612"
+    }
+  ]
+}

@@ -350,6 +350,46 @@ class RAGPipeline:
             )
         return snippets
 
+    @staticmethod
+    def _extract_compact_snippet(text: str, max_lines: int = 4) -> str:
+        """Extract a short human-readable snippet from a document chunk."""
+
+        lines = [line.strip() for line in text.splitlines() if line.strip()]
+        if not lines:
+            return ""
+
+        if any("indication" in line.lower() for line in lines):
+            snippet = RAGPipeline._extract_indication_snippet(text, max_lines=max_lines)
+            if snippet:
+                return snippet
+
+        return "\n".join(lines[:max_lines])
+
+    def _build_fast_answer(
+        self,
+        query: str,
+        docs: list[ScoredDocument],
+        diagnostics: RetrievalDiagnostics,
+    ) -> tuple[str, list[str], float, str, list[str], list[EvidenceSnippet]]:
+        """Build a grounded answer from retrieved evidence without LLM generation."""
+
+        if not docs:
+            fallback = f"Unable to generate a reliable answer for '{query}' because no relevant context was retrieved."
+            return fallback, [], 0.0, "no relevant context was retrieved", [], []
+
+        supporting_evidence = self._build_supporting_evidence(query, docs, citations=[], max_items=1)
+        if supporting_evidence:
+            answer = self._extract_compact_snippet(supporting_evidence[0].text)
+            citations = [f"{supporting_evidence[0].source}#page={supporting_evidence[0].page}"]
+        else:
+            top_doc = docs[0]
+            answer = self._extract_compact_snippet(top_doc.text)
+            citations = [f"{top_doc.metadata.get('source', 'unknown_source')}#page={top_doc.metadata.get('page', 'n/a')}"]
+
+        answer = self._enforce_indication_answer(query, answer, citations, docs)
+        confidence = max(0.55, min(1.0, diagnostics.confidence_score + 0.15))
+        return answer, citations, confidence, "", [], supporting_evidence
+
     def run(self, query: str, response_language: str = "en") -> PipelineResponse:
         """Execute full RAG pipeline with CRAG fallback and citations."""
 
@@ -432,28 +472,48 @@ class RAGPipeline:
                 },
             )
 
-            reranked = self.reranker.rerank(rewritten, docs, top_k=self.settings.rerank_top_k)
-            reranked = self._postprocess_reranked(query, reranked)
-            answer, citations, answer_confidence, uncertainty, conflict_notes = self.generator.generate(
-                query,
-                reranked,
-                response_language=response_language,
-            )
-            answer = self._enforce_indication_answer(query, answer, citations, reranked)
-            supporting_evidence = self._build_supporting_evidence(query, reranked, citations, max_items=1)
+            if self.settings.fast_answer_mode:
+                reranked = docs
+                answer, citations, answer_confidence, uncertainty, conflict_notes, supporting_evidence = self._build_fast_answer(
+                    query,
+                    reranked,
+                    diagnostics,
+                )
+                self.logger.info(
+                    "fast_generation_complete",
+                    extra={
+                        "extra": {
+                            "citation_count": len(citations),
+                            "answer_confidence": answer_confidence,
+                            "uncertainty": uncertainty,
+                            "conflict_notes": conflict_notes,
+                            "answer_preview": answer[:160],
+                        }
+                    },
+                )
+            else:
+                reranked = self.reranker.rerank(rewritten, docs, top_k=self.settings.rerank_top_k)
+                reranked = self._postprocess_reranked(query, reranked)
+                answer, citations, answer_confidence, uncertainty, conflict_notes = self.generator.generate(
+                    query,
+                    reranked,
+                    response_language=response_language,
+                )
+                answer = self._enforce_indication_answer(query, answer, citations, reranked)
+                supporting_evidence = self._build_supporting_evidence(query, reranked, citations, max_items=1)
 
-            self.logger.info(
-                "generation_complete",
-                extra={
-                    "extra": {
-                        "citation_count": len(citations),
-                        "answer_confidence": answer_confidence,
-                        "uncertainty": uncertainty,
-                        "conflict_notes": conflict_notes,
-                        "answer_preview": answer[:160],
-                    }
-                },
-            )
+                self.logger.info(
+                    "generation_complete",
+                    extra={
+                        "extra": {
+                            "citation_count": len(citations),
+                            "answer_confidence": answer_confidence,
+                            "uncertainty": uncertainty,
+                            "conflict_notes": conflict_notes,
+                            "answer_preview": answer[:160],
+                        }
+                    },
+                )
 
         return PipelineResponse(
             answer=answer,

@@ -1,0 +1,21 @@
+{
+  "memory": [
+    {
+      "type": "qa",
+      "input": "je vais presenter bactol ",
+      "output": "What specific aspects of BACTOL's disinfectant properties would you like to discuss?",
+      "metadata": {
+        "mode": "training",
+        "source": "json",
+        "topic": "mechanism_of_action",
+        "drug_name": "BACTOL",
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T19:29:23.252709Z",
+      "event_id": "evt_1c96720a47e54e13942cde3356216964"
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "summary_memory": {
+    "user_profile": {
+      "name": "Raef",
+      "company": "",
+      "role": "rep",
+      "preferences": []
+    },
+    "medical_topics": [],
+    "questions": [
+      "what is capitat of India?"
+    ],
+    "decisions": [],
+    "source_message_ids": [
+      "msg_dbd70c58bc6e4873a9673288b310b9b4",
+      "msg_43d686c8dd7e40df9a8b2696612be603",
+      "msg_799e4487bf0a4d84ac1ff069ab1736ed",
+      "msg_64330bc33cbf4a949ebb66882091bb29"
+    ],
+    "last_updated": "2026-05-02T16:08:55.347052Z"
+  },
+  "recent_messages": [
+    {
+      "id": "msg_bbbd4f509cc74d5b9b727a899c665ed3",
+      "role": "user",
+      "content": "I'm going to present Hydra",
+      "topic": "indications",
+      "mode": "training",
+      "timestamp": "2026-05-02T16:05:05.249362Z"
+    },
+    {
+      "id": "msg_f34ee152d50d476c85dffe0dea1058ff",
+      "role": "assistant",
+      "content": "So you're going to present Hydra. That's a great product for skincare. Can you tell me more about what specific aspects of Hydra you'd like to discuss today?",
+      "topic": "indications",
+      "mode": "training",
+      "source": "json",
+      "citations": [],
+      "timestamp": "2026-05-02T16:05:05.249391Z"
+    },
+    {
+      "id": "msg_cde3b368d9af4b548e2f2dc2c2c5217d",
+      "role": "user",
+      "content": "I think it is composed of vitamin C , B12 and its not dedicated for adults",
+      "topic": null,
+      "mode": "training",
+      "timestamp": "2026-05-02T16:06:19.839964Z"
+    },
+    {
+      "id": "msg_fbe81314ccd94c3291b05cfc904e2ec4",
+      "role": "assistant",
+      "content": "Hello Raef! So you're going to present Hydra. That's a great product for skincare. Can you tell me more about what specific aspects of Hydra you'd like to discuss today?\n\n(Note: I'll ask a question to build on your previous answer)\n\nWhat do you mean by \"not dedicated for adults\"?",
+      "topic": null,
+      "mode": "training",
+      "source": "assistant",
+      "citations": [],
+      "timestamp": "2026-05-02T16:06:19.839997Z"
+    },
+    {
+      "id": "msg_94446478a4ef4f0eafb90cd97222372b",
+      "role": "user",
+      "content": "I mean it's forbidden for adults",
+      "topic": "indications",
+      "mode": "training",
+      "timestamp": "2026-05-02T16:08:55.346695Z"
+    },
+    {
+      "id": "msg_c1781d7ebe3f44d6b3011b4407dc9f93",
+      "role": "assistant",
+      "content": "So you're saying Hydra is not dedicated for adults. Can you elaborate on what specific concerns or limitations you have in mind?",
+      "topic": "indications",
+      "mode": "training",
+      "source": "json",
+      "citations": [],
+      "timestamp": "2026-05-02T16:08:55.346723Z"
+    }
+  ],
+  "user_facts": {
+    "name": "Raef",
+    "company": "",
+    "role": "rep",
+    "preferences": []
+  },
+  "turn_count": 7,
+  "last_sync_event_id": "evt_534eeaa598f54052b7bda66d426a7612"
+}

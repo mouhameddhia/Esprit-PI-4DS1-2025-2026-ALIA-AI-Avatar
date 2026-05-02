@@ -1,0 +1,43 @@
+{
+  "summary_memory": {
+    "user_profile": {
+      "name": "",
+      "company": "",
+      "role": "",
+      "preferences": []
+    },
+    "medical_topics": [],
+    "questions": [],
+    "decisions": [],
+    "source_message_ids": [],
+    "last_updated": ""
+  },
+  "recent_messages": [
+    {
+      "id": "msg_f6e15eb15b6049b5bc34ea486b1361fd",
+      "role": "user",
+      "content": "hey I'm present to you the composition on bactol.",
+      "topic": "composition",
+      "mode": "training",
+      "timestamp": "2026-05-02T19:35:30.756279Z"
+    },
+    {
+      "id": "msg_d04757ce8be74bef9ebaad211a641fb0",
+      "role": "assistant",
+      "content": "Hello! Thank you for reaching out. I'm happy to help with any product-specific medical/pharmaceutical questions you may have. What would you like to know about Bactol?",
+      "topic": "composition",
+      "mode": "training",
+      "source": "assistant",
+      "citations": [],
+      "timestamp": "2026-05-02T19:35:30.756316Z"
+    }
+  ],
+  "user_facts": {
+    "name": "",
+    "company": "",
+    "role": "",
+    "preferences": []
+  },
+  "turn_count": 1,
+  "last_sync_event_id": "evt_ab995786fe7e430eb2b46b69edeca78b"
+}

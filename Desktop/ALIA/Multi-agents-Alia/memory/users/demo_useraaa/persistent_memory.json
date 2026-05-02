@@ -1,0 +1,89 @@
+{
+  "memory": [
+    {
+      "type": "qa",
+      "input": "hello",
+      "output": "Hello! Nice to meet you. I'm a senior medical doctor here to help with any product-specific medical or pharmaceutical questions you may have. What's on your mind today?",
+      "metadata": {
+        "mode": "training",
+        "source": "assistant",
+        "topic": null,
+        "drug_name": null,
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T18:28:16.435076Z",
+      "event_id": "evt_c8656740c1594cc19c36cf377c4f0364"
+    },
+    {
+      "type": "qa",
+      "input": "i'm fred a mzedical rep ",
+      "output": "Hello Fred! Nice to meet you. As a senior medical doctor, I'm here to help with any product-specific medical or pharmaceutical questions you may have. Since you're a medical representative, I'd like to know what specific products you're familiar with and what kind of information you're looking for today?",
+      "metadata": {
+        "mode": "training",
+        "source": "assistant",
+        "topic": null,
+        "drug_name": null,
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T18:29:54.164108Z",
+      "event_id": "evt_e121b70cf3374a28aec2f2048c4e867f"
+    },
+    {
+      "type": "qa",
+      "input": "i'm presenting bactol ",
+      "output": "That's great that you're presenting Bactol! As a senior medical doctor, I'd like to know more about your experience with this product. What specific benefits or features do you think make it stand out from other antiseptic products on the market?",
+      "metadata": {
+        "mode": "training",
+        "source": "json",
+        "topic": "other",
+        "drug_name": "BACTOL",
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T18:31:40.354086Z",
+      "event_id": "evt_20def9c9becc46769cbbe14148ac1060"
+    },
+    {
+      "type": "qa",
+      "input": "it is composedf of 100g of fer and 100ml of milk",
+      "output": "Can you explain how the combination of fer and milk in Bactol contributes to its antiseptic properties?",
+      "metadata": {
+        "mode": "training",
+        "source": "json",
+        "topic": "mechanism_of_action",
+        "drug_name": "BACTOL",
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T18:34:00.159485Z",
+      "event_id": "evt_70eab558cf6649a4b45395ee539609eb"
+    },
+    {
+      "type": "qa",
+      "input": "is the composition wrong ",
+      "output": "I'm surprised to hear that Bactol's composition includes fer and milk. Can you explain how these ingredients work together to provide antiseptic properties?",
+      "metadata": {
+        "mode": "training",
+        "source": "json",
+        "topic": "mechanism_of_action",
+        "drug_name": "BACTOL",
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T18:35:29.284189Z",
+      "event_id": "evt_4acf0d2b54c7431092b708b44f142a74"
+    }
+  ]
+}

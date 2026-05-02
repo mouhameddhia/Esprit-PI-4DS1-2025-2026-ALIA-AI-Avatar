@@ -1,0 +1,79 @@
+{
+  "summary_memory": {
+    "user_profile": {
+      "name": "",
+      "company": "",
+      "role": "",
+      "preferences": []
+    },
+    "medical_topics": [],
+    "questions": [],
+    "decisions": [],
+    "source_message_ids": [],
+    "last_updated": ""
+  },
+  "recent_messages": [
+    {
+      "id": "msg_aad47d42bccd49c6a06d8b300cc7db98",
+      "role": "user",
+      "content": "i'm presenting bactol ",
+      "topic": "other",
+      "mode": "training",
+      "timestamp": "2026-05-02T18:31:40.424236Z"
+    },
+    {
+      "id": "msg_e66017b2fc1241bd80a4b322667a650a",
+      "role": "assistant",
+      "content": "That's great that you're presenting Bactol! As a senior medical doctor, I'd like to know more about your experience with this product. What specific benefits or features do you think make it stand out from other antiseptic products on the market?",
+      "topic": "other",
+      "mode": "training",
+      "source": "json",
+      "citations": [],
+      "timestamp": "2026-05-02T18:31:40.424277Z"
+    },
+    {
+      "id": "msg_3ceffd0691864517896c3c7cbd49a737",
+      "role": "user",
+      "content": "it is composedf of 100g of fer and 100ml of milk",
+      "topic": "mechanism_of_action",
+      "mode": "training",
+      "timestamp": "2026-05-02T18:34:00.162968Z"
+    },
+    {
+      "id": "msg_744a8711647d49ac8ac2c4d7af391d39",
+      "role": "assistant",
+      "content": "Can you explain how the combination of fer and milk in Bactol contributes to its antiseptic properties?",
+      "topic": "mechanism_of_action",
+      "mode": "training",
+      "source": "json",
+      "citations": [],
+      "timestamp": "2026-05-02T18:34:00.162999Z"
+    },
+    {
+      "id": "msg_e4e5e64fbf7e4ce9b0147a8106154a46",
+      "role": "user",
+      "content": "is the composition wrong ",
+      "topic": "mechanism_of_action",
+      "mode": "training",
+      "timestamp": "2026-05-02T18:35:29.290385Z"
+    },
+    {
+      "id": "msg_175ab5ab8c7e4f5fb2d2f38c726110b0",
+      "role": "assistant",
+      "content": "I'm surprised to hear that Bactol's composition includes fer and milk. Can you explain how these ingredients work together to provide antiseptic properties?",
+      "topic": "mechanism_of_action",
+      "mode": "training",
+      "source": "json",
+      "citations": [],
+      "timestamp": "2026-05-02T18:35:29.290422Z"
+    }
+  ],
+  "user_facts": {
+    "name": "",
+    "company": "",
+    "role": "",
+    "preferences": []
+  },
+  "turn_count": 5,
+  "last_sync_event_id": "evt_4acf0d2b54c7431092b708b44f142a74"
+}

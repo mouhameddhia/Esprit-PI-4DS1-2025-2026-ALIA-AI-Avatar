@@ -1,0 +1,79 @@
+{
+  "summary_memory": {
+    "user_profile": {
+      "name": "",
+      "company": "",
+      "role": "",
+      "preferences": []
+    },
+    "medical_topics": [],
+    "questions": [],
+    "decisions": [],
+    "source_message_ids": [],
+    "last_updated": ""
+  },
+  "recent_messages": [
+    {
+      "id": "msg_d4988e28b4024fde8b12921c76b1eb47",
+      "role": "user",
+      "content": "I will start with bactol.",
+      "topic": "indications",
+      "mode": "training",
+      "timestamp": "2026-05-02T16:15:02.665496Z"
+    },
+    {
+      "id": "msg_772b7ade9d914dc7a01c4fabe52bc647",
+      "role": "assistant",
+      "content": "Can you tell me more about why you'd like to present Bactol? What specific aspects of the product would you like to discuss?",
+      "topic": "indications",
+      "mode": "training",
+      "source": "json",
+      "citations": [],
+      "timestamp": "2026-05-02T16:15:02.665529Z"
+    },
+    {
+      "id": "msg_39065516bcd34314959eeada11033c38",
+      "role": "user",
+      "content": "Bactol is composed of 200 ml of Zinc ,B12 and it is forbidden for adults.",
+      "topic": "indications",
+      "mode": "training",
+      "timestamp": "2026-05-02T16:17:31.234233Z"
+    },
+    {
+      "id": "msg_cd16ff2b69d84078a55e04abeca52294",
+      "role": "assistant",
+      "content": "I understand that Bactol is composed of Zinc, B12, and it's forbidden for adults. Can you explain why this product is not suitable for adults?",
+      "topic": "indications",
+      "mode": "training",
+      "source": "json",
+      "citations": [],
+      "timestamp": "2026-05-02T16:17:31.234270Z"
+    },
+    {
+      "id": "msg_9f71449c7fe04e438f6076978c3602e3",
+      "role": "user",
+      "content": "what is composition of bactol?",
+      "topic": "composition",
+      "mode": "commercial",
+      "timestamp": "2026-05-02T16:19:02.791425Z"
+    },
+    {
+      "id": "msg_d733d0cde9dc4eca88f3d791a420692b",
+      "role": "assistant",
+      "content": "EN: 1) BACTOL Professional Soap (90g): Benzalkonium chloride 0.18g; 2) BACTOL Disinfectant Spray (125ml): Alcohol 95° at 65%; 3) BACTOL Disinfectant Gel (125ml): Alcohol 70%, Benzalkonium chloride 0.2%.\nFR: 1) BACTOL Savon Professionnel (90g) : Chlorure de benzalkonium 0,18 g ; 2) BACTOL Spray Désinfectant (125 ml) : Alcool 95° à 65 % ; 3) BACTOL Gel Désinfectant (125 ml) : Alcool 70 %, Chlorure de benzalkonium 0,2 %.",
+      "topic": "composition",
+      "mode": "commercial",
+      "source": "json",
+      "citations": [],
+      "timestamp": "2026-05-02T16:19:02.791464Z"
+    }
+  ],
+  "user_facts": {
+    "name": "Raef",
+    "company": "",
+    "role": "doctor",
+    "preferences": []
+  },
+  "turn_count": 5,
+  "last_sync_event_id": "evt_577f144e4cf540028d43af9cbca988e6"
+}

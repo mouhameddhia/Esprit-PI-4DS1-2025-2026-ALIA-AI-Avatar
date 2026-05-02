@@ -1,0 +1,119 @@
+{
+  "memory": [
+    {
+      "type": "user_fact",
+      "content": "User name is Raef",
+      "key": "name",
+      "value": "Raef",
+      "timestamp": "2026-05-02T16:10:55.103916Z",
+      "event_id": "evt_d46563a22abd406cba1ef3bd07e426a8"
+    },
+    {
+      "type": "user_fact",
+      "content": "User role is rep",
+      "key": "role",
+      "value": "rep",
+      "timestamp": "2026-05-02T16:10:55.151888Z",
+      "event_id": "evt_79b2b71ee85d47888475d3598a5b0a17"
+    },
+    {
+      "type": "statement",
+      "content": "hello my name is Raef , I'm medical representative",
+      "timestamp": "2026-05-02T16:10:55.227144Z",
+      "event_id": "evt_80e0c180a2c44b50b9a3fc0a8245f170"
+    },
+    {
+      "type": "qa",
+      "input": "hello my name is Raef , I'm medical representative",
+      "output": "Hello Raef! Nice to meet you. As a senior medical doctor, I'm here to help with any product-specific medical/pharmaceutical questions you may have. What brings you to this conversation today?",
+      "metadata": {
+        "mode": "training",
+        "source": "assistant",
+        "topic": null,
+        "drug_name": null,
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T16:11:08.423022Z",
+      "event_id": "evt_3b681c7fc4924aa2a5c028683df0f7bb"
+    },
+    {
+      "type": "user_fact",
+      "content": "User role is doctor",
+      "key": "role",
+      "value": "doctor",
+      "timestamp": "2026-05-02T16:11:45.607458Z",
+      "event_id": "evt_912fa229773443a4858446e27ccb9796"
+    },
+    {
+      "type": "qa",
+      "input": "I'm here to present you a collection of medecines .",
+      "output": "Can you tell me more about this collection of medicines you'd like to present?",
+      "metadata": {
+        "mode": "training",
+        "source": "assistant",
+        "topic": "other",
+        "drug_name": null,
+        "confidence": 0.85,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T16:13:09.392215Z",
+      "event_id": "evt_94f568c8c4ae4eafaf151a19780fb439"
+    },
+    {
+      "type": "qa",
+      "input": "I will start with bactol.",
+      "output": "Can you tell me more about why you'd like to present Bactol? What specific aspects of the product would you like to discuss?",
+      "metadata": {
+        "mode": "training",
+        "source": "json",
+        "topic": "indications",
+        "drug_name": "BACTOL",
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T16:15:02.662518Z",
+      "event_id": "evt_dacf99d73a314c7e98cbfaf82cfe3f63"
+    },
+    {
+      "type": "qa",
+      "input": "Bactol is composed of 200 ml of Zinc ,B12 and it is forbidden for adults.",
+      "output": "I understand that Bactol is composed of Zinc, B12, and it's forbidden for adults. Can you explain why this product is not suitable for adults?",
+      "metadata": {
+        "mode": "training",
+        "source": "json",
+        "topic": "indications",
+        "drug_name": "BACTOL",
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T16:17:31.230866Z",
+      "event_id": "evt_052ee3f8fadd4499abb30b9c7adf506f"
+    },
+    {
+      "type": "qa",
+      "input": "what is composition of bactol?",
+      "output": "EN: 1) BACTOL Professional Soap (90g): Benzalkonium chloride 0.18g; 2) BACTOL Disinfectant Spray (125ml): Alcohol 95° at 65%; 3) BACTOL Disinfectant Gel (125ml): Alcohol 70%, Benzalkonium chloride 0.2%.\nFR: 1) BACTOL Savon Professionnel (90g) : Chlorure de benzalkonium 0,18 g ; 2) BACTOL Spray Désinfectant (125 ml) : Alcool 95° à 65 % ; 3) BACTOL Gel Désinfectant (125 ml) : Alcool 70 %, Chlorure de benzalkonium 0,2 %.",
+      "metadata": {
+        "mode": "commercial",
+        "source": "json",
+        "topic": "composition",
+        "drug_name": "BACTOL",
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T16:19:02.786489Z",
+      "event_id": "evt_577f144e4cf540028d43af9cbca988e6"
+    }
+  ]
+}

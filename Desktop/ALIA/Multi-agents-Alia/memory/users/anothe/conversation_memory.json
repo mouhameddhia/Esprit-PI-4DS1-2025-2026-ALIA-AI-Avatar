@@ -1,0 +1,43 @@
+{
+  "summary_memory": {
+    "user_profile": {
+      "name": "",
+      "company": "",
+      "role": "",
+      "preferences": []
+    },
+    "medical_topics": [],
+    "questions": [],
+    "decisions": [],
+    "source_message_ids": [],
+    "last_updated": ""
+  },
+  "recent_messages": [
+    {
+      "id": "msg_5eb240d3f5e04a1e97332a6a04e2bac2",
+      "role": "user",
+      "content": "Hello  I'm going to present bactol",
+      "topic": null,
+      "mode": "training",
+      "timestamp": "2026-05-02T19:36:47.654309Z"
+    },
+    {
+      "id": "msg_8efb7da3c2c646e99b5dd0ad118715e8",
+      "role": "assistant",
+      "content": "Welcome! It's great to connect with you. I'm here to help with any product-specific medical or pharmaceutical questions related to Bactol. What would you like to discuss about this product?",
+      "topic": null,
+      "mode": "training",
+      "source": "assistant",
+      "citations": [],
+      "timestamp": "2026-05-02T19:36:47.654347Z"
+    }
+  ],
+  "user_facts": {
+    "name": "",
+    "company": "",
+    "role": "",
+    "preferences": []
+  },
+  "turn_count": 1,
+  "last_sync_event_id": "evt_6b77785191d2415e991f01798614ec5d"
+}
