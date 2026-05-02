@@ -6,6 +6,7 @@ import inspect
 import re
 import sys
 from pathlib import Path
+from typing import Any
 
 import streamlit as st
 
@@ -14,10 +15,24 @@ if str(WORKSPACE_ROOT) not in sys.path:
     sys.path.insert(0, str(WORKSPACE_ROOT))
 
 from hybrid_medical_agent.agent.controller import HybridMedicalController
+from hybrid_medical_agent.agent.competency_framework import (
+    COMPETENCY_LEVELS,
+    CompetencyLevel,
+    coerce_competency_level,
+    get_competency_training_brief,
+)
+from hybrid_medical_agent.agent.persistent_memory import PersistentMemoryStore
+from hybrid_medical_agent.agent.user_memory_namespace import UserMemoryNamespace
 
 TRAINING_MODE = "Training Mode"
 COMMERCIAL_MODE = "Commercial Mode"
 MODE_OPTIONS = [TRAINING_MODE, COMMERCIAL_MODE]
+COMPETENCY_OPTIONS = [
+    CompetencyLevel.BEGINNER,
+    CompetencyLevel.JUNIOR,
+    CompetencyLevel.CONFIRMED,
+    CompetencyLevel.EXPERT,
+]
 LANGUAGE_OPTIONS = {
     "Auto-detect": "auto",
     "English": "en",
@@ -26,13 +41,14 @@ LANGUAGE_OPTIONS = {
 
 
 @st.cache_resource
-def get_controller(llm_model: str, llm_base_url: str) -> HybridMedicalController:
+def get_controller(llm_model: str, llm_base_url: str, competency_level: CompetencyLevel) -> HybridMedicalController:
     """Create one controller instance per UI configuration."""
 
     return HybridMedicalController(
         workspace_root=WORKSPACE_ROOT,
         llm_model=llm_model,
         llm_base_url=llm_base_url,
+        competency_level=competency_level,
     )
 
 
@@ -77,6 +93,7 @@ def ensure_conversation_state(mode: str) -> dict:
                 "summary_memory": {},
             },
             "turn_count": 0,
+            "alia_level": CompetencyLevel.JUNIOR.value,
         }
     return st.session_state[state_key]
 
@@ -95,6 +112,77 @@ def ensure_session_memory(mode: str) -> dict:
             }
         }
     return st.session_state[key]
+
+
+def _level_label(level: CompetencyLevel) -> str:
+    return f"Level {level.value} - {level.name}"
+
+
+def _render_competency_reference(level: CompetencyLevel) -> None:
+    profile = COMPETENCY_LEVELS[level]
+    st.markdown(f"**{_level_label(level)}**")
+    st.caption(profile.profile_description)
+    st.markdown(
+        f"""
+**Visit structure**
+{profile.visit_structure}
+
+**Questions**
+{profile.min_questions}-{profile.max_questions} per interaction, depth: {profile.question_depth}
+
+**Objections**
+{profile.objections_to_handle} objections, types: {', '.join(profile.objection_types)}
+
+**Knowledge scope**
+{profile.product_knowledge_depth}
+
+**Limits**
+{chr(10).join(f'- {item}' for item in profile.limitations)}
+
+**KPI**
+{profile.kpi_score}
+"""
+    )
+
+
+def _render_training_flow(level: CompetencyLevel) -> None:
+    st.markdown("### Training Flow")
+    st.code(
+        "User input -> Language detect -> Intent classify -> Product resolve -> Memory/context load -> JSON KB -> RAG fallback -> Training brain decision -> Safety/repetition guard -> Response",
+        language="text",
+    )
+    st.markdown("### Active Level Brief")
+    st.text(get_competency_training_brief(level))
+
+
+def _process_user_message(
+    *,
+    controller: HybridMedicalController,
+    mode: str,
+    user_id: str,
+    selected_language: str,
+    preferred_drug: str | None,
+    conversation_state: dict,
+    history: list[dict[str, str]],
+    user_message: str,
+    session_reset_flag: bool,
+) -> Any:
+    """Run the controller once and normalize the response payload."""
+
+    query_kwargs = {
+        "mode": "training" if mode == TRAINING_MODE else "commercial",
+        "preferred_drug_name": preferred_drug,
+        "messages": history,
+        "conversation_state": conversation_state if mode == TRAINING_MODE else None,
+    }
+    if "user_id" in inspect.signature(controller.handle_query).parameters:
+        query_kwargs["user_id"] = user_id
+    if "preferred_language" in inspect.signature(controller.handle_query).parameters:
+        query_kwargs["preferred_language"] = selected_language
+    if "session_reset" in inspect.signature(controller.handle_query).parameters:
+        query_kwargs["session_reset"] = session_reset_flag
+
+    return controller.handle_query(user_message, **query_kwargs)
 
 
 def _extract_name_from_message(message: str) -> str | None:
@@ -232,9 +320,46 @@ def main() -> None:
         llm_model = st.text_input("LLM Model", value="llama3:8b")
         llm_base_url = st.text_input("LLM Base URL", value="http://localhost:11434")
         user_id = st.text_input("Authenticated User ID", value="demo_user", help="Memory namespace key for the current authenticated user.")
-        controller = get_controller(llm_model=llm_model, llm_base_url=llm_base_url)
-        active_memory_paths = controller.user_memory_namespace.resolve(user_id)
+        memory_namespace = UserMemoryNamespace(WORKSPACE_ROOT)
+        memory_paths = memory_namespace.resolve(user_id=user_id)
+        user_memory = PersistentMemoryStore(
+            memory_paths.persistent_path,
+            conversation_path=memory_paths.conversation_path,
+        )
+
+        selected_competency_level = CompetencyLevel.JUNIOR
+        if mode == TRAINING_MODE:
+            stored_level = user_memory.get_competency_level()
+            default_competency_level = coerce_competency_level(stored_level) if stored_level else CompetencyLevel.JUNIOR
+            competency_widget_key = f"training_competency_level_{memory_paths.user_id}"
+            if competency_widget_key not in st.session_state:
+                st.session_state[competency_widget_key] = default_competency_level
+            selected_competency_level = st.selectbox(
+                "Training competency level",
+                options=COMPETENCY_OPTIONS,
+                index=COMPETENCY_OPTIONS.index(st.session_state[competency_widget_key]),
+                format_func=_level_label,
+                key=competency_widget_key,
+                help="Drive the medical-rep training behavior by level before sending anything to Unreal.",
+            )
+        controller = get_controller(llm_model=llm_model, llm_base_url=llm_base_url, competency_level=selected_competency_level)
+        active_memory_paths = memory_paths
         st.caption(f"Active conversation memory file: {active_memory_paths.conversation_path.relative_to(WORKSPACE_ROOT)}")
+
+        if mode == TRAINING_MODE:
+            current_level_value = user_memory.get_competency_level()
+            selected_level_value = str(selected_competency_level.value)
+            if current_level_value != selected_level_value:
+                user_memory.set_competency_level(selected_level_value)
+
+        if mode == TRAINING_MODE:
+            st.session_state[f"conv_state_{mode}"] = ensure_conversation_state(mode)
+            st.session_state[f"conv_state_{mode}"]["alia_level"] = selected_competency_level.value
+            with st.expander("Competency reference", expanded=True):
+                _render_competency_reference(selected_competency_level)
+
+        with st.expander("Training flow", expanded=False):
+            _render_training_flow(selected_competency_level)
 
         available_drugs = controller.json_retriever.drug_names
         if available_drugs:
@@ -247,6 +372,17 @@ def main() -> None:
         else:
             selected_drug = "(auto-detect)"
             st.info("No products found in the JSON knowledge base yet.")
+
+        if mode == TRAINING_MODE:
+            st.subheader("Quick test prompt")
+            test_prompt = st.text_area(
+                "Use this to test the current level before Unreal",
+                value="What is the composition of Hydra, and how would you explain it to a doctor?",
+                height=100,
+            )
+            if st.button("Run test prompt"):
+                st.session_state[f"pending_test_message_{mode}"] = test_prompt
+                st.rerun()
 
         if st.button("Reset current mode conversation"):
             if hasattr(controller, "reset_session"):
@@ -283,6 +419,7 @@ def main() -> None:
     conversation_state = ensure_conversation_state(mode)
     session_memory = ensure_session_memory(mode)
     reset_flag_key = f"session_reset_{mode}"
+    pending_message_key = f"pending_test_message_{mode}"
     session_reset_flag = bool(st.session_state.get(reset_flag_key, False))
     render_messages(history)
 
@@ -291,9 +428,13 @@ def main() -> None:
     else:
         prompt_text = "Ask about a product, composition, dosage, indications, or safety..."
 
-    user_message = st.chat_input(prompt_text)
+    pending_user_message = st.session_state.get(pending_message_key)
+    user_message = pending_user_message or st.chat_input(prompt_text)
     if not user_message:
         return
+
+    if pending_user_message:
+        st.session_state[pending_message_key] = None
 
     history.append({"role": "user", "content": user_message})
 
@@ -303,20 +444,17 @@ def main() -> None:
     preferred_drug = None if selected_drug == "(auto-detect)" else selected_drug
 
     with st.spinner("Doctor is reviewing the available knowledge..."):
-        query_kwargs = {
-            "mode": "training" if mode == TRAINING_MODE else "commercial",
-            "preferred_drug_name": preferred_drug,
-            "messages": history,  # PASS FULL CONVERSATION HISTORY to avoid repetitive loops
-            "conversation_state": conversation_state if mode == TRAINING_MODE else None,
-        }
-        if "user_id" in inspect.signature(controller.handle_query).parameters:
-            query_kwargs["user_id"] = user_id
-        if "preferred_language" in inspect.signature(controller.handle_query).parameters:
-            query_kwargs["preferred_language"] = selected_language
-        if "session_reset" in inspect.signature(controller.handle_query).parameters:
-            query_kwargs["session_reset"] = session_reset_flag
-
-        result = controller.handle_query(user_message, **query_kwargs)
+        result = _process_user_message(
+            controller=controller,
+            mode=mode,
+            user_id=user_id,
+            selected_language=selected_language,
+            preferred_drug=preferred_drug,
+            conversation_state=conversation_state,
+            history=history,
+            user_message=user_message,
+            session_reset_flag=session_reset_flag,
+        )
         st.session_state[reset_flag_key] = False
 
     # Keep UI session memory synchronized with persisted user facts.
@@ -372,6 +510,8 @@ def main() -> None:
                 conversation_state["conversation_phase"] = "clinical_exploration"
         if conversation_state["product_locked"] and conversation_state["conversation_phase"] == "clinical_exploration" and result.topic in {"mechanism_of_action", "warnings", "dosage"}:
             conversation_state["conversation_phase"] = "advanced_probe"
+        if "alia_level" not in conversation_state:
+            conversation_state["alia_level"] = selected_competency_level.value
 
     st.rerun()
 

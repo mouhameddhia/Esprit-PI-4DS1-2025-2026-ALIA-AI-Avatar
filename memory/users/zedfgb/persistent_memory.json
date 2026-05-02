@@ -1,0 +1,21 @@
+{
+  "memory": [
+    {
+      "type": "qa",
+      "input": "hello",
+      "output": "Hello! It's great to connect with you today. I'm happy to help with any product-specific medical or pharmaceutical questions you may have. What's on your mind?",
+      "metadata": {
+        "mode": "training",
+        "source": "assistant",
+        "topic": null,
+        "drug_name": null,
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T19:48:33.923454Z",
+      "event_id": "evt_f41cd50d6bf54b38989e0966845f5774"
+    }
+  ]
+}

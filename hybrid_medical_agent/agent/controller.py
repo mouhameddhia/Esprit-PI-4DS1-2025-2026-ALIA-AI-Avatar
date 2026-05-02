@@ -9,6 +9,7 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
+from .competency_framework import CompetencyLevel, coerce_competency_level
 from .intent_detector import DetectedIntent, detect_intent
 from .json_retriever import JSONRetriever
 from .llm_interface import COMMERCIAL_DOCTOR_SYSTEM_PROMPT, TRAINING_DOCTOR_SYSTEM_PROMPT, DoctorLLM
@@ -19,6 +20,8 @@ from .user_memory_namespace import UserMemoryNamespace
 
 NO_KB_MESSAGE = "No information available in knowledge base"
 NO_KB_MESSAGE_FR = "Aucune information disponible dans la base de connaissances"
+CONFIRM_INFO_MESSAGE = "I will confirm this information."
+CONFIRM_INFO_MESSAGE_FR = "Je vais confirmer cette information."
 CLARIFY_PRODUCT_MESSAGE = "Please specify the product/drug name so I can provide the exact medical information."
 CLARIFY_PRODUCT_MESSAGE_FR = "Veuillez preciser le nom du produit/medicament afin que je puisse fournir l'information medicale exacte."
 
@@ -171,6 +174,8 @@ RAG_LEARNING_CONFIDENCE_THRESHOLD = 0.85
 RAG_LEARNING_ENABLED = os.getenv("ALIA_ENABLE_RAG_LEARNING", "0") == "1"
 RAG_LEARNING_MIN_DIAGNOSTIC_CONFIDENCE = 0.75
 LLM_ROUTER_LABELS = {"medical", "greeting", "product_discussion", "off_topic"}
+VALIDATION_OK = "OK"
+VALIDATION_CONTRADICTION = "CONTRADICTION_DETECTED"
 
 @dataclass
 class AgentResponse:
@@ -222,11 +227,18 @@ class HybridMedicalController:
         workspace_root: Path,
         llm_model: str = "llama3:8b",
         llm_base_url: str = "http://localhost:11434",
+        competency_level = None,
     ) -> None:
+        from .competency_framework import CompetencyLevel
+        
         self.workspace_root = workspace_root
         self.json_retriever = JSONRetriever(workspace_root=workspace_root)
         self.rag_adapter = RAGAdapter(workspace_root=workspace_root)
-        self.llm = DoctorLLM(model=llm_model, base_url=llm_base_url)
+        
+        # Use competency level if provided, otherwise default to JUNIOR
+        self.competency_level = competency_level or CompetencyLevel.JUNIOR
+        self.llm = DoctorLLM(model=llm_model, base_url=llm_base_url, competency_level=self.competency_level)
+        
         self.training_brain = TrainingBrain(model=llm_model, base_url=llm_base_url)
         self.user_memory_namespace = UserMemoryNamespace(workspace_root=workspace_root)
         self.active_user_id = "anonymous"
@@ -1015,8 +1027,14 @@ class HybridMedicalController:
         question: str,
         resolved_drug: str | None,
         last_topic: str | None,
+        conversation_state: dict[str, str] | None = None,
     ) -> int:
         """Estimate ALIA level from conversation depth and complexity."""
+        if isinstance(conversation_state, dict):
+            forced_level = conversation_state.get("alia_level") or conversation_state.get("forced_alia_level")
+            if forced_level is not None:
+                return coerce_competency_level(forced_level).value
+
         level = 2
         turn_count = int(context.get("turn_count", 0))
         topic_count = len(context.get("topics_covered", set()))
@@ -1034,6 +1052,315 @@ class HybridMedicalController:
             level = max(level, 4)
 
         return max(1, min(4, level))
+
+    def _validate_rep_answer_against_kb(
+        self,
+        rep_answer: str,
+        resolved_drug: str | None,
+        alia_level: int,
+        language: str,
+        knowledge_context: str,
+    ) -> str | None:
+        """
+        Validate rep answer against JSON KB facts and generate level-appropriate objections.
+        
+        Returns objection message if factual mismatch detected, None otherwise.
+        """
+        if not rep_answer or not resolved_drug:
+            return None
+        
+        # Don't validate greetings or clarification questions
+        if any(
+            token in rep_answer.lower()
+            for token in ["hello", "hi", "good morning", "bonjour", "salut"]
+        ):
+            return None
+        
+        # Extract the payload for the product
+        payload = self.json_retriever.get_payload(resolved_drug)
+        if payload is None:
+            return None
+        
+        # Build ground truth facts from payload
+        ground_truth = {
+            "indications": self._extract_field(payload, "indications"),
+            "composition": self._extract_field(payload, "composition"),
+            "dosage": self._extract_field(payload, "dosage"),
+            "warnings": self._extract_field(payload, "warnings"),
+            "side_effects": self._extract_field(payload, "side_effects"),
+            "benefits": self._extract_field(payload, "benefits") or self._extract_field(payload, "key_benefits"),
+        }
+        
+        # Detect factual claims in rep answer
+        detected_claims = self._extract_claims_from_answer(rep_answer, language)
+        
+        # Check each claim against ground truth
+        mismatches = []
+        for claim_type, claim_text in detected_claims:
+            mismatch = self._check_claim_against_ground_truth(
+                claim_type=claim_type,
+                claim_text=claim_text,
+                ground_truth=ground_truth,
+            )
+            if mismatch:
+                mismatches.append(mismatch)
+        
+        validation_flag = VALIDATION_CONTRADICTION if mismatches else VALIDATION_OK
+
+        # Generate objection if mismatches found
+        if validation_flag == VALIDATION_CONTRADICTION:
+            return self._generate_objection(
+                mismatches=mismatches,
+                resolved_drug=resolved_drug,
+                alia_level=alia_level,
+                language=language,
+                payload=payload,
+            )
+        
+        return None
+    
+    @staticmethod
+    def _extract_field(payload: dict, field_name: str) -> str | None:
+        """Extract a field from payload, handling bilingual and nested structures."""
+        value = payload.get(field_name)
+        if value is None:
+            return None
+        
+        # Handle bilingual dict format: {"en": "...", "fr": "..."}
+        if isinstance(value, dict):
+            # Coerce None to empty string to avoid TypeError when concatenating
+            en = value.get("en") or ""
+            fr = value.get("fr") or ""
+            combined = (str(en).strip() + " " + str(fr).strip()).strip()
+            return combined if combined else None
+        
+        # Handle string
+        if isinstance(value, str):
+            return value.strip() if value.strip() else None
+        
+        # Handle list of strings
+        if isinstance(value, list):
+            texts = [str(item).strip() for item in value if isinstance(item, str)]
+            return " ".join(texts) if texts else None
+        
+        return None
+    
+    @staticmethod
+    def _extract_claims_from_answer(rep_answer: str, language: str) -> list[tuple[str, str]]:
+        """
+        Extract factual claims from rep answer.
+        Returns list of (claim_type, claim_text) tuples.
+        """
+        claims = []
+        lowered = rep_answer.lower()
+        
+        # Indication claims: "is used for X", "treats X", "indicated for X"
+        indication_patterns = [
+            r"(?:is used for|treats|indicated for|indication[s]?|used in)\s+([^.!?]+)",
+            r"(?:cures|heals|prevents)\s+([^.!?]+)",
+            r"(?:recommended for|suitable for)\s+([^.!?]+)",
+        ]
+        for pattern in indication_patterns:
+            matches = re.findall(pattern, lowered, re.IGNORECASE)
+            for match in matches:
+                claims.append(("indications", match.strip()))
+        
+        # Composition claims: "composed of X", "contains X", "ingredients"
+        composition_patterns = [
+            r"(?:is\s+composed\s+of|composed\s+of|made\s+of|contains|composition\s+(?:is|of)|active ingredient[s]?|ingredient[s]?)\s+([^.!?]+)",
+        ]
+        for pattern in composition_patterns:
+            matches = re.findall(pattern, lowered, re.IGNORECASE)
+            for match in matches:
+                claims.append(("composition", match.strip()))
+
+        # Dosage claims: "dose is X", "mg"
+        dosage_patterns = [
+            r"(?:dose|dosage|dosing)\s+(?:is|of)?\s+([^.!?]+)",
+            r"(\d+\s*(?:mg|ml|g|gr))",
+        ]
+        for pattern in dosage_patterns:
+            matches = re.findall(pattern, lowered, re.IGNORECASE)
+            for match in matches:
+                claims.append(("dosage", match.strip()))
+        
+        # Benefit/usage claims: "helps with X", "improves X", "reduces X"
+        benefit_patterns = [
+            r"(?:helps with|improves|reduces|alleviates|eliminates)\s+([^.!?]+)",
+            r"(?:benefit[s]?|advantage[s]?)\s+(?:is|are)?\s+([^.!?]+)",
+            r"(?:best for|ideal for|perfect for)\s+([^.!?]+)",
+        ]
+        for pattern in benefit_patterns:
+            matches = re.findall(pattern, lowered, re.IGNORECASE)
+            for match in matches:
+                claims.append(("benefits", match.strip()))
+        
+        # Warning/safety claims: "side effects are X", "warning", "dangerous"
+        warning_patterns = [
+            r"(?:side effect[s]?|adverse effect[s]?)\s+(?:is|are|include[s]?)\s+([^.!?]+)",
+            r"(?:contraindicated|warning|caution|danger)\s+([^.!?]+)",
+        ]
+        for pattern in warning_patterns:
+            matches = re.findall(pattern, lowered, re.IGNORECASE)
+            for match in matches:
+                claims.append(("warnings", match.strip()))
+        
+        return claims
+    
+    @staticmethod
+    def _check_claim_against_ground_truth(
+        claim_type: str,
+        claim_text: str,
+        ground_truth: dict,
+    ) -> dict | None:
+        """
+        Check if a claim matches ground truth.
+        Returns mismatch dict if mismatch found, None if OK.
+        """
+        ground = ground_truth.get(claim_type, "").lower()
+        if not ground:
+            # No ground truth available for this claim type
+            return None
+        
+        claim_lower = claim_text.lower()
+        claim_tokens = {token for token in re.split(r"[^a-z0-9]+", claim_lower) if token}
+        ground_tokens = {token for token in re.split(r"[^a-z0-9]+", ground) if token}
+
+        stop_tokens = {
+            "the", "a", "an", "and", "of", "to", "for", "with", "is", "are", "be", "of", "in", "on", "as", "it", "this", "that", "these", "those"
+        }
+        claim_content = {token for token in claim_tokens if token not in stop_tokens}
+        ground_content = {token for token in ground_tokens if token not in stop_tokens}
+
+        # Composition claims are stricter: if the user names ingredients or units
+        # not present in validated composition text, treat it as a contradiction.
+        if claim_type == "composition":
+            suspicious_tokens = {"milk", "vitamin", "c", "mg", "ml", "g", "grams", "gram", "milligram", "milliliter"}
+            if claim_content & suspicious_tokens and not (claim_content <= ground_content):
+                return {
+                    "claim_type": claim_type,
+                    "claim_text": claim_text,
+                    "ground_truth": ground_truth.get(claim_type, ""),
+                }
+        
+        # Allow significant overlap (word-based match)
+        overlap = len(claim_content & ground_content)
+        min_required = max(1, len(claim_content) // 2)
+        
+        if overlap >= min_required:
+            # Claim matches ground truth
+            return None
+        
+        # Mismatch detected
+        return {
+            "claim_type": claim_type,
+            "claim_text": claim_text,
+            "ground_truth": ground_truth.get(claim_type, ""),
+        }
+    
+    def _generate_objection(
+        self,
+        mismatches: list[dict],
+        resolved_drug: str,
+        alia_level: int,
+        language: str,
+        payload: dict,
+    ) -> str:
+        """
+        Generate professional, level-aware objection message.
+        """
+        # Use the DoctorLLM to craft a level-aware objection message grounded
+        # in the authoritative product JSON context. Enforce mandatory
+        # interruption and correction behavior. For CONFIRMED/EXPERT levels
+        # (3,4) use STRICT_CORRECTION mode and never suppress the objection.
+        from .competency_framework import get_competency_profile, CompetencyLevel
+
+        profile = get_competency_profile(CompetencyLevel(alia_level))
+
+        # Build context text from payload (use JSON retriever helper if available)
+        try:
+            knowledge_context = self.json_retriever.build_full_context(payload, drug_name=resolved_drug)
+        except Exception:
+            knowledge_context = json.dumps(payload, ensure_ascii=False)
+
+        # Prepare concise instruction for the LLM to produce the objection.
+        primary_mismatch = mismatches[0]
+        claim_type = primary_mismatch.get("claim_type", "claim")
+        claim_text = primary_mismatch.get("claim_text", "")
+        ground = primary_mismatch.get("ground_truth", "(no ground truth available)")
+        strict_correction = alia_level >= CompetencyLevel.CONFIRMED.value if isinstance(alia_level, int) else alia_level in (3, 4)
+
+        # Instruction template enforces immediate interruption and correction.
+        strict_tag = "MODE: STRICT_CORRECTION\n" if strict_correction else ""
+        tone_note = (
+            "Use a firmer, authoritative tone and state you are the medical expert responsible for accuracy.\n"
+            if strict_correction
+            else "Use a professional, corrective coaching tone.\n"
+        )
+
+        if language == "fr":
+            user_prompt = (
+                f"{strict_tag}You are training a medical representative at level {profile.name}. {tone_note}"
+                f"A representative stated: \"{claim_text}\" regarding {resolved_drug} ({claim_type}).\n\n"
+                "MANDATORY FORMAT (French):\n"
+                "0) Begin with: 'Ceci est incorrect.'\n"
+                "1) State the incorrect fragment directly, then give the correction.\n"
+                "2) Provide the correct version EXACTLY as found in the product context (quote).\n"
+                "3) Briefly explain (1 sentence) why the original statement is incorrect, using only the product context.\n"
+                "4) Prompt the rep to restate the corrected presentation in one sentence.\n"
+                "Do NOT ask for clarification, do NOT continue discussion before correcting, do NOT invent information.\n\n"
+                f"PRODUCT CONTEXT:\n{knowledge_context}\n\n"
+                "Return only the objection message following the mandatory format, or an empty string if the claim is fully supported by the context."
+            )
+        else:
+            user_prompt = (
+                f"{strict_tag}You are training a medical representative at level {profile.name}. {tone_note}"
+                f"A representative stated: \"{claim_text}\" regarding {resolved_drug} ({claim_type}).\n\n"
+                "MANDATORY FORMAT (English):\n"
+                "0) Begin with: 'This is incorrect.'\n"
+                "1) State the incorrect fragment directly, then give the correction.\n"
+                "2) Provide the correct version EXACTLY as found in the product context (quote).\n"
+                "3) Briefly explain (1 sentence) why the original statement is incorrect, using only the product context.\n"
+                "4) Prompt the rep to restate the corrected presentation in one sentence.\n"
+                "Do NOT ask for clarification, do NOT continue discussion before correcting, do NOT invent information.\n\n"
+                f"PRODUCT CONTEXT:\n{knowledge_context}\n\n"
+                "Return only the objection message following the mandatory format, or an empty string if the claim is fully supported by the context."
+            )
+
+        try:
+            llm_resp = self.llm.generate(
+                context=knowledge_context,
+                user_input=user_prompt,
+                conversation_history=None,
+            )
+            objection_text = llm_resp.answer.strip()
+            # If LLM returned nothing or an unavailable notice, enforce
+            # deterministic correction for ALL levels (tone varies by level).
+            if not objection_text or objection_text.lower().startswith("information not available"):
+                if language == "fr":
+                    prefix = "Ceci est incorrect" if alia_level == 1 else "Ceci est incorrect" if alia_level == 2 else "Ceci est incorrect" if alia_level == 3 else "Ceci est incorrect"
+                    return (
+                        f"{prefix}. {claim_text}.\n\n"
+                        f"La composition correcte est : {ground}.\n\n"
+                        f"La source produit indique explicitement ces informations."
+                    )
+                prefix = "This is incorrect"
+                return (
+                    f"{prefix}. {claim_text}.\n\n"
+                    f"The correct composition is: {ground}.\n\n"
+                    f"The product source explicitly states this information."
+                )
+            return objection_text
+        except Exception:
+            # Fail gracefully to deterministic template if LLM call fails.
+            mismatch = primary_mismatch
+            if language == "fr":
+                return (
+                    f"Ceci est incorrect. {mismatch.get('claim_text','')}. La composition correcte est : {mismatch.get('ground_truth','')}."
+                )
+            return (
+                f"This is incorrect. {mismatch.get('claim_text','')}. The correct composition is: {mismatch.get('ground_truth','')}."
+            )
 
     def handle_query(
         self,
@@ -1213,6 +1540,7 @@ class HybridMedicalController:
                 question=question,
                 resolved_drug=resolved_drug,
                 last_topic=last_topic,
+                conversation_state=conversation_state,
             )
 
             knowledge_source = "assistant"
@@ -1282,6 +1610,35 @@ class HybridMedicalController:
                 forced_language=language,
             )
 
+            # Validate rep answer against KB facts and generate objection if needed
+            objection = self._validate_rep_answer_against_kb(
+                rep_answer=question,
+                resolved_drug=resolved_drug,
+                alia_level=alia_level,
+                language=language,
+                knowledge_context=knowledge_context,
+            )
+
+            # If objection generated, stop the normal doctor prompt immediately
+            # and return the correction as the primary response.
+            if objection:
+                return self._finalize_response(
+                    question=question,
+                    mode=mode,
+                    response=AgentResponse(
+                        answer=objection,
+                        source="validator",
+                        context=knowledge_context,
+                        topic=decision.topic or last_topic or intent.topic,
+                        drug_name=resolved_drug,
+                        confidence=1.0,
+                        follow_up=None,
+                    ),
+                )
+
+            final_message = decision.message
+            follow_up_text = None
+
             if training_state.product_locked and resolved_drug is None:
                 resolved_drug = training_state.current_product
 
@@ -1289,13 +1646,13 @@ class HybridMedicalController:
                 question=question,
                 mode=mode,
                 response=AgentResponse(
-                    answer=decision.message,
+                    answer=final_message,
                     source=knowledge_source,
                     context=knowledge_context,
                     topic=decision.topic or last_topic or intent.topic,
                     drug_name=resolved_drug,
                     confidence=confidence if knowledge_context else 0.85,
-                    follow_up=None,
+                    follow_up=follow_up_text,
                 ),
             )
 
@@ -1367,7 +1724,7 @@ class HybridMedicalController:
             )
 
         # No knowledge found - give appropriate fallback
-        no_kb_message = NO_KB_MESSAGE_FR if language == "fr" else NO_KB_MESSAGE
+        no_kb_message = CONFIRM_INFO_MESSAGE_FR if language == "fr" else CONFIRM_INFO_MESSAGE
         return self._finalize_response(
             question=question,
             mode=mode,

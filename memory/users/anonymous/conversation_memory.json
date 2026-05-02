@@ -17,7 +17,8 @@
     "name": "",
     "company": "",
     "role": "",
-    "preferences": []
+    "preferences": [],
+    "competency_level": ""
   },
   "turn_count": 0,
   "last_sync_event_id": ""

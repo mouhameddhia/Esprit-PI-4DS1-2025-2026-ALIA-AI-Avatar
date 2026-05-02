@@ -1,176 +1,17 @@
 {
   "memory": [
     {
-      "type": "statement",
-      "content": "i'm moenes medical rep in vital",
-      "timestamp": "2026-04-20T17:34:47.653468Z",
-      "event_id": "evt_173b2ac3bf1f4142ad7f0aa37f997ebb"
-    },
-    {
-      "type": "qa",
-      "input": "what is my name ?",
-      "output": "Your name is bob.",
-      "metadata": {
-        "mode": "training",
-        "source": "memory",
-        "topic": null,
-        "drug_name": null,
-        "confidence": 1.0,
-        "citations": [],
-        "uncertainty": null,
-        "conflict_notes": []
-      },
-      "timestamp": "2026-04-28T08:36:49.950338Z",
-      "event_id": "evt_39f36d28f0ea4fb2905f428784ea27e5"
-    },
-    {
-      "type": "qa",
-      "input": "i'm going to present fervex",
-      "output": "Can you please elaborate on why you're presenting Fervex? Are there specific aspects of its clinical profile or indications that you'd like to discuss?",
-      "metadata": {
-        "mode": "training",
-        "source": "assistant",
-        "topic": "other",
-        "drug_name": null,
-        "confidence": 0.85,
-        "citations": [],
-        "uncertainty": null,
-        "conflict_notes": []
-      },
-      "timestamp": "2026-04-28T08:37:43.211911Z",
-      "event_id": "evt_9bfe2660c51e49a0987aa5ae70acbdbf"
-    },
-    {
-      "type": "qa",
-      "input": "what is my name and what am i going to present today ?",
-      "output": "Your name is bob.",
-      "metadata": {
-        "mode": "training",
-        "source": "memory",
-        "topic": null,
-        "drug_name": null,
-        "confidence": 1.0,
-        "citations": [],
-        "uncertainty": null,
-        "conflict_notes": []
-      },
-      "timestamp": "2026-04-28T08:38:22.746953Z",
-      "event_id": "evt_04f5be47d52848e39d4f9afcd87dd261"
-    },
-    {
-      "type": "qa",
-      "input": " what am i going to present today ?",
-      "output": "Which product would you like to discuss so I can keep the coaching grounded?",
-      "metadata": {
-        "mode": "training",
-        "source": "assistant",
-        "topic": "other",
-        "drug_name": null,
-        "confidence": 0.85,
-        "citations": [],
-        "uncertainty": null,
-        "conflict_notes": []
-      },
-      "timestamp": "2026-04-28T08:38:56.430529Z",
-      "event_id": "evt_65c8bbb2c2de478798ad9913fc20862f"
-    },
-    {
-      "type": "qa",
-      "input": "good morning i'm claud  ",
-      "output": "Good morning! I'm happy to assist you. As a medical information assistant, I can provide you with accurate and reliable information on various medical topics, including products and pharmaceuticals. If you have any specific questions or concerns, feel free to ask, and I'll do my best to help.",
-      "metadata": {
-        "mode": "training",
-        "source": "assistant",
-        "topic": null,
-        "drug_name": null,
-        "confidence": 1.0,
-        "citations": [],
-        "uncertainty": null,
-        "conflict_notes": []
-      },
-      "timestamp": "2026-04-28T08:41:09.222514Z",
-      "event_id": "evt_ab0f46afc0e145098692d9b3c3207d0e"
-    },
-    {
-      "type": "qa",
-      "input": "i'm going to present bactol ",
-      "output": "Great! You're going to present Bactol. Can you tell me more about what makes this product suitable for elderly patients or those with specific needs?",
-      "metadata": {
-        "mode": "training",
-        "source": "json",
-        "topic": "other",
-        "drug_name": "BACTOL",
-        "confidence": 1.0,
-        "citations": [],
-        "uncertainty": null,
-        "conflict_notes": []
-      },
-      "timestamp": "2026-04-28T08:43:13.011827Z",
-      "event_id": "evt_bc89d9870f144bb6a50e8819469901bb"
-    },
-    {
-      "type": "qa",
-      "input": "good morning ",
-      "output": "Good morning! I'm a professional medical information assistant. I'd be happy to help you with any product-specific medical or pharmaceutical questions you may have. Please feel free to ask away!",
-      "metadata": {
-        "mode": "training",
-        "source": "assistant",
-        "topic": null,
-        "drug_name": null,
-        "confidence": 1.0,
-        "citations": [],
-        "uncertainty": null,
-        "conflict_notes": []
-      },
-      "timestamp": "2026-04-28T09:06:51.429339Z",
-      "event_id": "evt_d6827011aa2441f9a461e818452f4a79"
-    },
-    {
-      "type": "qa",
-      "input": "what time is it ",
-      "output": "I'm happy to help with your product-specific medical or pharmaceutical questions! However, I don't have information on the current time.",
-      "metadata": {
-        "mode": "training",
-        "source": "assistant",
-        "topic": null,
-        "drug_name": null,
-        "confidence": 1.0,
-        "citations": [],
-        "uncertainty": null,
-        "conflict_notes": []
-      },
-      "timestamp": "2026-04-28T09:08:59.283351Z",
-      "event_id": "evt_5300fb33a482491b813202911843056e"
-    },
-    {
-      "type": "qa",
-      "input": "what is the capital of india?",
-      "output": "I can help with medical detailing and clinical product discussions. Let us refocus on indications, dosage, safety, or product use.",
-      "metadata": {
-        "mode": "training",
-        "source": "assistant",
-        "topic": null,
-        "drug_name": null,
-        "confidence": 1.0,
-        "citations": [],
-        "uncertainty": null,
-        "conflict_notes": []
-      },
-      "timestamp": "2026-04-28T09:09:25.969099Z",
-      "event_id": "evt_c4cc20e67d034b5481cf352b4bfcdffc"
-    },
-    {
       "type": "user_fact",
-      "content": "User name is bob",
-      "key": "name",
-      "value": "bob",
-      "timestamp": "2026-04-28T09:09:36.231942Z",
-      "event_id": "evt_a5b66bb5856a408484981fe2c0fc858e"
+      "content": "User selected competency level 2",
+      "key": "competency_level",
+      "value": "2",
+      "timestamp": "2026-05-02T20:20:22.417876Z",
+      "event_id": "evt_5f0f15ed7c2a4122b30710c6a8bd7640"
     },
     {
       "type": "qa",
-      "input": "i'm bob ",
-      "output": "Good morning! I'm a professional medical information assistant. I'd be happy to help you with any product-specific medical or pharmaceutical questions you may have. Please feel free to ask away!",
+      "input": "hello",
+      "output": "Hello! It's great to connect with you today. I'm happy to help with any product-specific medical or pharmaceutical questions you may have. What's on your mind?",
       "metadata": {
         "mode": "training",
         "source": "assistant",
@@ -181,8 +22,48 @@
         "uncertainty": null,
         "conflict_notes": []
       },
-      "timestamp": "2026-04-28T09:09:50.586045Z",
-      "event_id": "evt_763d969f21f34a4ca90f9faafd6080e4"
+      "timestamp": "2026-05-02T20:20:49.204158Z",
+      "event_id": "evt_253661dc833f49bb9904019fd567ec86"
+    },
+    {
+      "type": "statement",
+      "content": "i'm going to present hydra",
+      "timestamp": "2026-05-02T20:20:57.333093Z",
+      "event_id": "evt_7202b2d94574400893eea6765a1925c8"
+    },
+    {
+      "type": "qa",
+      "input": "i'm going to present hydra",
+      "output": "Hello! It's great to connect with you today. I'm happy to help with any product-specific medical or pharmaceutical questions you may have. What's on your mind?\n\nPlease go ahead and present Hydra.",
+      "metadata": {
+        "mode": "training",
+        "source": "assistant",
+        "topic": null,
+        "drug_name": "HYDRA",
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T20:21:21.978104Z",
+      "event_id": "evt_414428eb3b7d4901a73788acd6d9c387"
+    },
+    {
+      "type": "qa",
+      "input": "it is composed of 10 ml of water , 10 ml of orange  and 10mg of vitamin C",
+      "output": "This is incorrect.\n\nThe original statement \"10 ml of water , 10 ml of orange and 10mg of vitamin c\" regarding HYDRA (composition) is incorrect because there is no mention of specific dosages or ingredients for any product in the HYDRA range. The composition details provided only describe the general characteristics of each product, without specifying exact amounts or formulations.\n\nPlease restate the corrected presentation in one sentence:",
+      "metadata": {
+        "mode": "training",
+        "source": "validator",
+        "topic": "other",
+        "drug_name": "HYDRA",
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T20:22:40.599419Z",
+      "event_id": "evt_54f8bbaaf0c0456b830b27b06d494231"
     }
   ]
 }

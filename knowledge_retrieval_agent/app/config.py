@@ -2,12 +2,16 @@
 
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from pathlib import Path
+
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 
 class Settings(BaseSettings):
     """Environment-driven runtime settings."""
 
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
+    model_config = SettingsConfigDict(env_file=PROJECT_ROOT / ".env", env_file_encoding="utf-8", extra="ignore")
 
     data_dir: str = Field(default="data", description="Directory containing source PDFs.")
     vector_store_dir: str = Field(default="vector_store", description="Directory for persisted retrieval indexes.")

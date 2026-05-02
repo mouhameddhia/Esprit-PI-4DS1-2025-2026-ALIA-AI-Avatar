@@ -1,0 +1,55 @@
+{
+  "memory": [
+    {
+      "type": "qa",
+      "input": "hi",
+      "output": "Hello! It's great to connect with you today. I'm here to help with any product-specific medical or pharmaceutical questions you may have. What's on your mind?",
+      "metadata": {
+        "mode": "training",
+        "source": "assistant",
+        "topic": null,
+        "drug_name": null,
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T19:58:21.053612Z",
+      "event_id": "evt_66294aaac652404b88adf8be2f1268df"
+    },
+    {
+      "type": "qa",
+      "input": "i'm presenting bactol",
+      "output": "What specific aspect of BACTOL would you like to discuss today? Its indications, dosage, composition, or something else?",
+      "metadata": {
+        "mode": "training",
+        "source": "json",
+        "topic": "other",
+        "drug_name": "BACTOL",
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T19:59:04.667687Z",
+      "event_id": "evt_e3a56faf4317468b9199036dc5c0dd59"
+    },
+    {
+      "type": "qa",
+      "input": "it is composed of 100 ml of milk  and 10 mg of vitamin C",
+      "output": "0) This is incorrect.\n1) I need to correct that — \"100 ml of milk and 10 mg of vitamin C\" regarding BACTOL (composition).\n2) The correct version is: COMPOSITION: EN: 1) BACTOL Professional Soap (90g): Benzalkonium chloride 0.18g; 2) BACTOL Disinfectant Spray (125ml): Alcohol 95° at 65%; 3) BACTOL Disinfectant Gel (125ml): Alcohol 70%, Benzalkonium chloride 0.2%.\n3) The original statement is incorrect because the composition of BACTOL products does not include milk or vitamin C.\n4) Please restate the corrected presentation in one sentence: \"BACTOL Professional Soap, Spray, and Gel contain Benzalkonium chloride and alcohol as active ingredients.\"",
+      "metadata": {
+        "mode": "training",
+        "source": "validator",
+        "topic": "other",
+        "drug_name": "BACTOL",
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-05-02T20:01:00.123740Z",
+      "event_id": "evt_1c4b2166a5034505ba9ec12ba0f96587"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "summary_memory": {
+    "user_profile": {
+      "name": "",
+      "company": "",
+      "role": "",
+      "preferences": []
+    },
+    "medical_topics": [],
+    "questions": [],
+    "decisions": [],
+    "source_message_ids": [],
+    "last_updated": ""
+  },
+  "recent_messages": [
+    {
+      "id": "msg_e2201b3b7ca54c73baac6e52aeb7450d",
+      "role": "user",
+      "content": "hello",
+      "topic": null,
+      "mode": "training",
+      "timestamp": "2026-05-02T19:48:33.925564Z"
+    },
+    {
+      "id": "msg_11f382491b7049678a57d1bbe33019e3",
+      "role": "assistant",
+      "content": "Hello! It's great to connect with you today. I'm happy to help with any product-specific medical or pharmaceutical questions you may have. What's on your mind?",
+      "topic": null,
+      "mode": "training",
+      "source": "assistant",
+      "citations": [],
+      "timestamp": "2026-05-02T19:48:33.925579Z"
+    }
+  ],
+  "user_facts": {
+    "name": "",
+    "company": "",
+    "role": "",
+    "preferences": []
+  },
+  "turn_count": 1,
+  "last_sync_event_id": "evt_f41cd50d6bf54b38989e0966845f5774"
+}
