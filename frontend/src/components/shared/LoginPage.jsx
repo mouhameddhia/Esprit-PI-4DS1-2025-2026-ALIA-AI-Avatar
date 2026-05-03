@@ -15,6 +15,18 @@ const LoginPage = ({ onClose }) => {
   const { loginWithPopup, getIdTokenClaims, user, isLoading, error } = useAuth0();
   const [isAuthLoading, setIsAuthLoading] = useState(false);
 
+  const navigateByRole = (userRole) => {
+    if (userRole === 'admin') {
+      navigate('/admin/dashboard');
+    } else if (userRole === 'medrep') {
+      navigate('/portal');
+    } else if (userRole === 'physician') {
+      navigate('/physician/portal');
+    } else {
+      navigate('/portal');
+    }
+  };
+
   const syncAuth0Profile = async (syncRole) => {
     const tokenClaims = await getIdTokenClaims();
     const idToken = tokenClaims?.__raw;
@@ -46,11 +58,16 @@ const LoginPage = ({ onClose }) => {
     setIsAuthLoading(true);
     try {
       await loginWithPopup();
-      await syncAuth0Profile(role);
-      if (role === 'Medical Rep') {
-        navigate('/portal');
-      } else if (role === 'Physician') {
-        navigate('/physician/portal');
+      const syncResult = await syncAuth0Profile(role);
+      if (syncResult?.user) {
+        const userData = syncResult.user;
+        localStorage.setItem('userRole', userData.role);
+        localStorage.setItem('userName', userData.name);
+        localStorage.setItem('userEmail', userData.email);
+        navigateByRole(userData.role);
+      } else {
+        const uiRole = role === 'Medical Rep' ? 'medrep' : 'physician';
+        navigateByRole(uiRole);
       }
     } catch (err) {
       console.error('Auth0 login error:', err);
@@ -77,12 +94,30 @@ const LoginPage = ({ onClose }) => {
 
       if (response.ok) {
         const data = await response.json();
-        localStorage.setItem('token', data.access_token);
-        // Navigate based on role - for now assume medrep, could be improved
-        if (role === 'Medical Rep') {
-          navigate('/portal');
-        } else if (role === 'Physician') {
-          navigate('/physician/portal');
+
+        // Fetch real user profile to enforce role selection
+        const meRes = await fetch('http://localhost:8000/auth/me', {
+          headers: { Authorization: `Bearer ${data.access_token}` },
+        });
+        if (meRes.ok) {
+          const userData = await meRes.json();
+          const actualRole = userData.role;
+          const selectedRole = role === 'Medical Rep' ? 'medrep' : 'physician';
+
+          // Admins can always log in regardless of the UI button selected
+          if (actualRole !== 'admin' && actualRole !== selectedRole) {
+            const label = actualRole === 'medrep' ? 'Medical Rep' : 'Physician';
+            alert(`This account is registered as "${label}". Please select the correct role and try again.`);
+            return;
+          }
+
+          localStorage.setItem('token', data.access_token);
+          localStorage.setItem('userRole', actualRole);
+          localStorage.setItem('userName', userData.name);
+          localStorage.setItem('userEmail', userData.email);
+          navigateByRole(actualRole);
+        } else {
+          alert('Login failed: could not verify account role.');
         }
       } else {
         const errorData = await response.json();

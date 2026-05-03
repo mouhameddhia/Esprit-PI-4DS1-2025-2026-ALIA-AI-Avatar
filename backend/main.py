@@ -7,7 +7,7 @@ import logging
 # config.py calls load_dotenv() on import, so it must come before any module
 # that reads os.getenv() at module scope.
 from . import config
-from .routes import auth, chat, admin
+from .routes import auth, chat, sessions, debug, admin, products, users_admin, alerts
 from .utils.background_tasks import (
     auto_finalize_idle_sessions,
     auto_generate_shadow_monitoring_snapshot,
@@ -63,9 +63,14 @@ async def _run_shadow_monitoring_job() -> None:
         logger.error(f"Shadow monitoring snapshot failed: {exc}")
 
 # Include routers
-app.include_router(auth.router, prefix="/auth", tags=["auth"])
-app.include_router(chat.router, prefix="/chat", tags=["chat"])
-app.include_router(admin.router, tags=["admin"])
+app.include_router(auth.router,         prefix="/auth",  tags=["auth"])
+app.include_router(chat.router,         prefix="/chat",  tags=["chat"])
+app.include_router(sessions.router,     prefix="/chat",  tags=["sessions"])
+app.include_router(debug.router,        prefix="/chat",  tags=["debug"])
+app.include_router(admin.router,                         tags=["admin"])
+app.include_router(products.router,                      tags=["products"])
+app.include_router(users_admin.router,                   tags=["users-admin"])
+app.include_router(alerts.router,                        tags=["alerts"])
 
 @app.get("/")
 async def root():
@@ -89,6 +94,11 @@ async def startup_event():
             [("user_email", 1), ("updated_at", -1)], background=True
         )
         await db.conversations.create_index("nlp_events.intent", background=True)
+        await db.products.create_index("name", background=True)
+        await db.products.create_index("category", background=True)
+        await db.alerts.create_index("status", background=True)
+        await db.alerts.create_index("severity", background=True)
+        await db.alerts.create_index("timestamp", background=True)
         logger.info("MongoDB indexes ensured")
     except Exception as e:
         logger.warning(f"MongoDB index creation warning: {e}")

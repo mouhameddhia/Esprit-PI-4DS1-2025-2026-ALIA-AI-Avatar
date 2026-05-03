@@ -1,7 +1,11 @@
 """Admin routes for managing vector database and embeddings."""
 
+from typing import Optional
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from motor.motor_asyncio import AsyncIOMotorDatabase
+from pydantic import BaseModel
+
 from ..dependencies import (
     get_database,
     get_vector_client,
@@ -9,13 +13,13 @@ from ..dependencies import (
     get_product_indexer,
     get_knowledge_document_indexer,
     get_conversation_embedder,
-    get_current_user
+    require_roles,
 )
 from ..models.user import UserInDB
-from pydantic import BaseModel
-from typing import Optional
 
 router = APIRouter()
+
+_admin = Depends(require_roles("admin"))
 
 
 class IndexingResponse(BaseModel):
@@ -26,7 +30,7 @@ class IndexingResponse(BaseModel):
 
 @router.post("/admin/reindex-products", response_model=IndexingResponse)
 async def reindex_products(
-    current_user: UserInDB = Depends(get_current_user),
+    current_user: UserInDB = _admin,
     db: AsyncIOMotorDatabase = Depends(get_database),
     product_indexer = Depends(get_product_indexer)
 ):
@@ -57,7 +61,7 @@ async def reindex_products(
 
 @router.post("/admin/reindex-conversations", response_model=IndexingResponse)
 async def reindex_conversations(
-    current_user: UserInDB = Depends(get_current_user),
+    current_user: UserInDB = _admin,
     db: AsyncIOMotorDatabase = Depends(get_database),
     conversation_embedder = Depends(get_conversation_embedder)
 ):
@@ -88,7 +92,7 @@ async def reindex_conversations(
 
 @router.post("/admin/reindex-knowledge-documents", response_model=IndexingResponse)
 async def reindex_knowledge_documents(
-    current_user: UserInDB = Depends(get_current_user),
+    current_user: UserInDB = _admin,
     db: AsyncIOMotorDatabase = Depends(get_database),
     knowledge_document_indexer = Depends(get_knowledge_document_indexer),
 ):
@@ -119,7 +123,7 @@ async def reindex_knowledge_documents(
 
 @router.get("/admin/vector-db-status")
 async def get_vector_db_status(
-    current_user: UserInDB = Depends(get_current_user),
+    current_user: UserInDB = _admin,
     vector_client = Depends(get_vector_client),
     embedding_encoder = Depends(get_embedding_encoder)
 ):
@@ -140,7 +144,7 @@ async def get_vector_db_status(
 @router.post("/admin/embed-conversation/{conversation_id}", response_model=IndexingResponse)
 async def embed_single_conversation(
     conversation_id: str,
-    current_user: UserInDB = Depends(get_current_user),
+    current_user: UserInDB = _admin,
     db: AsyncIOMotorDatabase = Depends(get_database),
     conversation_embedder = Depends(get_conversation_embedder)
 ):
@@ -171,7 +175,7 @@ async def embed_single_conversation(
 @router.get("/admin/conversation-insights/{conversation_id}")
 async def get_conversation_insights(
     conversation_id: str,
-    current_user: UserInDB = Depends(get_current_user),
+    current_user: UserInDB = _admin,
     db: AsyncIOMotorDatabase = Depends(get_database),
     conversation_embedder = Depends(get_conversation_embedder)
 ):

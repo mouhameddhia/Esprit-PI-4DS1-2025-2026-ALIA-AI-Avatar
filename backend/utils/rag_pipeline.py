@@ -5,7 +5,7 @@ from typing import List, Optional
 from motor.motor_asyncio import AsyncIOMotorDatabase
 from bson import ObjectId
 
-from NLP.pipeline.reranker import rerank_candidates
+from alia_nlp.src.layers.reranker import rerank_candidates
 
 logger = logging.getLogger(__name__)
 

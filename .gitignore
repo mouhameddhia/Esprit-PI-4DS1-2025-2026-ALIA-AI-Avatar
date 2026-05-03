@@ -1,0 +1,75 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.pytest_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# NLP model weights — large binaries, use model registry instead
+NLP/fine_tuning/models/
+*.safetensors
+*.pt
+*.bin
+*.ckpt
+*.pth
+training_args.bin
+optimizer.pt
+scheduler.pt
+rng_state.pth
+
+# Environment & secrets
+.env
+.env.*
+*.env
+backend/.env
+
+# Node
+node_modules/
+package-lock.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs & temp
+*.log
+*.tmp
+benchmark/
+tools/
+tmp_transformer/
+
+# Claude Code memory
+.claude/
+
+# Root-level architecture / audit documents — not part of deployable code
+ADVANCED_NLP_ARCHITECTURE.md
+ALIA_NLP_ARCHITECTURE.md
+ALIA_NLP_DIAGRAMS.md
+ALIA_NLP_FULL_AUDIT.pdf
+ENTITY_EXTRACTION_V2_INDEX.md
+NLP_EVALUATION_MATRIX.md
+NLP_LABEL_TAXONOMY.md
+RAG_INGESTION_PLAN.md
+TESTING_GUIDE.md
+TESTING_QUICK_REFERENCE.md
+
+# Generated evaluation artifacts (keep source datasets, not run artifacts)
+NLP/evaluation/results/

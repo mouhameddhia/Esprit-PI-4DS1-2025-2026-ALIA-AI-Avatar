@@ -1,6 +1,10 @@
-from pydantic import BaseModel
-from typing import Optional, List
+from typing import Optional, List, Any
 from datetime import datetime
+
+from pydantic import BaseModel, model_validator
+
+from .common import coerce_mongo_id
+
 
 class ProductBase(BaseModel):
     name: str
@@ -10,15 +14,37 @@ class ProductBase(BaseModel):
     contraindications: List[str]
     dosage: str
 
+
 class ProductCreate(ProductBase):
     pass
+
+
+class ProductUpdate(BaseModel):
+    name: Optional[str] = None
+    description: Optional[str] = None
+    category: Optional[str] = None
+    indications: Optional[List[str]] = None
+    contraindications: Optional[List[str]] = None
+    dosage: Optional[str] = None
+
 
 class ProductInDB(ProductBase):
     id: str
     created_at: datetime
     updated_at: datetime
 
+    @model_validator(mode="before")
+    @classmethod
+    def _coerce_id(cls, data: Any) -> Any:
+        return coerce_mongo_id(data)
+
+
 class ProductResponse(ProductBase):
     id: str
-    created_at: datetime</content>
-<parameter name="filePath">c:\Users\moham\Desktop\alia-web-main\backend\models\product.py
+    created_at: datetime
+    updated_at: datetime
+
+    @model_validator(mode="before")
+    @classmethod
+    def _coerce_id(cls, data: Any) -> Any:
+        return coerce_mongo_id(data)

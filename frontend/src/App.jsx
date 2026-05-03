@@ -12,7 +12,8 @@ import MedRepAnalyticsPairing from './components/medrep/MedRepAnalyticsPairing';
 import MedRepSimulation from './components/medrep/MedRepSimulation';
 import PhysicianPortal from './components/physician/PhysicianPortal';
 import { UserProfile } from './components/shared/AuthComponent';
-import { ProtectedRoute } from './components/shared/ProtectedRoute';
+import { ProtectedRoute, AdminRoute } from './components/shared/ProtectedRoute';
+import AdminDashboard from './components/admin/AdminDashboard';
 import SectionPage from './components/landing/SectionPage';
 import ProblemContext from './components/landing/ProblemContext';
 import ComparisonSection from './components/landing/ComparisonSection';
@@ -82,6 +83,9 @@ function App() {
         <Route path="/rep/simulation" element={<ProtectedRoute><MedRepSimulation /></ProtectedRoute>} />
         <Route path="/analytics/pairing" element={<ProtectedRoute><MedRepAnalyticsPairing /></ProtectedRoute>} />
         <Route path="/physician/portal" element={<ProtectedRoute><PhysicianPortal /></ProtectedRoute>} />
+
+        {/* Admin routes */}
+        <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
       </Routes>
     </div>
   );

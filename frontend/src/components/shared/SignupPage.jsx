@@ -10,11 +10,20 @@ const SignupPage = ({ onClose }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
+  const [adminKey, setAdminKey] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [showAdminKey, setShowAdminKey] = useState(false);
   const [isTraditionalLoading, setIsTraditionalLoading] = useState(false);
   const navigate = useNavigate();
   const { loginWithPopup, getIdTokenClaims, user, isLoading, error } = useAuth0();
   const [isAuthLoading, setIsAuthLoading] = useState(false);
+
+  const navigateByRole = (userRole) => {
+    if (userRole === 'admin') navigate('/admin/dashboard');
+    else if (userRole === 'medrep') navigate('/portal');
+    else if (userRole === 'physician') navigate('/physician/portal');
+    else navigate('/portal');
+  };
 
   const syncAuth0Profile = async (syncRole, syncName) => {
     const tokenClaims = await getIdTokenClaims();
@@ -49,12 +58,8 @@ const SignupPage = ({ onClose }) => {
       await loginWithPopup({
         authorizationParams: { screen_hint: 'signup' },
       });
-      await syncAuth0Profile(role, name);
-      if (role === 'Medical Rep') {
-        navigate('/portal');
-      } else if (role === 'Physician') {
-        navigate('/physician/portal');
-      }
+      const syncResult = await syncAuth0Profile(role, name);
+      navigateByRole(syncResult?.user?.role || role.toLowerCase().replace(' ', ''));
     } catch (err) {
       console.error('Auth0 signup error:', err);
       alert(err.message || 'Auth0 signup failed');
@@ -67,27 +72,32 @@ const SignupPage = ({ onClose }) => {
     e.preventDefault();
     setIsTraditionalLoading(true);
     try {
+      const requestedRole = role.toLowerCase().replace(' ', '');
+      const body = { email, password, name, role: requestedRole };
+      if (requestedRole === 'admin') body.admin_secret_key = adminKey;
+
       const response = await fetch('http://localhost:8000/auth/signup', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-          name: name,
-          role: role.toLowerCase().replace(' ', ''),
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
       });
 
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem('token', data.access_token);
-        // Navigate based on role
-        if (role === 'Medical Rep') {
-          navigate('/portal');
-        } else if (role === 'Physician') {
-          navigate('/physician/portal');
+
+        // Fetch real user profile to confirm role and cache it
+        const meRes = await fetch('http://localhost:8000/auth/me', {
+          headers: { Authorization: `Bearer ${data.access_token}` },
+        });
+        if (meRes.ok) {
+          const userData = await meRes.json();
+          localStorage.setItem('userRole', userData.role);
+          localStorage.setItem('userName', userData.name);
+          localStorage.setItem('userEmail', userData.email);
+          navigateByRole(userData.role);
+        } else {
+          navigateByRole(requestedRole);
         }
       } else {
         const errorData = await response.json();
@@ -198,8 +208,40 @@ const SignupPage = ({ onClose }) => {
                   >
                     Physician
                   </button>
+                  <button
+                    type="button"
+                    onClick={() => setRole('Admin')}
+                    className={`login-role-btn ${role === 'Admin' ? 'active' : ''}`}
+                    style={role === 'Admin' ? { borderColor: '#7c3aed', color: '#7c3aed' } : {}}
+                  >
+                    Admin
+                  </button>
                 </div>
               </div>
+
+              {role === 'Admin' && (
+                <div className="login-form-group">
+                  <label className="login-form-label">Admin Secret Key</label>
+                  <div className="login-password-input-container">
+                    <input
+                      type={showAdminKey ? 'text' : 'password'}
+                      value={adminKey}
+                      onChange={(e) => setAdminKey(e.target.value)}
+                      className="login-input"
+                      placeholder="Enter the admin secret key"
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowAdminKey(!showAdminKey)}
+                      className="login-password-toggle"
+                      aria-label={showAdminKey ? 'Hide key' : 'Show key'}
+                    >
+                      {showAdminKey ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </button>
+                  </div>
+                </div>
+              )}
 
               <div className="login-form-group">
                 <label className="login-form-label">Full Name</label>

@@ -12,6 +12,7 @@ from ..dependencies import get_database, get_current_user, require_roles
 from ..models.user import UserInDB, UserResponse, Token, UserCreate
 from ..utils.auth import create_access_token, verify_password, get_password_hash
 from pydantic import BaseModel
+from typing import Optional
 from jwt import PyJWKClient
 import jwt
 from datetime import datetime
@@ -229,33 +230,51 @@ async def login_jwt(form_data: OAuth2PasswordRequestForm = Depends(), db: AsyncI
     access_token = create_access_token(data={"sub": user["email"]})
     return Token(access_token=access_token, token_type="bearer")
 
+class SignupRequest(BaseModel):
+    email: str
+    password: str
+    name: str
+    role: str
+    admin_secret_key: Optional[str] = None
+
+
 @router.post("/signup", response_model=Token)
-async def signup(user: UserCreate, db: AsyncIOMotorDatabase = Depends(get_database)):
-    # Check if user already exists
+async def signup(user: SignupRequest, db: AsyncIOMotorDatabase = Depends(get_database)):
+    requested_role = user.role.lower().replace(" ", "")
+
+    # Admin signup requires a matching secret key
+    if requested_role == "admin":
+        expected_key = config.ADMIN_SECRET_KEY
+        if not expected_key:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Admin registration is disabled on this server",
+            )
+        if user.admin_secret_key != expected_key:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Invalid admin secret key",
+            )
+
     existing_user = await db.users.find_one({"email": user.email})
     if existing_user:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Email already registered"
+            detail="Email already registered",
         )
-    
-    # Hash the password
+
     hashed_password = get_password_hash(user.password)
-    
-    # Create user
+    now = datetime.utcnow()
     user_data = {
         "email": user.email,
         "name": user.name,
-        "role": user.role.lower().replace(" ", ""),
+        "role": requested_role,
         "hashed_password": hashed_password,
-        "created_at": datetime.utcnow(),
-        "updated_at": datetime.utcnow()
+        "created_at": now,
+        "updated_at": now,
     }
-    
+
     result = await db.users.insert_one(user_data)
-    user_doc = await db.users.find_one({"_id": result.inserted_id})
-    
-    # Create access token
     access_token = create_access_token(data={"sub": user.email})
     return Token(access_token=access_token, token_type="bearer")
 

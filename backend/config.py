@@ -59,6 +59,8 @@ REP_SCORER_ARTIFACT_DIR: str = os.getenv("REP_SCORER_ARTIFACT_DIR", "")
 # Authentication
 # ---------------------------------------------------------------------------
 JWT_SECRET: str = os.getenv("JWT_SECRET", "your_secret_key")
+# Secret key required to self-register as admin. Empty string = admin signup disabled.
+ADMIN_SECRET_KEY: str = os.getenv("ADMIN_SECRET_KEY", "")
 AUTH0_DOMAIN: str = os.getenv("AUTH0_DOMAIN", "")
 AUTH0_CLIENT_ID: str = os.getenv("AUTH0_CLIENT_ID", "")
 AUTH0_CLIENT_SECRET: str = os.getenv("AUTH0_CLIENT_SECRET", "")

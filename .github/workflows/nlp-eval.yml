@@ -5,6 +5,10 @@ on:
   push:
     branches: [ main, master ]
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   evaluate-nlp:
     runs-on: ubuntu-latest
@@ -43,16 +47,340 @@ jobs:
           import json
           with open('NLP/evaluation/results/ci_eval.json') as f:
             data = json.load(f)
+          result = data.get('result', {})
           baseline = {'intent_accuracy': 0.9592, 'safety_recall': 1.0, 'secondary_tags_recall': 0.7475, 'entity_map_recall': 0.5625}
           for metric, baseline_val in baseline.items():
-            current = data.get(metric, 0)
+            current = result.get(metric, 0)
             drift = ((current - baseline_val) / baseline_val * 100) if baseline_val > 0 else 0
             if drift < -5:
               print(f'⚠ WARNING: {metric} drifted {drift:.1f}% from baseline')
           "
 
+      - name: Build shadow fixture from labeled dataset
+        run: |
+          python NLP/evaluation/build_shadow_fixture.py NLP/datasets/eval_intent_safety_v4.jsonl \
+            --output-jsonl NLP/evaluation/results/ci_shadow_fixture.jsonl
+
+      - name: Run shadow divergence quality gate
+        run: |
+          python NLP/evaluation/shadow_monitoring.py NLP/evaluation/results/ci_shadow_fixture.jsonl \
+            --max-divergence 0.15 \
+            --output-json NLP/evaluation/results/ci_shadow_eval.json
+
+      - name: Run clarification behavior quality gate
+        run: |
+          python NLP/evaluation/run_clarification_eval.py NLP/datasets/eval_intent_clarification_v1.jsonl \
+            --min-clarification-recall 0.80 \
+            --min-clarification-precision 0.70 \
+            --min-clear-intent-accuracy 0.85 \
+            --output-json NLP/evaluation/results/ci_clarification_eval.json
+
+      - name: Run retrieval rerank quality gate
+        run: |
+          python NLP/evaluation/run_retrieval_rerank_eval.py NLP/datasets/eval_retrieval_rerank_v3.jsonl \
+            --min-rerank-hit-at-1 0.70 \
+            --min-rerank-mrr 0.85 \
+            --max-hit-at-1-regression 0.01 \
+            --output-json NLP/evaluation/results/ci_retrieval_rerank_eval.json
+
+      - name: Run language detection quality gate
+        run: |
+          python NLP/evaluation/run_language_detection_eval.py NLP/datasets/eval_language_detection_v1.jsonl \
+            --min-accuracy 0.90 \
+            --output-json NLP/evaluation/results/ci_language_eval.json
+
+      - name: Run retriever and generation regression checks
+        run: |
+          python NLP/evaluation/run_retriever_generation_regression.py \
+            --output-json NLP/evaluation/results/ci_retriever_generation_regression.json
+
+      - name: Build retrieval review queue
+        run: |
+          python NLP/evaluation/build_retrieval_review_queue.py \
+            --dataset-jsonl NLP/datasets/eval_retrieval_rerank_real_v1.jsonl \
+            --output-jsonl NLP/evaluation/results/ci_retrieval_review_queue.jsonl \
+            --output-json NLP/evaluation/results/ci_retrieval_review_coverage.json
+
+      - name: Check retrieval review coverage (strict)
+        run: |
+          python NLP/evaluation/check_retrieval_review_coverage.py \
+            --dataset-jsonl NLP/datasets/eval_retrieval_rerank_real_v1.jsonl \
+            --min-verified-ratio 1.00 \
+            --output-json NLP/evaluation/results/ci_retrieval_review_gate.json
+
+      - name: Run candidate promotion gate
+        run: |
+          python NLP/evaluation/promote_candidate.py \
+            --baseline-eval NLP/evaluation/results/eval_v4_latest.json \
+            --candidate-eval NLP/evaluation/results/ci_eval.json \
+            --shadow-eval NLP/evaluation/results/ci_shadow_eval.json \
+            --min-intent-delta -0.10 \
+            --min-safety-delta 0.0 \
+            --min-entity-delta 0.0 \
+            --max-shadow-divergence 0.15 \
+            --output-json NLP/evaluation/results/ci_promotion_decision.json
+
+      - name: Run retraining trigger analysis (Phase 4)
+        run: |
+          python NLP/evaluation/retraining_trigger.py \
+            --eval-json NLP/evaluation/results/ci_eval.json \
+            --shadow-json NLP/evaluation/results/ci_shadow_eval.json \
+            --clarification-json NLP/evaluation/results/ci_clarification_eval.json \
+            --rerank-json NLP/evaluation/results/ci_retrieval_rerank_eval.json \
+            --language-json NLP/evaluation/results/ci_language_eval.json \
+            --output-json NLP/evaluation/results/ci_retraining_trigger.json
+
+      - name: Build version snapshot artifact (Phase 4)
+        run: |
+          python NLP/evaluation/build_version_snapshot.py \
+            --manifest-json NLP/version_manifest.json \
+            --output-json NLP/evaluation/results/ci_version_snapshot.json
+
+      - name: Build deterministic intent train/val/test splits (Phase 4.3)
+        run: |
+          python NLP/evaluation/build_intent_dataset_splits.py \
+            --dataset-jsonl NLP/datasets/eval_intent_safety_v4.jsonl \
+            --output-dir NLP/evaluation/results \
+            --prefix ci_intent_split_v1 \
+            --seed 42 \
+            --train-ratio 0.70 \
+            --val-ratio 0.15
+
+      - name: Build deterministic entity train/val/test splits (Phase 4.4)
+        run: |
+          python NLP/evaluation/build_intent_dataset_splits.py \
+            --dataset-jsonl NLP/datasets/eval_intent_safety_v5.jsonl \
+            --output-dir NLP/evaluation/results \
+            --prefix ci_entity_split_v1 \
+            --seed 42 \
+            --train-ratio 0.70 \
+            --val-ratio 0.15
+
+      - name: Build deterministic reranker train/val/test splits (Phase 4.5)
+        run: |
+          python NLP/evaluation/build_rerank_dataset_splits.py \
+            --dataset-jsonl NLP/datasets/eval_retrieval_rerank_v3.jsonl \
+            --output-dir NLP/evaluation/results \
+            --prefix ci_rerank_split_v1 \
+            --seed 42 \
+            --train-ratio 0.70 \
+            --val-ratio 0.15
+
+      - name: Train baseline intent model (Phase 4.2)
+        run: |
+          python NLP/evaluation/train_intent_model.py \
+            --dataset-jsonl NLP/evaluation/results/ci_intent_split_v1_train.jsonl \
+            --val-jsonl NLP/evaluation/results/ci_intent_split_v1_val.jsonl \
+            --ngram-min 1 \
+            --ngram-max 1 \
+            --class-prior-mode uniform \
+            --disable-class-balance \
+            --output-json NLP/evaluation/results/ci_intent_model_v1.json
+
+      - name: Run trained intent shadow evaluation (Phase 4.2)
+        run: |
+          python NLP/evaluation/run_trained_intent_shadow_eval.py \
+            --dataset-jsonl NLP/evaluation/results/ci_intent_split_v1_test.jsonl \
+            --model-json NLP/evaluation/results/ci_intent_model_v1.json \
+            --thresholds-json NLP/evaluation/intent_shadow_thresholds.json \
+            --output-json NLP/evaluation/results/ci_trained_intent_shadow_eval.json
+
+      - name: Train baseline entity model (Phase 4.4)
+        run: |
+          python NLP/evaluation/train_entity_model.py \
+            --dataset-jsonl NLP/evaluation/results/ci_entity_split_v1_train.jsonl \
+            --val-jsonl NLP/evaluation/results/ci_entity_split_v1_val.jsonl \
+            --strategy hybrid_lexicon \
+            --min-value-support 1 \
+            --max-values-per-entity 200 \
+            --output-json NLP/evaluation/results/ci_entity_model_v1.json
+
+      - name: Run trained entity shadow evaluation (Phase 4.4)
+        run: |
+          python NLP/evaluation/run_trained_entity_shadow_eval.py \
+            --dataset-jsonl NLP/evaluation/results/ci_entity_split_v1_test.jsonl \
+            --model-json NLP/evaluation/results/ci_entity_model_v1.json \
+            --thresholds-json NLP/evaluation/entity_shadow_thresholds.json \
+            --output-json NLP/evaluation/results/ci_trained_entity_shadow_eval.json
+
+      - name: Train baseline reranker model (Phase 4.5)
+        run: |
+          python NLP/evaluation/train_reranker_model.py \
+            --dataset-jsonl NLP/evaluation/results/ci_rerank_split_v1_train.jsonl \
+            --val-jsonl NLP/evaluation/results/ci_rerank_split_v1_val.jsonl \
+            --output-json NLP/evaluation/results/ci_reranker_model_v1.json
+
+      - name: Run trained reranker holdout quality gate (Phase 4.5)
+        run: |
+          python NLP/evaluation/run_retrieval_rerank_eval.py NLP/evaluation/results/ci_rerank_split_v1_test.jsonl \
+            --model-json NLP/evaluation/results/ci_reranker_model_v1.json \
+            --min-rerank-hit-at-1 0.60 \
+            --min-rerank-mrr 0.75 \
+            --max-hit-at-1-regression 0.15 \
+            --output-json NLP/evaluation/results/ci_trained_rerank_shadow_eval.json
+
+      - name: Ratchet intent shadow thresholds proposal (Phase 4.3)
+        if: always()
+        id: ratchet_intent_thresholds
+        run: |
+          python NLP/evaluation/ratchet_intent_shadow_thresholds.py \
+            --config-json NLP/evaluation/intent_shadow_thresholds.json \
+            --eval-json NLP/evaluation/results/ci_trained_intent_shadow_eval.json \
+            --output-json NLP/evaluation/results/ci_intent_shadow_thresholds_next.json
+          python - <<'PY'
+          import json
+          import os
+
+          path = "NLP/evaluation/results/ci_intent_shadow_thresholds_next.json"
+          payload = json.load(open(path, encoding="utf-8"))
+          tightened = bool(payload.get("tightened"))
+          reason = str(payload.get("reason", ""))
+
+          output_path = os.environ.get("GITHUB_OUTPUT")
+          if output_path:
+              with open(output_path, "a", encoding="utf-8") as handle:
+                  handle.write(f"tightened={'true' if tightened else 'false'}\n")
+                  handle.write(f"reason={reason}\n")
+          PY
+
+      - name: Ratchet entity shadow thresholds proposal (Phase 4.4)
+        if: always()
+        id: ratchet_entity_thresholds
+        run: |
+          python NLP/evaluation/ratchet_entity_shadow_thresholds.py \
+            --config-json NLP/evaluation/entity_shadow_thresholds.json \
+            --eval-json NLP/evaluation/results/ci_trained_entity_shadow_eval.json \
+            --output-json NLP/evaluation/results/ci_entity_shadow_thresholds_next.json
+          python - <<'PY'
+          import json
+          import os
+
+          path = "NLP/evaluation/results/ci_entity_shadow_thresholds_next.json"
+          payload = json.load(open(path, encoding="utf-8"))
+          tightened = bool(payload.get("tightened"))
+          reason = str(payload.get("reason", ""))
+
+          output_path = os.environ.get("GITHUB_OUTPUT")
+          if output_path:
+              with open(output_path, "a", encoding="utf-8") as handle:
+                  handle.write(f"tightened={'true' if tightened else 'false'}\n")
+                  handle.write(f"reason={reason}\n")
+          PY
+
+      - name: Apply ratcheted thresholds to config (Phase 4.3)
+        if: always() && github.event_name == 'push' && (github.ref_name == 'main' || github.ref_name == 'master') && steps.ratchet_intent_thresholds.outputs.tightened == 'true'
+        run: |
+          python NLP/evaluation/ratchet_intent_shadow_thresholds.py \
+            --config-json NLP/evaluation/intent_shadow_thresholds.json \
+            --eval-json NLP/evaluation/results/ci_trained_intent_shadow_eval.json \
+            --output-json NLP/evaluation/results/ci_intent_shadow_thresholds_next.json \
+            --write-back-config
+
+      - name: Open PR for ratcheted intent thresholds (Phase 4.3)
+        if: always() && github.event_name == 'push' && (github.ref_name == 'main' || github.ref_name == 'master') && steps.ratchet_intent_thresholds.outputs.tightened == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "chore(nlp): ratchet intent shadow thresholds"
+          title: "chore(nlp): ratchet intent shadow thresholds"
+          body: |
+            Automated ratcheting of trained-intent shadow thresholds based on latest holdout evaluation.
+
+            Source artifacts:
+            - NLP/evaluation/results/ci_trained_intent_shadow_eval.json
+            - NLP/evaluation/results/ci_intent_shadow_thresholds_next.json
+          branch: automation/ratchet-intent-thresholds-${{ github.run_id }}
+          delete-branch: true
+          add-paths: |
+            NLP/evaluation/intent_shadow_thresholds.json
+
+      - name: Apply ratcheted entity thresholds to config (Phase 4.4)
+        if: always() && github.event_name == 'push' && (github.ref_name == 'main' || github.ref_name == 'master') && steps.ratchet_entity_thresholds.outputs.tightened == 'true'
+        run: |
+          python NLP/evaluation/ratchet_entity_shadow_thresholds.py \
+            --config-json NLP/evaluation/entity_shadow_thresholds.json \
+            --eval-json NLP/evaluation/results/ci_trained_entity_shadow_eval.json \
+            --output-json NLP/evaluation/results/ci_entity_shadow_thresholds_next.json \
+            --write-back-config
+
+      - name: Open PR for ratcheted entity thresholds (Phase 4.4)
+        if: always() && github.event_name == 'push' && (github.ref_name == 'main' || github.ref_name == 'master') && steps.ratchet_entity_thresholds.outputs.tightened == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "chore(nlp): ratchet entity shadow thresholds"
+          title: "chore(nlp): ratchet entity shadow thresholds"
+          body: |
+            Automated ratcheting of trained-entity shadow thresholds based on latest holdout evaluation.
+
+            Source artifacts:
+            - NLP/evaluation/results/ci_trained_entity_shadow_eval.json
+            - NLP/evaluation/results/ci_entity_shadow_thresholds_next.json
+          branch: automation/ratchet-entity-thresholds-${{ github.run_id }}
+          delete-branch: true
+          add-paths: |
+            NLP/evaluation/entity_shadow_thresholds.json
+
+      - name: Run Phase 4 exit gate summary
+        run: |
+          python NLP/evaluation/phase4_exit_gate.py \
+            --results-dir NLP/evaluation/results \
+            --output-json NLP/evaluation/results/ci_phase4_exit_gate.json
+
+      - name: Package fine-tune candidate evaluation smoke test
+        run: |
+          python NLP/fine_tuning/package_candidate_eval.py \
+            --predictions-jsonl NLP/fine_tuning/data/candidate_predictions_v2_local_baseline.jsonl \
+            --evaluation-json NLP/evaluation/results/ci_finetune_candidate_eval_v2_local_baseline.json \
+            --output-dir NLP/evaluation/results \
+            --prefix ci_finetune_candidate_v2_local_baseline
+
+      - name: Comment packaged fine-tune summary on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = 'NLP/evaluation/results/ci_finetune_candidate_v2_local_baseline_pr_comment.md';
+            const body = fs.readFileSync(path, 'utf8');
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.pull_request.number,
+              body,
+            });
+
       - name: Upload evaluation artifact
         uses: actions/upload-artifact@v4
         with:
           name: nlp-eval-result
-          path: NLP/evaluation/results/ci_eval.json
+          path: |
+            NLP/evaluation/results/ci_eval.json
+            NLP/evaluation/results/ci_shadow_fixture.jsonl
+            NLP/evaluation/results/ci_shadow_eval.json
+            NLP/evaluation/results/ci_clarification_eval.json
+            NLP/evaluation/results/ci_retrieval_rerank_eval.json
+            NLP/evaluation/results/ci_language_eval.json
+            NLP/evaluation/results/ci_retriever_generation_regression.json
+            NLP/evaluation/results/ci_retrieval_review_queue.jsonl
+            NLP/evaluation/results/ci_retrieval_review_coverage.json
+            NLP/evaluation/results/ci_retrieval_review_gate.json
+            NLP/evaluation/results/ci_promotion_decision.json
+            NLP/evaluation/results/ci_retraining_trigger.json
+            NLP/evaluation/results/ci_version_snapshot.json
+            NLP/evaluation/results/ci_intent_split_v1_metadata.json
+            NLP/evaluation/results/ci_intent_model_v1.json
+            NLP/evaluation/results/ci_trained_intent_shadow_eval.json
+            NLP/evaluation/results/ci_intent_shadow_thresholds_next.json
+            NLP/evaluation/results/ci_entity_split_v1_metadata.json
+            NLP/evaluation/results/ci_entity_model_v1.json
+            NLP/evaluation/results/ci_trained_entity_shadow_eval.json
+            NLP/evaluation/results/ci_entity_shadow_thresholds_next.json
+            NLP/evaluation/results/ci_rerank_split_v1_metadata.json
+            NLP/evaluation/results/ci_reranker_model_v1.json
+            NLP/evaluation/results/ci_trained_rerank_shadow_eval.json
+            NLP/evaluation/results/ci_phase4_exit_gate.json
+            NLP/evaluation/results/ci_finetune_candidate_v2_local_baseline_predictions.jsonl
+            NLP/evaluation/results/ci_finetune_candidate_v2_local_baseline_eval.json
+            NLP/evaluation/results/ci_finetune_candidate_v2_local_baseline_pr_comment.md
+            NLP/evaluation/results/ci_finetune_candidate_v2_local_baseline_summary.json
+            NLP/evaluation/intent_shadow_thresholds.json
+            NLP/evaluation/entity_shadow_thresholds.json

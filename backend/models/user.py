@@ -1,53 +1,47 @@
-from pydantic import BaseModel, Field, field_validator
 from typing import Optional, Any
 from datetime import datetime
-from bson import ObjectId
 
+from pydantic import BaseModel, model_validator
 
-def _objectid_to_str(v: Any) -> Any:
-    if isinstance(v, ObjectId):
-        return str(v)
-    return v
+from .common import coerce_mongo_id
+
 
 class UserBase(BaseModel):
     email: str
     name: str
-    role: str  # "medrep" or "physician"
+    role: str  # "admin" | "medrep" | "physician"
+
 
 class UserCreate(UserBase):
     password: str
 
+
 class UserInDB(UserBase):
-    id: str = Field(..., alias="_id")
+    id: str
     hashed_password: str
     created_at: datetime
     updated_at: datetime
 
-    model_config = {
-        "populate_by_name": True,
-    }
-
-    @field_validator("id", mode="before")
+    @model_validator(mode="before")
     @classmethod
-    def _id_from_objectid(cls, v: Any) -> Any:
-        return _objectid_to_str(v)
+    def _coerce_id(cls, data: Any) -> Any:
+        return coerce_mongo_id(data)
+
 
 class UserResponse(UserBase):
-    id: str = Field(..., alias="_id")
+    id: str
     created_at: datetime
 
-    model_config = {
-        "populate_by_name": True,
-    }
-
-    @field_validator("id", mode="before")
+    @model_validator(mode="before")
     @classmethod
-    def _id_from_objectid(cls, v: Any) -> Any:
-        return _objectid_to_str(v)
+    def _coerce_id(cls, data: Any) -> Any:
+        return coerce_mongo_id(data)
+
 
 class Token(BaseModel):
     access_token: str
     token_type: str
+
 
 class TokenData(BaseModel):
     email: Optional[str] = None

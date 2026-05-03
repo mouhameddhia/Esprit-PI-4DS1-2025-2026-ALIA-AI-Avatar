@@ -7,8 +7,24 @@ from motor.motor_asyncio import AsyncIOMotorDatabase
 
 from .. import config
 from .summary import generate_summary_with_caching
-from NLP.pipeline.nlp import analyze_message_nlp
-from NLP.evaluation.shadow_monitoring import build_shadow_report
+from alia_nlp.src.pipeline.online import analyze_message_nlp
+from alia_nlp.evaluation.shadow import snapshot as _shadow_snapshot
+
+
+def build_shadow_report(rows: list) -> dict:
+    """Inline replacement for the deleted shadow_monitoring module."""
+    if not rows:
+        return {"divergence_rate": 0.0, "total": 0, "disagreements": 0}
+    disagreements = sum(
+        1 for r in rows
+        if r.get("primary_intent") and r.get("shadow_intent")
+        and r["primary_intent"] != r["shadow_intent"]
+    )
+    return {
+        "total": len(rows),
+        "disagreements": disagreements,
+        "divergence_rate": round(disagreements / len(rows), 4),
+    }
 
 
 async def auto_finalize_idle_sessions(db: AsyncIOMotorDatabase) -> int:
@@ -85,7 +101,7 @@ async def auto_generate_shadow_monitoring_snapshot(
     limit = limit if limit is not None else config.SHADOW_LOG_MAX_ROWS
     max_divergence = max_divergence if max_divergence is not None else config.SHADOW_MAX_DIVERGENCE
 
-    results_dir = Path("NLP") / "evaluation" / "results"
+    results_dir = Path("alia_nlp") / "evaluation" / "results"
     results_dir.mkdir(parents=True, exist_ok=True)
 
     today = datetime.utcnow().strftime("%Y%m%d")
