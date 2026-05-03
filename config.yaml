@@ -1,0 +1,42 @@
+data:
+  input_csv: "data/facemesh_sequences.csv"
+  output_dir: "artifacts"
+  subject_col: "subject_id"
+  label_col: "label"
+  frame_col: "frame"
+  feature_cols: []
+  sequence_length: 90
+  stride: 15
+  test_size: 0.2
+  val_size: 0.2
+  random_state: 42
+  group_split: true
+  balance_strategy: "none"
+
+preprocessing:
+  center_on_nose: true
+  scale_by_iod: true
+  compute_velocity: true
+  smooth_window: 3
+  normalize: "zscore"
+
+model:
+  input_dim: null
+  hidden_dim: 192
+  num_layers: 2
+  bidirectional: true
+  dropout: 0.3
+  dense_dim: 128
+  num_classes: 2
+
+training:
+  epochs: 35
+  batch_size: 32
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  grad_clip: 1.0
+  early_stopping_patience: 8
+  scheduler_factor: 0.5
+  scheduler_patience: 3
+  class_weighting: true
+  device: "auto"
