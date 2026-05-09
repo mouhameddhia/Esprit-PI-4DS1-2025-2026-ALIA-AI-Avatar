@@ -1,0 +1,35 @@
+{
+  "summary": {
+    "total_queries": 2,
+    "static_hits": 0,
+    "rag_fallbacks": 2,
+    "static_hit_rate": 0.0
+  },
+  "results": [
+    {
+      "query": "What are contraindications?",
+      "used_static": false,
+      "quality": "ambiguous",
+      "confidence": 0.5519696347713471,
+      "latency_ms": 29337.66960000503,
+      "citation_count": 2,
+      "citations": [
+        "Référentiel des 4 niveaux de compétence - AVATAR ALIA.pdf#page=1",
+        "Référentiel des 4 niveaux de compétence - AVATAR ALIA.pdf#page=3"
+      ],
+      "answer_preview": "Contraindications are not explicitly mentioned in the provided context."
+    },
+    {
+      "query": "What is the composition?",
+      "used_static": false,
+      "quality": "correct",
+      "confidence": 0.7808001961822502,
+      "latency_ms": 6490.153799997643,
+      "citation_count": 1,
+      "citations": [
+        "Gamme BACTOL.pptx#page=4"
+      ],
+      "answer_preview": "Alcool 70 % [1], Chlorure de benzalkonium 0.2 %"
+    }
+  ]
+}

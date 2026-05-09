@@ -1,0 +1,224 @@
+{
+  "memory": [
+    {
+      "type": "user_fact",
+      "content": "User role is rep",
+      "key": "role",
+      "value": "rep",
+      "timestamp": "2026-04-30T09:58:57.274506Z",
+      "event_id": "evt_31edd5f4aa9e44c2b1b79441ee55ba79"
+    },
+    {
+      "type": "user_fact",
+      "content": "User name is claud",
+      "key": "name",
+      "value": "claud",
+      "timestamp": "2026-04-30T09:58:57.315331Z",
+      "event_id": "evt_14242e5c8fce42ba9d8688fe4a38423f"
+    },
+    {
+      "type": "statement",
+      "content": "i'm claud a medical rep",
+      "timestamp": "2026-04-30T09:58:57.340525Z",
+      "event_id": "evt_8bab9b226b254ab29ec5f2a0c9719677"
+    },
+    {
+      "type": "qa",
+      "input": "i need to ask you about the weather ?",
+      "output": "I can help with medical detailing and clinical product discussions. Let us refocus on indications, dosage, safety, or product use.",
+      "metadata": {
+        "mode": "training",
+        "source": "assistant",
+        "topic": null,
+        "drug_name": null,
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-04-30T10:00:28.578005Z",
+      "event_id": "evt_0975d3a982ea4063a354354793ce5924"
+    },
+    {
+      "type": "user_fact",
+      "content": "User role is doctor",
+      "key": "role",
+      "value": "doctor",
+      "timestamp": "2026-04-30T10:02:00.484783Z",
+      "event_id": "evt_4fd9303537934ec49750807937563de8"
+    },
+    {
+      "type": "qa",
+      "input": "i want to present a set of new medecins",
+      "output": "What specific aspects of these new medicines would you like to discuss?",
+      "metadata": {
+        "mode": "training",
+        "source": "assistant",
+        "topic": "other",
+        "drug_name": null,
+        "confidence": 0.85,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-04-30T10:03:10.894814Z",
+      "event_id": "evt_b13c69a8bdaa4a94bb2640817d02e300"
+    },
+    {
+      "type": "user_fact",
+      "content": "User company is vital company",
+      "key": "company",
+      "value": "vital company",
+      "timestamp": "2026-04-30T10:07:08.966007Z",
+      "event_id": "evt_276e688ada6041158511129f2ab881da"
+    },
+    {
+      "type": "qa",
+      "input": "i'm from vital company ",
+      "output": "Hello! As a professional medical information assistant, I can assist you with product-specific medical or pharmaceutical questions. Since you've introduced yourself as being from Vital Company, I'll keep that in mind for our conversation. Please feel free to ask me any questions, and I'll do my best to provide accurate and reliable information based on the evidence context.",
+      "metadata": {
+        "mode": "training",
+        "source": "assistant",
+        "topic": null,
+        "drug_name": null,
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-04-30T10:07:38.448362Z",
+      "event_id": "evt_4fc5fd12c41841478f734a034ea5dd80"
+    },
+    {
+      "type": "statement",
+      "content": "what is my name and where do i work",
+      "timestamp": "2026-04-30T10:09:33.269950Z",
+      "event_id": "evt_5150015d5e4b4966be118c0b266b1989"
+    },
+    {
+      "type": "qa",
+      "input": "what is my name and where do i work ",
+      "output": "Your name is claud.",
+      "metadata": {
+        "mode": "training",
+        "source": "memory",
+        "topic": null,
+        "drug_name": null,
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-04-30T10:09:46.881539Z",
+      "event_id": "evt_8cf87bed06b24c41936a016e2bd3672c"
+    },
+    {
+      "type": "qa",
+      "input": "what is my company",
+      "output": "Your company is Vital Company.",
+      "metadata": {
+        "mode": "training",
+        "source": "assistant",
+        "topic": null,
+        "drug_name": null,
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-04-30T10:16:20.580207Z",
+      "event_id": "evt_1e110dcf4e474788a37a9a0dbf17f3bc"
+    },
+    {
+      "type": "statement",
+      "content": "where do i work",
+      "timestamp": "2026-04-30T10:16:35.686688Z",
+      "event_id": "evt_75323d805eae4a4985bc896c2404d185"
+    },
+    {
+      "type": "qa",
+      "input": "where do i work ",
+      "output": "You work at vital company.",
+      "metadata": {
+        "mode": "training",
+        "source": "memory",
+        "topic": null,
+        "drug_name": null,
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-04-30T10:16:47.801823Z",
+      "event_id": "evt_66e1b15722d04dfca32b85096362b177"
+    },
+    {
+      "type": "qa",
+      "input": "what i have today ",
+      "output": "As a professional medical information assistant, I can assist you with product-specific medical or pharmaceutical questions. Since we've discussed your company and role earlier, I don't have any specific information about what you have today. If you're looking for information on a particular topic or product, please feel free to ask, and I'll do my best to provide accurate and reliable information based on the evidence context.",
+      "metadata": {
+        "mode": "training",
+        "source": "assistant",
+        "topic": null,
+        "drug_name": null,
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-04-30T10:17:21.167058Z",
+      "event_id": "evt_a890f86bfed44163912e49fff6818084"
+    },
+    {
+      "type": "qa",
+      "input": "it is bactlo ",
+      "output": "You mentioned 'Bactlo', could you please clarify what you mean by that? Is it a specific medication or condition you'd like to discuss?",
+      "metadata": {
+        "mode": "training",
+        "source": "assistant",
+        "topic": "other",
+        "drug_name": null,
+        "confidence": 0.85,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-04-30T10:18:57.904473Z",
+      "event_id": "evt_ce5952207fa746278304083acfeb4269"
+    },
+    {
+      "type": "qa",
+      "input": "yes ofc",
+      "output": "Which product would you like to discuss so I can keep the coaching grounded?",
+      "metadata": {
+        "mode": "training",
+        "source": "assistant",
+        "topic": "other",
+        "drug_name": null,
+        "confidence": 0.85,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-04-30T10:28:21.299243Z",
+      "event_id": "evt_89acdc48ef9f4ac496524f0e7d32ef23"
+    },
+    {
+      "type": "qa",
+      "input": "i want to disuss about the capital pf tunis ",
+      "output": "I can help with medical detailing and clinical product discussions. Let us refocus on indications, dosage, safety, or product use.",
+      "metadata": {
+        "mode": "training",
+        "source": "assistant",
+        "topic": null,
+        "drug_name": null,
+        "confidence": 1.0,
+        "citations": [],
+        "uncertainty": null,
+        "conflict_notes": []
+      },
+      "timestamp": "2026-04-30T10:41:16.067401Z",
+      "event_id": "evt_9a838101943a41fc891e1ed95c8edf36"
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "personalInformation": {
+    "fullName": "",
+    "email": "",
+    "links": [],
+    "summary": ""
+  },
+  "education": [
+    {
+      "degree": "",
+      "major": "",
+      "institution": "",
+      "location": "",
+      "startDate": "",
+      "endDate": "",
+      "gpa": ""
+    }
+  ],
+  "workExperience": [
+    {
+      "jobTitle": "",
+      "company": "",
+      "location": "",
+      "startDate": "",
+      "endDate": "",
+      "description": "",
+      "tags": [""]
+    }
+  ],
+  "projects": [
+    {
+      "projectName": "",
+      "description": "",
+      "role": "",
+      "tags": [],
+      "startDate": "",
+      "endDate": "",
+      "link": ""
+    }
+  ],
+  "skills": [],
+  "languages": [
+    {
+      "language": "",
+      "proficiency": ""
+    }
+  ],
+  "certifications": [
+    {
+      "certificationName": "",
+      "dateObtained": "",
+      "expirationDate": ""
+    }
+  ],
+  "awards": [
+    {
+      "awardName": "",
+      "issuingOrganization": "",
+      "dateReceived": "",
+      "description": ""
+    }
+  ],
+  "volunteerExperience": [
+    {
+      "role": "",
+      "organization": "",
+      "location": "",
+      "startDate": "",
+      "endDate": "",
+      "description": ""
+    }
+  ]
+}

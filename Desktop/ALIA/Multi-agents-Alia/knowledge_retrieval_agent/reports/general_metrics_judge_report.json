@@ -1,0 +1,147 @@
+{
+  "generated_at": "2026-04-20T23:08:36.273519",
+  "model": "smollm2:135m",
+  "sample_count": 3,
+  "retrieval_generation_metrics": {
+    "per_sample": [
+      {
+        "precision_at_k": 0.6666666666666666,
+        "recall_at_k": 1.0,
+        "ndcg_at_k": 1.0,
+        "reciprocal_rank": 1.0,
+        "answer_relevance": 0.10475590657189608,
+        "context_relevance": 0.9994013580308607,
+        "faithfulness": 0.9992053820088841,
+        "hallucination_rate": 0.000794617991115909,
+        "retrieval_confidence": 0.5385245901639344,
+        "latency_ms": 412.0
+      },
+      {
+        "precision_at_k": 0.6666666666666666,
+        "recall_at_k": 1.0,
+        "ndcg_at_k": 1.0,
+        "reciprocal_rank": 1.0,
+        "answer_relevance": 0.34018586556550373,
+        "context_relevance": 0.8891504679596275,
+        "faithfulness": 0.9988483350600532,
+        "hallucination_rate": 0.0011516649399467838,
+        "retrieval_confidence": 0.6435433822651868,
+        "latency_ms": 533.0
+      },
+      {
+        "precision_at_k": 0.3333333333333333,
+        "recall_at_k": 1.0,
+        "ndcg_at_k": 0.9321641718442815,
+        "reciprocal_rank": 0.5,
+        "answer_relevance": 0.9999669407109729,
+        "context_relevance": 0.9899610749601233,
+        "faithfulness": 0.9949591159499828,
+        "hallucination_rate": 0.005040884050017236,
+        "retrieval_confidence": 0.5028409090909092,
+        "latency_ms": 487.0
+      }
+    ],
+    "summary": {
+      "precision_at_k": {
+        "mean": 0.5555555555555556,
+        "std": 0.15713484026367722,
+        "count": 3
+      },
+      "recall_at_k": {
+        "mean": 1.0,
+        "std": 0.0,
+        "count": 3
+      },
+      "ndcg_at_k": {
+        "mean": 0.9773880572814272,
+        "std": 0.03197811606420927,
+        "count": 3
+      },
+      "reciprocal_rank": {
+        "mean": 0.8333333333333334,
+        "std": 0.23570226039551584,
+        "count": 3
+      },
+      "answer_relevance": {
+        "mean": 0.48163623761612423,
+        "std": 0.3789079525214825,
+        "count": 3
+      },
+      "context_relevance": {
+        "mean": 0.9595043003168705,
+        "std": 0.04989673357129505,
+        "count": 3
+      },
+      "faithfulness": {
+        "mean": 0.99767094433964,
+        "std": 0.0019230844221598236,
+        "count": 3
+      },
+      "hallucination_rate": {
+        "mean": 0.0023290556603599764,
+        "std": 0.0019230844221598236,
+        "count": 3
+      },
+      "retrieval_confidence": {
+        "mean": 0.5616362938400101,
+        "std": 0.0597210717946222,
+        "count": 3
+      },
+      "latency_ms": {
+        "mean": 477.3333333333333,
+        "std": 49.86871653540813,
+        "count": 3
+      }
+    }
+  },
+  "judge_results": [
+    {
+      "sample_id": 1,
+      "judge": {
+        "faithfulness": 0.92,
+        "answer_relevance": 0.78,
+        "context_utilization": 0.63,
+        "medical_safety": 0.41,
+        "clarity": 0.55,
+        "mode_alignment": 0.45,
+        "overall_score": 0.6233333333333334,
+        "issues": [
+          "One or more criteria scored below 0.5 without explicit rationale."
+        ],
+        "verdict": "acceptable"
+      }
+    },
+    {
+      "sample_id": 2,
+      "judge": {
+        "faithfulness": 0.92,
+        "answer_relevance": 0.78,
+        "context_utilization": 0.63,
+        "medical_safety": 0.41,
+        "clarity": 0.55,
+        "mode_alignment": 0.45,
+        "overall_score": 0.6233333333333334,
+        "issues": [
+          "One or more criteria scored below 0.5 without explicit rationale."
+        ],
+        "verdict": "acceptable"
+      }
+    },
+    {
+      "sample_id": 3,
+      "judge": {
+        "faithfulness": 0.92,
+        "answer_relevance": 0.78,
+        "context_utilization": 0.63,
+        "medical_safety": 0.41,
+        "clarity": 0.55,
+        "mode_alignment": 0.45,
+        "overall_score": 0.6233333333333334,
+        "issues": [
+          "One or more criteria scored below 0.5 without explicit rationale."
+        ],
+        "verdict": "acceptable"
+      }
+    }
+  ]
+}

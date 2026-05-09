@@ -1,0 +1,88 @@
+{
+  "document_name": "BACTOL Product Range",
+  "drug_name": "BACTOL",
+  "type": "Antiseptic / Disinfectant (Topical - External Use Only)",
+  "indications": {
+    "en": "Disinfection of hands and skin surfaces. Three product forms available: 1) BACTOL Savon Professionnel (Professional Soap) for daily disinfecting hand wash; 2) BACTOL Spray Désinfectant (Disinfectant Spray) for skin disinfection without rinsing, used as needed; 3) BACTOL Gel Désinfectant (Disinfectant Gel) for hand disinfection without rinsing, used as needed.",
+    "fr": "Désinfection des mains et des surfaces cutanées. Trois formes disponibles : 1) BACTOL Savon Professionnel pour un lavage désinfectant quotidien des mains ; 2) BACTOL Spray Désinfectant pour la désinfection cutanée sans rinçage, selon les besoins ; 3) BACTOL Gel Désinfectant pour la désinfection des mains sans rinçage, selon les besoins."
+  },
+  "composition": {
+    "en": "1) BACTOL Professional Soap (90g): Benzalkonium chloride 0.18g; 2) BACTOL Disinfectant Spray (125ml): Alcohol 95° at 65%; 3) BACTOL Disinfectant Gel (125ml): Alcohol 70%, Benzalkonium chloride 0.2%.",
+    "fr": "1) BACTOL Savon Professionnel (90g) : Chlorure de benzalkonium 0,18 g ; 2) BACTOL Spray Désinfectant (125 ml) : Alcool 95° à 65 % ; 3) BACTOL Gel Désinfectant (125 ml) : Alcool 70 %, Chlorure de benzalkonium 0,2 %."
+  },
+  "mechanism_of_action": {
+    "en": "Benzalkonium chloride is a quaternary ammonium compound with broad-spectrum antiseptic activity, effective against bacteria, fungi, and some viruses by disrupting cell membranes. Alcohol (ethanol) at concentrations of 65–70% acts as an antiseptic by denaturing microbial proteins and disrupting lipid membranes, providing rapid broad-spectrum antimicrobial action.",
+    "fr": "Le chlorure de benzalkonium est un composé d'ammonium quaternaire à activité antiseptique large spectre, efficace contre les bactéries, les champignons et certains virus en perturbant les membranes cellulaires. L'alcool (éthanol) à des concentrations de 65 à 70 % agit comme antiseptique en dénaturant les protéines microbiennes et en perturbant les membranes lipidiques, offrant une action antimicrobienne rapide à large spectre."
+  },
+  "age": "Adults for all three products. The Disinfectant Spray (125ml) is also indicated for children (adults and children).",
+  "dosage": {
+    "en": "1) BACTOL Professional Soap (90g): Use daily as a disinfectant soap for handwashing; 2) BACTOL Disinfectant Spray (125ml): Apply as needed, no rinsing required; 3) BACTOL Disinfectant Gel (125ml): Apply a few drops, rub hands thoroughly, no rinsing required.",
+    "fr": "1) BACTOL Savon Professionnel (90g) : Utiliser quotidiennement comme savon désinfectant pour le lavage des mains ; 2) BACTOL Spray Désinfectant (125 ml) : Appliquer selon les besoins, sans rinçage ; 3) BACTOL Gel Désinfectant (125 ml) : Appliquer quelques gouttes, bien frotter les mains, sans rinçage."
+  },
+  "administration": {
+    "en": "All products are for external/topical use only. 1) Professional Soap: Apply to wet hands, lather, rinse; 2) Disinfectant Spray: Spray directly onto the area as needed, no rinsing required; 3) Disinfectant Gel: Apply a few drops onto hands and rub thoroughly until dry, no rinsing required.",
+    "fr": "Tous les produits sont à usage externe/topique uniquement. 1) Savon Professionnel : Appliquer sur les mains mouillées, faire mousser, rincer ; 2) Spray Désinfectant : Vaporiser directement sur la zone concernée selon les besoins, sans rinçage ; 3) Gel Désinfectant : Appliquer quelques gouttes sur les mains et frotter soigneusement jusqu'à séchage complet, sans rinçage."
+  },
+  "warnings": {
+    "en": "For external use only. Keep out of reach of children. Avoid contact with eyes and mucous membranes. Not mentioned in the document beyond age and usage indications; no additional warnings provided.",
+    "fr": "Usage externe uniquement. Tenir hors de portée des enfants. Éviter le contact avec les yeux et les muqueuses. Aucune mise en garde supplémentaire n'est mentionnée dans le document au-delà des indications d'âge et d'utilisation."
+  },
+  "side_effects": {
+    "en": null,
+    "fr": null
+  },
+  "additional_sections": {
+    "product_forms_and_sizes": {
+      "en": "BACTOL is available in three forms: 1) Professional Soap – 90g bar; 2) Disinfectant Spray – 125ml bottle; 3) Disinfectant Gel – 125ml bottle.",
+      "fr": "BACTOL est disponible en trois formes : 1) Savon Professionnel – pain de 90 g ; 2) Spray Désinfectant – flacon de 125 ml ; 3) Gel Désinfectant – flacon de 125 ml."
+    },
+    "rinsing_requirements": {
+      "en": "The Professional Soap requires rinsing after use. Both the Disinfectant Spray and Disinfectant Gel are no-rinse formulas.",
+      "fr": "Le Savon Professionnel nécessite un rinçage après utilisation. Le Spray Désinfectant et le Gel Désinfectant sont tous deux des formules sans rinçage."
+    }
+  },
+  "variations": {
+    "statements_en": [
+      "BACTOL is a range of antiseptic products available as a professional soap, a disinfectant spray, and a disinfectant gel.",
+      "BACTOL Professional Soap contains benzalkonium chloride 0.18g and is recommended for daily hand disinfection in adults.",
+      "BACTOL Disinfectant Spray contains 65% alcohol at 95° and can be used without rinsing for adults and children.",
+      "BACTOL Disinfectant Gel combines 70% alcohol and 0.2% benzalkonium chloride and requires no rinsing after application.",
+      "The BACTOL gel should be applied by rubbing a few drops thoroughly onto the hands without rinsing.",
+      "BACTOL spray and gel are no-rinse antiseptic products intended for use as needed.",
+      "The BACTOL product line provides topical disinfection solutions for professional and personal hygiene use."
+    ],
+    "statements_fr": [
+      "BACTOL est une gamme de produits antiseptiques disponible sous forme de savon professionnel, de spray désinfectant et de gel désinfectant.",
+      "Le Savon Professionnel BACTOL contient du chlorure de benzalkonium 0,18 g et est recommandé pour la désinfection quotidienne des mains chez l'adulte.",
+      "Le Spray Désinfectant BACTOL contient 65 % d'alcool à 95° et peut être utilisé sans rinçage pour les adultes et les enfants.",
+      "Le Gel Désinfectant BACTOL associe 70 % d'alcool et 0,2 % de chlorure de benzalkonium et ne nécessite aucun rinçage après application.",
+      "Le gel BACTOL s'applique en frottant quelques gouttes soigneusement sur les mains sans rinçage.",
+      "Le spray et le gel BACTOL sont des antiseptiques sans rinçage destinés à être utilisés selon les besoins.",
+      "La gamme BACTOL offre des solutions de désinfection topique pour une hygiène professionnelle et personnelle."
+    ],
+    "questions_en": [
+      "What are the indications for BACTOL products?",
+      "What is the composition of BACTOL disinfectant gel?",
+      "What is the concentration of alcohol in BACTOL spray?",
+      "Does BACTOL gel require rinsing after use?",
+      "Can children use BACTOL disinfectant spray?",
+      "What is the active ingredient in BACTOL professional soap?",
+      "How should BACTOL disinfectant gel be applied?",
+      "What sizes are BACTOL products available in?",
+      "What is the difference between BACTOL soap, spray, and gel?",
+      "Is BACTOL suitable for daily use?"
+    ],
+    "questions_fr": [
+      "Quelles sont les indications des produits BACTOL ?",
+      "Quelle est la composition du gel désinfectant BACTOL ?",
+      "Quelle est la concentration en alcool du spray BACTOL ?",
+      "Le gel BACTOL nécessite-t-il un rinçage après utilisation ?",
+      "Les enfants peuvent-ils utiliser le spray désinfectant BACTOL ?",
+      "Quel est le principe actif du savon professionnel BACTOL ?",
+      "Comment appliquer le gel désinfectant BACTOL ?",
+      "En quels formats les produits BACTOL sont-ils disponibles ?",
+      "Quelle est la différence entre le savon, le spray et le gel BACTOL ?",
+      "BACTOL est-il adapté à une utilisation quotidienne ?"
+    ]
+  }
+}

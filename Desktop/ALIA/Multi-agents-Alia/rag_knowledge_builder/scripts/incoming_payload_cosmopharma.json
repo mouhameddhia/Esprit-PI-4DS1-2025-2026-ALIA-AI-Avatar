@@ -1,0 +1,198 @@
+{
+  "document_name": "COSMOPHARMA Product Range",
+  "drug_name": "COSMOPHARMA – Multiple Products",
+  "type": "Dermatological / Cosmetic / Antiseptic / Topical Products Range",
+  "indications": {
+    "en": "A wide range of dermatological and cosmetic products targeting: acne-prone and oily skin, dry and sensitive skin, intimate hygiene, fungal infections, insect repellent and relief, skin hydration and nutrition, antiseptic and drying of skin lesions.",
+    "fr": "Une gamme variée de produits dermatologiques et cosmétiques ciblant : les peaux acnéiques et grasses, les peaux sèches et sensibles, l'hygiène intime, les infections fongiques, la protection contre les insectes, l'hydratation et la nutrition cutanée, l'antisepsie et l'assèchement des lésions cutanées."
+  },
+  "composition": {
+    "en": "See per-product details in additional_sections.",
+    "fr": "Voir les détails par produit dans les sections supplémentaires."
+  },
+  "mechanism_of_action": {
+    "en": "Products use a variety of active mechanisms: salicylic acid exfoliates and unclogs pores; zinc sulfate regulates sebum and reduces inflammation; tea tree essential oil provides antiseptic and antifungal action; aloe vera soothes and promotes healing; sulfur purifies and accelerates skin repair; cade oil and salicylic acid act as keratolytic and antiseptic agents; shea butter and sweet almond oil nourish and soften; citronella repels insects; aqueous and alcoholic eosin dry and disinfect skin lesions; benzalkonium chloride provides broad-spectrum antiseptic action; apple cider vinegar and propolis offer antifungal and antiseptic properties.",
+    "fr": "Les produits utilisent divers mécanismes actifs : l'acide salicylique exfolie et désincruste les pores ; le sulfate de zinc régule le sébum et réduit l'inflammation ; l'huile essentielle d'arbre à thé offre une action antiseptique et antifongique ; l'aloès vera apaise et favorise la cicatrisation ; le soufre purifie et accélère la réparation cutanée ; l'huile de cade et l'acide salicylique agissent comme agents kératolytiques et antiseptiques ; le beurre de karité et l'huile d'amande douce nourrissent et adoucissent ; la citronnelle repousse les insectes ; l'éosine aqueuse et alcoolisée assèchent et désinfectent les lésions cutanées ; le chlorure de benzalkonium offre une action antiseptique large spectre ; le vinaigre de cidre et la propolis offrent des propriétés antifongiques et antiseptiques."
+  },
+  "age": "Most products are indicated for adults only. Exceptions: MOUSTIK Soap, Gel, and Lotion (adults and children); Vaseline 100% and Vaseline Glycérinée (adults and children); VITOSINE Aqueous and Alcoholic Eosin 2% (children and adults); FONGIDERM Gel Lavant (adults from 12 years).",
+  "dosage": {
+    "en": "1) DERMACNÉ Capsule: 1 capsule in the morning (adult); 2) DERMACNÉ Cream: Apply a hazelnut-sized amount to cleansed skin (adult); 3) DERMACNÉ Cleansing Gel: Lather with water, apply to face with gentle massage, rinse thoroughly (adult); 4) DERMACNÉ Soap: Daily use (adult); 5) DERMASOUFRE Soap: Daily use (adult); 6) DERMALO Soap: Daily use (adult); 7) ARGIDERM Soap: Daily use (adult); 8) FONGIDERM Soap: Daily use, apply to moist skin, rub gently, rinse and dry (adult); 9) DERMADOUCE Soap: Daily use (adult); 10) HYDRA Soap: Daily use (adult); 11) MOUSTIK Soap: Apply to skin, rub gently (adults and children); 12) MOUSTIK Gel: Apply to skin, rub gently (adults and children); 13) MOUSTIK Lotion: Apply to skin, rub gently (adults and children); 14) DERMAGYN Soap: Daily wash, apply to moist skin, leave a few minutes, rinse thoroughly (adult); 15) DERMAGYN Gel: Daily wash, apply to moist skin, leave a few minutes, rinse thoroughly (adult); 16) Vaseline 100%: Apply a hazelnut-sized amount to cleansed skin (adults and children); 17) Vaseline Glycérinée: Apply to all dry skin areas (adults and children); 18) Vaseline Salicylée: Apply to callused hands/feet, dry or scaly skin (adult); 19) FONGIDERM Gel Lavant: Gently wash moistened hair and body, rinse thoroughly, 1–2 times per week (adults from 12 years); 20) FONGIDERM Crème: 3 applications per day after washing and drying the area to treat, massage until fully absorbed (adult); 21) FONGIDERM Spray: Apply to clean, dry areas 2 times per day on elbows, feet, nails, between toes, and soles (adult); 22) VITOSINE Aqueous Eosin 2%: Spray directly on area to dry, 1–2 times per day (children and adults); 23) VITOSINE Alcoholic Eosin 2%: Spray directly on area to clean and dry, 1–2 times per day (children and adults).",
+    "fr": "1) DERMACNÉ Gélule : 1 gélule le matin (adulte) ; 2) DERMACNÉ Crème : Appliquer une noisette de crème sur une peau nettoyée (adulte) ; 3) DERMACNÉ Gel Nettoyant : Faire mousser avec de l'eau, appliquer sur le visage en massant doucement, rincer abondamment (adulte) ; 4) DERMACNÉ Savon : Usage quotidien (adulte) ; 5) DERMASOUFRE Savon : Usage quotidien (adulte) ; 6) DERMALO Savon : Usage quotidien (adulte) ; 7) ARGIDERM Savon : Usage quotidien (adulte) ; 8) FONGIDERM Savon : Usage quotidien, appliquer sur peau humide, frotter doucement, rincer et sécher (adulte) ; 9) DERMADOUCE Savon : Usage quotidien (adulte) ; 10) HYDRA Savon : Usage quotidien (adulte) ; 11) MOUSTIK Savon : Appliquer sur la peau et frotter doucement (adulte et enfant) ; 12) MOUSTIK Gel : Appliquer sur la peau et frotter doucement (adulte et enfant) ; 13) MOUSTIK Lotion : Appliquer sur la peau et frotter doucement (adulte et enfant) ; 14) DERMAGYN Savon : Lavage quotidien, appliquer sur peau humide, laisser quelques minutes, rincer soigneusement (adulte) ; 15) DERMAGYN Gel : Lavage quotidien, appliquer sur peau humide, laisser quelques minutes, rincer soigneusement (adulte) ; 16) Vaseline 100% : Appliquer une noisette sur une peau nettoyée (adulte et enfant) ; 17) Vaseline Glycérinée : Appliquer sur toute peau sèche du corps (adulte et enfant) ; 18) Vaseline Salicylée : Appliquer sur les pieds/mains calleux, peau sèche et squameuse (adulte) ; 19) FONGIDERM Gel Lavant : Laver délicatement cheveux et corps mouillés, rincer soigneusement, 1 à 2 fois par semaine (adulte à partir de 12 ans) ; 20) FONGIDERM Crème : 3 applications par jour après lavage et séchage soigneux de la zone à traiter, masser jusqu'à pénétration complète (adulte) ; 21) FONGIDERM Spray : Appliquer sur zones propres et sèches 2 fois par jour sur coude, pied, ongles, entre les orteils et plante du pied (adulte) ; 22) VITOSINE Éosine Aqueuse 2% : Vaporiser directement sur la partie à assécher, 1 à 2 fois par jour (enfant et adulte) ; 23) VITOSINE Éosine Alcoolisée 2% : Vaporiser directement sur la partie à nettoyer et assécher, 1 à 2 fois par jour (enfant et adulte)."
+  },
+  "administration": {
+    "en": "All products are for external/topical use only. Application methods vary by product: soaps are applied to moist skin and rinsed; creams and gels are applied directly to clean skin; sprays are applied directly to the target area; capsules (DERMACNÉ) are taken orally once daily in the morning.",
+    "fr": "Tous les produits sont à usage externe/topique uniquement. Les méthodes d'application varient selon le produit : les savons s'appliquent sur une peau humide et se rincent ; les crèmes et gels s'appliquent directement sur une peau propre ; les sprays sont vaporisés directement sur la zone ciblée ; les gélules (DERMACNÉ) sont prises par voie orale une fois par jour le matin."
+  },
+  "warnings": {
+    "en": "No specific warnings are mentioned in the source document beyond age indications and usage instructions. General precautions apply: for external use only (except DERMACNÉ capsule); keep out of reach of children; avoid contact with eyes.",
+    "fr": "Aucune mise en garde spécifique n'est mentionnée dans le document source au-delà des indications d'âge et des instructions d'utilisation. Des précautions générales s'appliquent : usage externe uniquement (sauf gélule DERMACNÉ) ; tenir hors de portée des enfants ; éviter le contact avec les yeux."
+  },
+  "side_effects": {
+    "en": null,
+    "fr": null
+  },
+  "additional_sections": {
+    "dermacne_capsule": {
+      "en": "DERMACNÉ Capsule (30 capsules): Indicated for deep skin purification, elimination of acne-related imperfections, reduction of excess sebum, soothing of acneic lesion inflammation, and promotion of healing. Composition per capsule: Burdock dry extract (Arctium lappa) 100mg, Wild pansy dry extract (Viola tricolor) 100mg, Brewer's yeast (Saccharomyces cerevisiae) 74mg, Zinc sulfate 66mg, Vitamin B5 6mg, Vitamin A 800µg. Dosage: 1 capsule in the morning. Age: Adult.",
+      "fr": "DERMACNÉ Gélule (30 gélules) : Indiquée pour assainir et purifier la peau en profondeur, éliminer les imperfections acnéiques, réduire l'excès de sébum, apaiser l'inflammation des lésions acnéiques et favoriser la cicatrisation. Composition par gélule : Extrait sec de Bardane (Arctium lappa) 100 mg, Extrait sec de Pensée sauvage (Viola tricolor) 100 mg, Levure de bière (Saccharomyces cerevisiae) 74 mg, Sulfate de Zinc 66 mg, Vitamine B5 6 mg, Vitamine A 800 µg. Posologie : 1 gélule le matin. Âge : Adulte."
+    },
+    "dermacne_creme": {
+      "en": "DERMACNÉ Cream (45g): Indicated for deep skin purification and hydration, reduction of imperfections, and treatment of acne-prone skin. Composition: Shea butter (Butyrospermum parkii), Sweet almond oil (Prunus amygdalus), Vitamin A, Salicylic acid, Zinc sulfate. Usage: Apply a hazelnut-sized amount to previously cleansed skin. Age: Adult.",
+      "fr": "DERMACNÉ Crème (45 g) : Indiquée pour purifier et hydrater la peau en profondeur, réduire les imperfections cutanées et soigner la peau acnéique. Composition : Beurre de Karité (Butyrospermum parkii), Huile d'amande douce (Prunus amygdalus), Vitamine A, Acide salicylique, Sulfate de zinc. Utilisation : Appliquer une noisette de crème sur une peau préalablement nettoyée. Âge : Adulte."
+    },
+    "dermacne_gel_nettoyant": {
+      "en": "DERMACNÉ Cleansing Gel (200ml): Indicated for deep cleansing and purification of oily and acne-prone skin, elimination of excess sebum, reduction of irritation and redness, skin preparation for subsequent care while maintaining hydration and skin barrier. Composition: Aloe vera gel, Salicylic acid, Argan oil (Argania spinosa), Zinc sulfate, Tea tree essential oil (Melaleuca alternifolia). Usage: Lather with water, apply to face with gentle massage, rinse thoroughly. Age: Adult.",
+      "fr": "DERMACNÉ Gel Nettoyant (200 ml) : Indiqué pour nettoyer et purifier en profondeur les peaux grasses à tendance acnéique, éliminer l'excès de sébum, réduire les irritations et les rougeurs, préparer la peau aux soins suivants tout en maintenant son hydratation et sa barrière cutanée. Composition : Gel d'aloès Vera, Acide salicylique, Huile d'Argan (Argania spinosa), Sulfate de zinc, Huile essentielle d'arbre à thé (Melaleuca alternifolia). Utilisation : Faire mousser avec un peu d'eau, appliquer sur le visage en massant doucement, rincer abondamment. Âge : Adulte."
+    },
+    "dermacne_savon": {
+      "en": "DERMACNÉ Soap (90g): Indicated for soothing, anti-inflammatory, and exfoliating care for acne-prone skin. Composition: Rosemary dry extract (Rosmarinus officinalis), Tea tree essential oil (Melaleuca alternifolia), Salicylic acid. Usage: Daily use. Age: Adult.",
+      "fr": "DERMACNÉ Savon (90 g) : Indiqué pour des soins apaisants, anti-inflammatoires et exfoliants des peaux acnéiques. Composition : Extrait sec de Romarin (Rosmarinus officinalis), Huile essentielle d'arbre à thé (Melaleuca alternifolia), Acide salicylique. Utilisation : Usage quotidien. Âge : Adulte."
+    },
+    "dermasoufre": {
+      "en": "DERMASOUFRE Soap (90g): Indicated for soothing and accelerating skin repair, hygiene and care of oily and acne-prone skin. Composition: Sulfur. Usage: Daily use. Age: Adult.",
+      "fr": "DERMASOUFRE Savon (90 g) : Indiqué pour apaiser et accélérer la réparation de la peau, hygiène et soin des peaux grasses à tendance acnéique. Composition : Soufre. Utilisation : Usage quotidien. Âge : Adulte."
+    },
+    "dermalo": {
+      "en": "DERMALO Soap (90g): Indicated for soothing, accelerating skin repair, purifying and antiseptic care. Composition: Salicylic acid, Cade oil. Usage: Daily use. Age: Adult.",
+      "fr": "DERMALO Savon (90 g) : Indiqué pour apaiser et accélérer la réparation de la peau, soin purifiant et antiseptique. Composition : Acide salicylique, Huile de cade. Utilisation : Usage quotidien. Âge : Adulte."
+    },
+    "argiderm": {
+      "en": "ARGIDERM Soap (90g): Indicated for care and treatment of very sensitive skin. Composition: Clay, Olive oil, Honey. Usage: Daily use. Age: Adult.",
+      "fr": "ARGIDERM Savon (90 g) : Indiqué pour le soin et le traitement des peaux très sensibles. Composition : Argile, Huile d'olive, Miel. Utilisation : Usage quotidien. Âge : Adulte."
+    },
+    "fongiderm_savon": {
+      "en": "FONGIDERM Soap (90g): Indicated as an antifungal soap. Composition: Coconut oil (Cocos nucifera), Aloe vera gel, Tea tree essential oil (Melaleuca alternifolia), Lavender essential oil (Lavandula angustifolia), Benzalkonium chloride, Black seed oil (Nigella sativa). Usage: Daily use, apply to moist skin, rub gently, rinse thoroughly and dry hands with a towel. Age: Adult.",
+      "fr": "FONGIDERM Savon (90 g) : Indiqué comme savon antifongique. Composition : Huile de noix de coco (Cocos nucifera), Gel d'aloès Vera, Huile essentielle d'arbre à thé (Melaleuca alternifolia), Huile essentielle de lavande (Lavandula angustifolia), Chlorure de Benzalkonium, Huile de nigelle (Nigella sativa). Utilisation : Usage quotidien, appliquer sur la peau humide et frotter doucement, rincer abondamment à l'eau et sécher les mains avec une serviette. Âge : Adulte."
+    },
+    "dermadouce": {
+      "en": "DERMADOUCE Soap (90g): Indicated for care and hygiene of dry skin. Composition: Sweet almond oil. Usage: Daily use. Age: Adult.",
+      "fr": "DERMADOUCE Savon (90 g) : Indiqué pour le soin et l'hygiène des peaux sèches. Composition : Huile d'amande douce. Utilisation : Usage quotidien. Âge : Adulte."
+    },
+    "hydra": {
+      "en": "HYDRA Soap (90g): Indicated for deep skin hydration, nutrition, softening, suppleness, and skin regeneration and healing. Composition: Shea butter, Sweet almond oil, Lavender essential oil. Usage: Daily use. Age: Adult.",
+      "fr": "HYDRA Savon (90 g) : Indiqué pour l'hydratation en profondeur de la peau, la nutrition, l'adoucissement, l'assouplissement, la régénération et la cicatrisation cutanée. Composition : Beurre de karité, Huile d'amande douce, Huile essentielle de lavande. Utilisation : Usage quotidien. Âge : Adulte."
+    },
+    "moustik_savon": {
+      "en": "MOUSTIK Soap (90g): Indicated as an insect repellent and to soothe insect bites. Composition: Citronella essence (Cymbopogon winterianus). Usage: Apply to skin and rub gently. Age: Adults and children.",
+      "fr": "MOUSTIK Savon (90 g) : Indiqué comme répulsif contre les piqûres d'insectes et pour soulager les piqûres. Composition : Essence de citronnelle (Cymbopogon winterianus). Utilisation : Appliquer sur la peau et frotter doucement. Âge : Adulte et enfant."
+    },
+    "moustik_gel": {
+      "en": "MOUSTIK Gel (55g): Indicated as an insect repellent and to soothe insect bites. Composition: Citronella essence (Cymbopogon winterianus), Calendula glycolic extract (Calendula officinalis). Usage: Apply to skin and rub gently. Age: Adults and children.",
+      "fr": "MOUSTIK Gel (55 g) : Indiqué comme répulsif contre les piqûres d'insectes et pour soulager les piqûres. Composition : Essence de citronnelle (Cymbopogon winterianus), Extrait glycolique de Calendula (Calendula officinalis). Utilisation : Appliquer sur la peau et frotter doucement. Âge : Adulte et enfant."
+    },
+    "moustik_lotion": {
+      "en": "MOUSTIK Lotion (125ml): Indicated as an insect repellent and to soothe insect bites. Composition: Aloe vera gel, Citronella essence (Cymbopogon winterianus), Arnica dry extract (Arnica montana). Usage: Apply to skin and rub gently. Age: Adults and children.",
+      "fr": "MOUSTIK Lotion (125 ml) : Indiquée comme répulsif contre les piqûres d'insectes et pour soulager les piqûres. Composition : Gel d'Aloès Vera, Essence de Citronnelle (Cymbopogon winterianus), Extrait sec d'Arnica (Arnica montana). Utilisation : Appliquer sur la peau et frotter doucement. Âge : Adulte et enfant."
+    },
+    "dermagyn_savon": {
+      "en": "DERMAGYN Soap (90g): Indicated for intimate hygiene, protection and soothing of irritation, daily freshness and comfort, with pH adapted to vaginal flora. Composition: Aloe vera, Glycerin, Lavender essential oil (Lavandula angustifolia), Burdock dry extract (Arctium lappa), Argan oil. Usage: Daily wash, apply to moist skin, leave a few minutes, rinse thoroughly. Age: Adult.",
+      "fr": "DERMAGYN Savon (90 g) : Indiqué pour l'hygiène intime, la protection et l'apaisement des irritations, la fraîcheur et le confort quotidien, avec un pH adapté à la flore vaginale. Composition : Aloès Vera, Glycérine, Huile essentielle de Lavande (Lavandula angustifolia), Extrait sec de Bardane (Arctium lappa), Huile d'Argan. Utilisation : Lavage quotidien, appliquer sur peau humide, laisser quelques minutes, rincer soigneusement. Âge : Adulte."
+    },
+    "dermagyn_gel": {
+      "en": "DERMAGYN Gel (200ml): Indicated for intimate hygiene, protection and soothing of irritation, daily freshness and comfort, with pH adapted to vaginal flora. Composition: Rose water, Lavender essential oil, Aloe vera, Burdock dry extract (Arctium lappa L.), Argan oil. Usage: Daily wash, apply to moist skin, leave a few minutes, rinse thoroughly. Age: Adult.",
+      "fr": "DERMAGYN Gel (200 ml) : Indiqué pour l'hygiène intime, la protection et l'apaisement des irritations, la fraîcheur et le confort quotidien, avec un pH adapté à la flore vaginale. Composition : Eau de rose, Huile essentielle de Lavande, Aloès Vera, Extrait sec de Bardane (Arctium lappa L.), Huile d'Argan. Utilisation : Lavage quotidien, appliquer sur peau humide, laisser quelques minutes, rincer soigneusement. Âge : Adulte."
+    },
+    "vaseline_pure": {
+      "en": "Vaseline 100% (40g): Indicated for relieving irritation lesions and skin dryness in adults and children. Composition: 100% Vaseline. Usage: Apply a hazelnut-sized amount to previously cleansed skin. Age: Adults and children.",
+      "fr": "Vaseline 100% (40 g) : Indiquée pour soulager les lésions d'irritation et les sécheresses cutanées des adultes et des enfants. Composition : 100% Vaseline. Utilisation : Appliquer une noisette de crème sur une peau préalablement nettoyée. Âge : Adulte et enfant."
+    },
+    "vaseline_glycerinee": {
+      "en": "Vaseline Glycérinée (45g): Indicated to provide essential hydration thanks to its emollient and occlusive agents. Composition: White petrolatum, Glycerin, Paraffin oil. Usage: Apply to all dry skin areas on the body. Age: Adults and children.",
+      "fr": "Vaseline Glycérinée (45 g) : Indiquée pour assurer une hydratation incontournable de la peau grâce à ses agents émollients et occlusifs. Composition : Vaseline blanche, Glycérine, Huile de paraffine. Utilisation : Appliquer sur toute peau sèche du corps. Âge : Adulte et enfant."
+    },
+    "vaseline_salicylee": {
+      "en": "Vaseline Salicylée (40g): Indicated to attenuate fine scales and calluses on feet and hands, hydrate dry skin, and promote regeneration. Composition: White petrolatum, Salicylic acid. Usage: Apply to callused hands and feet, dry skin, and scaly skin. Age: Adult.",
+      "fr": "Vaseline Salicylée (40 g) : Indiquée pour atténuer les fins squames et les callosités des pieds et des mains, hydrater la peau sèche et la régénérer. Composition : Vaseline blanche, Acide salicylique. Utilisation : Appliquer sur les pieds et les mains présentant des callosités, sur la peau sèche et la peau présentant des squames. Âge : Adulte."
+    },
+    "fongiderm_gel_lavant": {
+      "en": "FONGIDERM Gel Lavant (200ml): Antifungal cleansing gel for hair and body, designed for optimal hygiene while caring for skin and scalp. Composition: Aloe vera gel 11.25g, Coconut oil (Cocos nucifera) 2.25g, Rosemary essential oil (Rosmarinus officinalis) 1.13g, Tea tree essential oil (Melaleuca alternifolia) 0.45g, Mint essential oil (Mentha piperita) 0.45g, Thyme essential oil (Thymus vulgaris) 0.23g, Black seed oil (Nigella sativa) 0.11g. Usage: Gently wash moistened hair and body, rinse thoroughly, 1–2 times per week. Age: Adults from 12 years.",
+      "fr": "FONGIDERM Gel Lavant (200 ml) : Gel nettoyant antifongique pour cheveux et corps, conçu pour une hygiène optimale tout en prenant soin de la peau et du cuir chevelu. Composition : Gel d'aloès vera 11,25 g, Huile de noix de coco (Cocos nucifera) 2,25 g, Huile essentielle de romarin (Rosmarinus officinalis) 1,13 g, Huile essentielle d'arbre à thé (Melaleuca alternifolia) 0,45 g, Huile essentielle de menthe (Mentha piperita) 0,45 g, Huile essentielle de thym (Thymus vulgaris) 0,23 g, Huile de nigelle (Nigella sativa) 0,11 g. Utilisation : Laver délicatement les cheveux et le corps préalablement mouillés puis rincer soigneusement, 1 à 2 fois par semaine. Âge : Adulte à partir de 12 ans."
+    },
+    "fongiderm_creme": {
+      "en": "FONGIDERM Cream (45g): Indicated to combat superficial localized fungal infections, reinforce antiseptic, anti-inflammatory and antifungal action, and gently cleanse and protect the scalp and hair. Composition: Liquid Aloe vera (Aloe barbadensis), Coconut oil (Cocos nucifera), Tea tree essential oil (Melaleuca alternifolia), Rosemary dry extract (Rosmarinus officinalis), Eucalyptus essential oil (Eucalyptus globulus), Ginger essential oil (Zingiber officinalis), Green tea dry extract (Camellia sinensis), Propolis dry extract, Olive dry extract (Olea europaea), Garlic dry extract (Allium sativum). Usage: 3 applications per day after washing and thoroughly drying the area to treat, massage until fully absorbed. Age: Adult.",
+      "fr": "FONGIDERM Crème (45 g) : Indiquée pour lutter contre les atteintes fongiques superficielles localisées, renforcer l'action antiseptique, anti-inflammatoire et antifongique, nettoyer en douceur et protéger le cuir chevelu et les cheveux. Composition : Aloès Vera liquide (Aloe barbadensis), Huile de noix de coco (Cocos nucifera), Huile essentielle d'arbre à thé (Melaleuca alternifolia), Extrait sec de Romarin (Rosmarinus officinalis), Huile essentielle d'Eucalyptus (Eucalyptus globulus), Huile essentielle de Gingembre (Zingiber officinalis), Extrait sec de Thé Vert (Camellia sinensis), Extrait sec de Propolis, Extrait sec d'Olivier (Olea europaea), Extrait sec d'Ail (Allium sativum). Utilisation : 3 applications par jour après lavage et séchage soigneux de la zone à traiter, masser jusqu'à pénétration complète de la crème. Âge : Adulte."
+    },
+    "fongiderm_spray": {
+      "en": "FONGIDERM Spray (40ml): A natural topical spray formulated to relieve, prevent and treat superficial cutaneous fungal infections. Its 100% natural synergistic formula combines antifungal, antiseptic, anti-inflammatory and healing agents with a dual preventive and curative action. Composition: Aloe vera gel (Aloe barbadensis) 4.116g, Apple cider vinegar 2.058g, Alcoholic propolis extract 1.2348g, Tea tree essential oil (Melaleuca alternifolia) 1.2348g, Calendula glycolic extract (Calendula officinalis) 0.4116g, Eucalyptus essential oil (Eucalyptus globulus) 0.2058g, Ginger essential oil (Zingiber officinalis) 0.2058g. Usage: Apply to clean dry areas 2 times per day on elbows, feet, nails, between toes and soles. Age: Adult.",
+      "fr": "FONGIDERM Spray (40 ml) : Spray topique naturel formulé pour soulager, prévenir et traiter les atteintes fongiques cutanées superficielles. Sa formule synergique 100% naturelle associe des agents antifongiques, antiseptiques, anti-inflammatoires et cicatrisants, offrant une double action préventive et curative. Composition : Gel d'aloès vera (Aloe barbadensis) 4,116 g, Vinaigre de cidre 2,058 g, Extrait alcoolique de propolis 1,2348 g, Huile essentielle d'arbre à thé (Melaleuca alternifolia) 1,2348 g, Extrait glycolique de calendula (Calendula officinalis) 0,4116 g, Huile essentielle d'eucalyptus (Eucalyptus globulus) 0,2058 g, Huile essentielle de gingembre (Zingiber officinalis) 0,2058 g. Utilisation : Appliquer sur les zones propres et sèches 2 fois par jour sur le coude, pied, ongles, entre les orteils et plante du pied. Âge : Adulte."
+    },
+    "vitosine_eosine_aqueuse": {
+      "en": "VITOSINE Aqueous Eosin 2% (30ml): Indicated for cleansing and drying skin lesions prone to superinfection, notably in newborns (umbilical cord and diaper rash). Composition: Aqueous eosin 2%. Usage: Spray directly onto area to dry, 1–2 times per day. Age: Children and adults.",
+      "fr": "VITOSINE Éosine Aqueuse 2% (30 ml) : Indiquée pour nettoyer et assécher les lésions cutanées susceptibles de se surinfecter, notamment chez le nouveau-né (cordon ombilical et érythème fessier). Composition : Éosine aqueuse 2%. Utilisation : Vaporiser directement sur la partie à assécher, 1 à 2 fois par jour. Âge : Enfant et adulte."
+    },
+    "vitosine_eosine_alcoolisee": {
+      "en": "VITOSINE Alcoholic Eosin 2% (30ml): Indicated as an adjunct treatment for skin conditions, antiseptic and skin-drying agent. Composition: Alcoholic eosin 2%. Usage: Spray directly onto area to clean and dry, 1–2 times per day. Age: Children and adults.",
+      "fr": "VITOSINE Éosine Alcoolisée 2% (30 ml) : Indiquée comme traitement d'appoint pour les affections de la peau, antiseptique et assèchement de la peau. Composition : Éosine aqueuse alcoolisée 2%. Utilisation : Vaporiser directement sur la partie à nettoyer et assécher, 1 à 2 fois par jour. Âge : Enfant et adulte."
+    }
+  },
+  "variations": {
+    "statements_en": [
+      "COSMOPHARMA offers a complete dermatological product range including acne treatments, antifungal care, insect repellents, intimate hygiene products, and skin hydration solutions.",
+      "DERMACNÉ capsules contain zinc sulfate, burdock extract, wild pansy, brewer's yeast, vitamin B5, and vitamin A, taken once daily in the morning for acne management.",
+      "FONGIDERM is available in four forms: soap, cleansing gel, cream, and spray, all targeting superficial fungal skin infections.",
+      "MOUSTIK soap, gel, and lotion all contain citronella essence and are suitable for both adults and children for insect repellent use.",
+      "DERMAGYN soap and gel are formulated with a pH adapted to vaginal flora for daily intimate hygiene in adults.",
+      "Vaseline Salicylée combines white petrolatum and salicylic acid to treat calluses, dry skin, and fine scales on hands and feet.",
+      "VITOSINE Aqueous Eosin 2% is safe for newborns and is used to dry and disinfect the umbilical cord and diaper rash areas.",
+      "FONGIDERM Spray is a 100% natural antifungal topical formula with a dual preventive and curative action for superficial skin fungal infections.",
+      "DERMACNÉ Cleansing Gel contains tea tree oil, argan oil, aloe vera, zinc sulfate, and salicylic acid, designed for oily and acne-prone skin.",
+      "HYDRA soap combines shea butter, sweet almond oil, and lavender essential oil for deep skin nourishment and regeneration."
+    ],
+    "statements_fr": [
+      "COSMOPHARMA propose une gamme dermatologique complète incluant des traitements anti-acné, des soins antifongiques, des répulsifs contre les insectes, des produits d'hygiène intime et des solutions d'hydratation cutanée.",
+      "Les gélules DERMACNÉ contiennent du sulfate de zinc, de l'extrait de bardane, de la pensée sauvage, de la levure de bière, de la vitamine B5 et de la vitamine A, à prendre une fois par jour le matin pour la prise en charge de l'acné.",
+      "FONGIDERM est disponible en quatre formes : savon, gel lavant, crème et spray, tous ciblant les infections fongiques cutanées superficielles.",
+      "Le savon, le gel et la lotion MOUSTIK contiennent tous de l'essence de citronnelle et conviennent aux adultes comme aux enfants comme répulsifs contre les insectes.",
+      "Le savon et le gel DERMAGYN sont formulés avec un pH adapté à la flore vaginale pour l'hygiène intime quotidienne des adultes.",
+      "La Vaseline Salicylée associe de la vaseline blanche et de l'acide salicylique pour traiter les callosités, la peau sèche et les squames sur les mains et les pieds.",
+      "La VITOSINE Éosine Aqueuse 2% est sans danger pour les nouveau-nés et est utilisée pour assécher et désinfecter le cordon ombilical et les érythèmes fessiers.",
+      "Le Spray FONGIDERM est une formule topique antifongique 100% naturelle avec une double action préventive et curative contre les infections fongiques cutanées superficielles.",
+      "Le Gel Nettoyant DERMACNÉ contient de l'huile d'arbre à thé, de l'huile d'argan, de l'aloès vera, du sulfate de zinc et de l'acide salicylique, conçu pour les peaux grasses à tendance acnéique.",
+      "Le savon HYDRA associe beurre de karité, huile d'amande douce et huile essentielle de lavande pour une nutrition et une régénération cutanée en profondeur."
+    ],
+    "questions_en": [
+      "What are the indications of DERMACNÉ capsules?",
+      "What is the composition of FONGIDERM spray?",
+      "Which COSMOPHARMA products are suitable for children?",
+      "How many times per day should FONGIDERM cream be applied?",
+      "What is the active ingredient in DERMASOUFRE soap?",
+      "What products does COSMOPHARMA offer for intimate hygiene?",
+      "What is MOUSTIK lotion used for and who can use it?",
+      "How should VITOSINE Aqueous Eosin 2% be used in newborns?",
+      "What is the difference between FONGIDERM gel lavant and FONGIDERM cream?",
+      "Which products contain salicylic acid?",
+      "What is the dosage of DERMACNÉ capsules for adults?",
+      "Can Vaseline Glycérinée be used on children?",
+      "What are the antifungal products available in the COSMOPHARMA range?",
+      "What is the composition of ARGIDERM soap?",
+      "How should DERMAGYN gel be applied?",
+      "What is DERMALO soap used for?",
+      "Which products are indicated for dry skin?",
+      "What is the size of FONGIDERM spray?",
+      "How often should FONGIDERM gel lavant be used?",
+      "What natural ingredients does FONGIDERM cream contain?"
+    ],
+    "questions_fr": [
+      "Quelles sont les indications des gélules DERMACNÉ ?",
+      "Quelle est la composition du spray FONGIDERM ?",
+      "Quels produits COSMOPHARMA conviennent aux enfants ?",
+      "Combien de fois par jour faut-il appliquer la crème FONGIDERM ?",
+      "Quel est le principe actif du savon DERMASOUFRE ?",
+      "Quels produits COSMOPHARMA propose-t-il pour l'hygiène intime ?",
+      "À quoi sert la lotion MOUSTIK et qui peut l'utiliser ?",
+      "Comment utiliser la VITOSINE Éosine Aqueuse 2% chez le nouveau-né ?",
+      "Quelle est la différence entre le gel lavant FONGIDERM et la crème FONGIDERM ?",
+      "Quels produits contiennent de l'acide salicylique ?",
+      "Quelle est la posologie des gélules DERMACNÉ pour l'adulte ?",
+      "La Vaseline Glycérinée peut-elle être utilisée chez l'enfant ?",
+      "Quels sont les produits antifongiques disponibles dans la gamme COSMOPHARMA ?",
+      "Quelle est la composition du savon ARGIDERM ?",
+      "Comment appliquer le gel DERMAGYN ?",
+      "À quoi sert le savon DERMALO ?",
+      "Quels produits sont indiqués pour les peaux sèches ?",
+      "Quelle est la contenance du spray FONGIDERM ?",
+      "À quelle fréquence utiliser le gel lavant FONGIDERM ?",
+      "Quels ingrédients naturels contient la crème FONGIDERM ?"
+    ]
+  }
+}

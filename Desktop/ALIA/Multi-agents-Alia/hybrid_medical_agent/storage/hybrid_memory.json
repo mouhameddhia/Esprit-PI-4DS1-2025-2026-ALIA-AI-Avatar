@@ -1,0 +1,25 @@
+{
+  "summary": "Here is the updated concise conversation summary: User initiated conversation with \"Hello doctor\". Assistant responded with \"Hello, how can I help?\"",
+  "history": [
+    {
+      "user": "Tell me composition A",
+      "assistant": "Composition A is ..."
+    },
+    {
+      "user": "Tell me dosage A",
+      "assistant": "Dosage A is ..."
+    },
+    {
+      "user": "Any warnings?",
+      "assistant": "Warnings are ..."
+    },
+    {
+      "user": "Any side effects?",
+      "assistant": "Side effects are ..."
+    },
+    {
+      "user": "What about administration?",
+      "assistant": "Administration is ..."
+    }
+  ]
+}
