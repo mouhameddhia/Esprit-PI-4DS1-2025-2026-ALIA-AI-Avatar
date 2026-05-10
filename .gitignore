@@ -1,24 +1,70 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.pytest_cache/
 
-node_modules
-dist
-dist-ssr
-*.local
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# NLP model weights — large binaries, use model registry instead
+NLP/fine_tuning/models/
+alia_nlp/models/affect_classifier/
+alia_nlp/models/ser_wav2vec2/
+alia_nlp/models/speechbrain/
+*.safetensors
+*.pt
+*.bin
+*.ckpt
+*.pth
+training_args.bin
+optimizer.pt
+scheduler.pt
+rng_state.pth
+
+# Environment & secrets
+.env
+.env.*
+*.env
+backend/.env
+
+# Node
+node_modules/
+package-lock.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+Thumbs.db
+
+# Logs & temp
+*.log
+*.tmp
+benchmark/
+tools/
+tmp_transformer/
+
+# Claude Code memory
+.claude/
+
+# Audit PDFs and deleted stub docs
+ALIA_NLP_FULL_AUDIT.pdf
+
+# Generated evaluation artifacts (keep source datasets, not run artifacts)
+NLP/evaluation/results/
+alia_nlp/evaluation/results/

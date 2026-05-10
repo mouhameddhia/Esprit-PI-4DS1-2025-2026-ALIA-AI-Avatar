@@ -1,0 +1,92 @@
+{
+  "intents": [
+    "product_information_request",
+    "dosage_question",
+    "safety_question",
+    "objection_handling",
+    "training_simulation",
+    "crm_follow_up",
+    "competency_assessment",
+    "visit_format_request",
+    "sales_methodology_request",
+    "general_greeting",
+    "other"
+  ],
+  "visit_phases": [
+    "opening_permission",
+    "discovery_sondage",
+    "summary_reformulation",
+    "objection_handling",
+    "argumentation",
+    "closing_commitment",
+    "crm_followup",
+    "second_visit_cycle"
+  ],
+  "visit_formats": ["flash_visit", "standard_visit", "deep_visit"],
+  "auxiliary_tags": ["general_greeting", "mixed_intent"],
+  "objection_types": [
+    "no_time",
+    "habitual_use",
+    "not_convinced",
+    "too_expensive",
+    "needs_proof",
+    "safety_concern",
+    "tolerance_concern",
+    "access_problem"
+  ],
+  "safety_flags": [
+    "patient_specific_advice_request",
+    "diagnosis_request",
+    "off_label_request",
+    "high_risk_interaction",
+    "contraindication_query",
+    "overclaim_risk",
+    "source_required"
+  ],
+  "competency_levels": ["Debutant", "Junior", "Confirme", "Expert"],
+  "entity_types": [
+    "product_name",
+    "active_ingredient",
+    "indication",
+    "patient_profile",
+    "dosage",
+    "benefit",
+    "contraindication",
+    "adverse_event",
+    "competency_level",
+    "visit_format",
+    "objection_phrase",
+    "proof_reference"
+  ],
+  "affect": {
+    "rep_confidence": ["low", "medium", "high"],
+    "engagement_level": ["passive", "engaged"],
+    "query_urgency": ["routine", "elevated", "urgent"],
+    "affect_flags": ["frustration_signal", "stress_signal"]
+  },
+  "promotion_thresholds": {
+    "Debutant_to_Junior": {
+      "score": 7.0,
+      "simulations": 5,
+      "structure_ok": 0.8,
+      "engagement": 0.6,
+      "compliance_errors": 0
+    },
+    "Junior_to_Confirme": {
+      "score": 8.0,
+      "simulations": 10,
+      "acr_validated": 0.7,
+      "adaptation": 0.6,
+      "crm_complete": 0.8,
+      "compliance_errors": 0
+    },
+    "Confirme_to_Expert": {
+      "score": 9.0,
+      "simulations": 10,
+      "difficult_visits": 0.7,
+      "cycle_long": 0.6,
+      "clean_language": 0.95,
+      "compliance_errors": 0
+    }
+  }
+}
