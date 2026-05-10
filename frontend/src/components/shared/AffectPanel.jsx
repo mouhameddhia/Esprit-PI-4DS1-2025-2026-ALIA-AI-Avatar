@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Activity, AlertTriangle, Zap, CheckCircle2, Brain, Mic } from 'lucide-react';
+import {
+  Activity, AlertTriangle, Zap, CheckCircle2,
+  Brain, Mic, FlaskConical, ChevronDown, ChevronUp,
+} from 'lucide-react';
 import './AffectPanel.css';
 
 const CONF_META = {
@@ -22,7 +25,208 @@ const EMOTION_META = {
   ang: { color: '#ef4444', bg: 'rgba(239,68,68,0.12)',   emoji: '😤', label: 'Angry'   },
 };
 
-export default function AffectPanel({ affect, audioAffect, mode }) {
+// ─── LIME / SHAP token bar ────────────────────────────────────────────────────
+
+function TokenBar({ token, importance, maxAbs }) {
+  const pct    = maxAbs > 0 ? Math.abs(importance) / maxAbs : 0;
+  const isPos  = importance >= 0;
+  const color  = isPos ? '#10b981' : '#ef4444';
+  const width  = `${Math.round(pct * 100)}%`;
+  return (
+    <div className="xai-token-row">
+      <span className="xai-token-label">{token}</span>
+      <div className="xai-bar-track">
+        <motion.div
+          className="xai-bar-fill"
+          style={{ width, background: color, marginLeft: isPos ? 0 : 'auto' }}
+          initial={{ width: 0 }}
+          animate={{ width }}
+          transition={{ duration: 0.4 }}
+        />
+      </div>
+      <span className="xai-token-score" style={{ color }}>
+        {importance > 0 ? '+' : ''}{importance.toFixed(3)}
+      </span>
+    </div>
+  );
+}
+
+// ─── Audio segment bar ────────────────────────────────────────────────────────
+
+function SegmentBar({ feature, importance, maxAbs }) {
+  const pct   = maxAbs > 0 ? Math.abs(importance) / maxAbs : 0;
+  const isPos = importance >= 0;
+  const color = isPos ? '#6366f1' : '#94a3b8';
+  const width = `${Math.round(pct * 100)}%`;
+  return (
+    <div className="xai-token-row">
+      <span className="xai-token-label xai-seg-label">{feature}</span>
+      <div className="xai-bar-track">
+        <motion.div
+          className="xai-bar-fill"
+          style={{ width, background: color }}
+          initial={{ width: 0 }}
+          animate={{ width }}
+          transition={{ duration: 0.4 }}
+        />
+      </div>
+      <span className="xai-token-score" style={{ color }}>
+        {importance > 0 ? '+' : ''}{importance.toFixed(3)}
+      </span>
+    </div>
+  );
+}
+
+// ─── Explanation section (shared) ─────────────────────────────────────────────
+
+function ExplainSection({ title, tokens, isSegments = false }) {
+  if (!tokens || tokens.length === 0) return null;
+  const maxAbs = Math.max(...tokens.map(t => Math.abs(t.importance)), 0.001);
+  return (
+    <div className="xai-section">
+      <div className="xai-section-title">{title}</div>
+      {tokens.map((t, i) =>
+        isSegments
+          ? <SegmentBar key={i} feature={t.feature ?? t.token} importance={t.importance} maxAbs={maxAbs} />
+          : <TokenBar   key={i} token={t.token}                 importance={t.importance} maxAbs={maxAbs} />
+      )}
+    </div>
+  );
+}
+
+// ─── Explanation panel (collapsible) ─────────────────────────────────────────
+
+function ExplainPanel({ explanation }) {
+  const [open, setOpen] = useState(false);
+  if (!explanation) return null;
+
+  const shap = explanation.shap;
+  const lime = explanation.lime;
+
+  const hasShap = shap && shap.dimensions;
+  const hasLime = lime && lime.dimensions;
+  if (!hasShap && !hasLime) return null;
+
+  return (
+    <div className="xai-panel">
+      <button className="xai-toggle" onClick={() => setOpen(o => !o)}>
+        <FlaskConical size={12} />
+        <span>LIME / SHAP Explanation</span>
+        {open ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
+      </button>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            className="xai-body"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25 }}
+          >
+            <p className="xai-legend">
+              <span style={{ color: '#10b981' }}>■ pushes signal up</span>
+              {'  '}
+              <span style={{ color: '#ef4444' }}>■ pushes signal down</span>
+            </p>
+
+            {/* SHAP dimensions */}
+            {hasShap && Object.entries(shap.dimensions).map(([dim, data]) =>
+              data.tokens && (
+                <ExplainSection
+                  key={`shap-${dim}`}
+                  title={`SHAP — ${dim.replace('_', ' ')}`}
+                  tokens={data.tokens}
+                />
+              )
+            )}
+
+            {/* LIME dimensions */}
+            {hasLime && Object.entries(lime.dimensions).map(([dim, data]) =>
+              data.tokens && (
+                <ExplainSection
+                  key={`lime-${dim}`}
+                  title={`LIME — ${dim.replace('_', ' ')}`}
+                  tokens={data.tokens}
+                />
+              )
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+// ─── Audio explanation panel ──────────────────────────────────────────────────
+
+function AudioExplainPanel({ audioExplanation }) {
+  const [open, setOpen] = useState(false);
+  if (!audioExplanation) return null;
+
+  const lime = audioExplanation.lime;
+  const shap = audioExplanation.shap;
+  const textExp = audioExplanation.text_explanation;
+
+  return (
+    <div className="xai-panel">
+      <button className="xai-toggle" onClick={() => setOpen(o => !o)}>
+        <FlaskConical size={12} />
+        <span>Audio LIME / SHAP</span>
+        {open ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
+      </button>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            className="xai-body"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25 }}
+          >
+            <p className="xai-legend">
+              <span style={{ color: '#6366f1' }}>■ drives emotion up</span>
+              {'  '}
+              <span style={{ color: '#94a3b8' }}>■ drives emotion down</span>
+            </p>
+
+            {lime?.segments && (
+              <ExplainSection title="LIME — audio segments" tokens={lime.segments} isSegments />
+            )}
+            {shap?.segments && (
+              <ExplainSection title="SHAP — audio segments" tokens={shap.segments} isSegments />
+            )}
+
+            {/* Text explanation on transcription */}
+            {textExp?.shap?.dimensions && Object.entries(textExp.shap.dimensions).map(([dim, data]) =>
+              data.tokens && (
+                <ExplainSection
+                  key={`txt-shap-${dim}`}
+                  title={`SHAP (transcript) — ${dim.replace('_', ' ')}`}
+                  tokens={data.tokens}
+                />
+              )
+            )}
+            {textExp?.lime?.dimensions && Object.entries(textExp.lime.dimensions).map(([dim, data]) =>
+              data.tokens && (
+                <ExplainSection
+                  key={`txt-lime-${dim}`}
+                  title={`LIME (transcript) — ${dim.replace('_', ' ')}`}
+                  tokens={data.tokens}
+                />
+              )
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+// ─── Main AffectPanel ────────────────────────────────────────────────────────
+
+export default function AffectPanel({ affect, audioAffect, mode, explanation, audioExplanation }) {
   if (!affect || Object.keys(affect).length === 0) return null;
 
   const {
@@ -34,16 +238,14 @@ export default function AffectPanel({ affect, audioAffect, mode }) {
     affect_source      = 'rules',
   } = affect;
 
-  const isPhysician    = mode === 'physician_portal';
+  const isPhysician     = mode === 'physician_portal';
   const hasFlaggedSignal = frustration_signal || stress_signal;
 
-  // Audio affect
-  const hasAudio   = audioAffect && audioAffect.emotion;
-  const emotion    = hasAudio ? audioAffect.emotion : null;
+  const hasAudio    = audioAffect && audioAffect.emotion;
+  const emotion     = hasAudio ? audioAffect.emotion : null;
   const emotionMeta = emotion ? (EMOTION_META[emotion] ?? EMOTION_META.neu) : null;
-  const audioPct   = hasAudio ? Math.round((audioAffect.confidence ?? 0) * 100) : 0;
+  const audioPct    = hasAudio ? Math.round((audioAffect.confidence ?? 0) * 100) : 0;
 
-  // Divergence: text says confident but voice says sad/ang
   const textConfident = rep_confidence === 'high' || rep_confidence === 'medium';
   const voiceNegative = emotion === 'sad' || emotion === 'ang';
   const divergence    = hasAudio && !isPhysician && textConfident && voiceNegative;
@@ -143,7 +345,10 @@ export default function AffectPanel({ affect, audioAffect, mode }) {
           )}
         </div>
 
-        {/* ── VOICE EMOTION (SpeechBrain) ── */}
+        {/* ── TEXT LIME / SHAP EXPLANATION ── */}
+        <ExplainPanel explanation={explanation} />
+
+        {/* ── VOICE EMOTION ── */}
         {hasAudio && (
           <motion.div
             className="audio-affect-row"
@@ -168,7 +373,6 @@ export default function AffectPanel({ affect, audioAffect, mode }) {
               <span className="audio-confidence">{audioPct}%</span>
             </div>
 
-            {/* Confidence bar */}
             <div className="audio-bar-wrap">
               <div
                 className="audio-bar"
@@ -176,15 +380,14 @@ export default function AffectPanel({ affect, audioAffect, mode }) {
               />
             </div>
 
-            {/* Divergence alert */}
             {divergence && (
-              <motion.div
-                className="divergence-alert"
-                initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-              >
+              <motion.div className="divergence-alert" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                 ⚠ Voice contradicts text — rep sounds {emotionMeta.label.toLowerCase()} despite positive words
               </motion.div>
             )}
+
+            {/* ── AUDIO LIME / SHAP EXPLANATION ── */}
+            <AudioExplainPanel audioExplanation={audioExplanation} />
           </motion.div>
         )}
       </motion.div>

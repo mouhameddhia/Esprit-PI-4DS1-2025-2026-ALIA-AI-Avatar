@@ -199,6 +199,50 @@ def _classify_emotion(audio_bytes: bytes) -> Optional[dict]:
             pass
 
 
+def _classify_emotion_array(audio_np: "np.ndarray", sr: int) -> Optional[dict]:
+    """
+    Run SER on a raw float32 numpy array (already 16 kHz mono).
+    Used by the audio explainability module for segment masking.
+    """
+    with _ser_lock:
+        _load_ser_model()
+
+    if _ser_model is None or _ser_extractor is None:
+        return None
+
+    try:
+        import torch
+        import numpy as np
+
+        waveform = torch.from_numpy(audio_np.astype("float32"))
+        if sr != 16000:
+            import torchaudio.functional as F_audio
+            waveform = F_audio.resample(waveform.unsqueeze(0), sr, 16000).squeeze(0)
+
+        inputs = _ser_extractor(
+            waveform.numpy(), sampling_rate=16000, return_tensors="pt", padding=True
+        )
+        with torch.no_grad():
+            logits = _ser_model(**inputs).logits
+
+        probs    = torch.softmax(logits, dim=-1)[0]
+        top_idx  = probs.argmax().item()
+        id2label = _ser_model.config.id2label
+        emotion  = id2label[top_idx].lower()
+
+        return {
+            "emotion":       emotion,
+            "emotion_label": _EMOTION_LABELS.get(emotion, emotion.capitalize()),
+            "confidence":    round(float(probs[top_idx].item()), 4),
+            "source":        "wav2vec2-iemocap",
+            "all_scores":    {id2label[i].lower(): round(float(probs[i].item()), 4)
+                              for i in range(len(probs))},
+        }
+    except Exception as exc:
+        logger.warning("SER array inference error: %s", exc)
+        return None
+
+
 # ── STT + SER ─────────────────────────────────────────────────────────────────
 
 class SpeakRequest(BaseModel):

@@ -85,6 +85,34 @@ def _load_model() -> None:
         _model = None
 
 
+def get_tokenizer():
+    """Return the loaded tokenizer (or None). Used by explainability modules."""
+    with _lock:
+        _load_model()
+    return _tokenizer
+
+
+def predict_proba(texts: list[str], mode: str) -> "np.ndarray":
+    """
+    Batch prediction returning a (N, 7) probability matrix for LIME/SHAP.
+
+    Columns: confidence_low, confidence_medium, confidence_high,
+             engagement_active, urgency_high, frustration, stress
+    """
+    import numpy as np
+    rows = []
+    for text in texts:
+        r = predict(text, mode)
+        if r is None:
+            rows.append([0.0, 1.0, 0.0, 0.5, 0.0, 0.0, 0.0])
+        else:
+            conf = {"low": [1, 0, 0], "medium": [0, 1, 0], "high": [0, 0, 1]}.get(r.rep_confidence, [0, 1, 0])
+            eng  = [0, 1] if r.engagement_level == "active" else [1, 0]
+            urg  = [0, 0, 1] if r.query_urgency == "high" else [0, 1, 0] if r.query_urgency == "medium" else [1, 0, 0]
+            rows.append(conf + [eng[1], urg[2], int(r.frustration_signal), int(r.stress_signal)])
+    return np.array(rows, dtype=float)
+
+
 def predict(text: str, mode: str, prev_turn: str = "") -> Optional[AffectResult]:
     with _lock:
         _load_model()

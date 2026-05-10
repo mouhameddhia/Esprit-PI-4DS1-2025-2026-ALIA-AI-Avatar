@@ -7,7 +7,7 @@ import logging
 # config.py calls load_dotenv() on import, so it must come before any module
 # that reads os.getenv() at module scope.
 from . import config
-from .routes import auth, chat, sessions, debug, admin, products, users_admin, alerts, audio
+from .routes import auth, chat, sessions, debug, admin, products, users_admin, alerts, audio, affect
 from .utils.background_tasks import (
     auto_finalize_idle_sessions,
     auto_generate_shadow_monitoring_snapshot,
@@ -72,6 +72,7 @@ app.include_router(products.router,                      tags=["products"])
 app.include_router(users_admin.router,                   tags=["users-admin"])
 app.include_router(alerts.router,                        tags=["alerts"])
 app.include_router(audio.router,                         tags=["audio"])
+app.include_router(affect.router,                        tags=["affect"])
 
 @app.get("/")
 async def root():
