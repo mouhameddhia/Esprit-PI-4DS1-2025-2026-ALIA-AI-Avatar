@@ -1,6 +1,6 @@
 # ALIA — Pharmaceutical AI Assistant
 
-ALIA is a conversational AI platform for pharmaceutical sales training and clinical knowledge retrieval. It supports two distinct personas:
+ALIA is a conversational AI platform for pharmaceutical sales training and clinical knowledge retrieval. It serves as an intelligent agent that operates in two distinct roles — simulating a doctor to train medical representatives, or simulating a medical rep to assist doctors with product knowledge:
 
 - **MedRep** — simulates a physician interaction to train medical sales representatives, evaluating competency and communication quality.
 - **Physician** — provides a clinical knowledge portal for answering drug-related questions, backed by RAG over a pharmaceutical knowledge base.
