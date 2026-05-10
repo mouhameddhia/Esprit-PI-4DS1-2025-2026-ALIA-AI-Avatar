@@ -60,9 +60,9 @@
   ],
   "affect": {
     "rep_confidence": ["low", "medium", "high"],
-    "engagement_level": ["passive", "active", "highly_engaged"],
+    "engagement_level": ["passive", "engaged"],
     "query_urgency": ["routine", "elevated", "urgent"],
-    "affect_flags": ["frustration_signal"]
+    "affect_flags": ["frustration_signal", "stress_signal"]
   },
   "promotion_thresholds": {
     "Debutant_to_Junior": {

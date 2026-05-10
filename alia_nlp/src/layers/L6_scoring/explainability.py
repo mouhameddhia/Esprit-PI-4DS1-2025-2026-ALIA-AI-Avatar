@@ -45,6 +45,7 @@ def build(
     secondary_tags: List[str],
     confidence: float,
     intent_source: str = "unknown",
+    affect_source: str = "unknown",
 ) -> Dict[str, Any]:
     text = user_text.lower()
     triggered = [kw for kw in _INTENT_SIGNALS.get(intent, []) if kw in text]
@@ -56,4 +57,5 @@ def build(
         "active_secondary_tags": secondary_tags,
         "confidence_band": band,
         "intent_source": intent_source,
+        "affect_source": affect_source,
     }

@@ -7,7 +7,7 @@ import logging
 # config.py calls load_dotenv() on import, so it must come before any module
 # that reads os.getenv() at module scope.
 from . import config
-from .routes import auth, chat, sessions, debug, admin, products, users_admin, alerts
+from .routes import auth, chat, sessions, debug, admin, products, users_admin, alerts, audio
 from .utils.background_tasks import (
     auto_finalize_idle_sessions,
     auto_generate_shadow_monitoring_snapshot,
@@ -28,7 +28,7 @@ app = FastAPI(title="ALIA Backend", version="1.0.0")
 # CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:5174"],  # Frontend URL(s)
+    allow_origins=config.CORS_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -71,10 +71,25 @@ app.include_router(admin.router,                         tags=["admin"])
 app.include_router(products.router,                      tags=["products"])
 app.include_router(users_admin.router,                   tags=["users-admin"])
 app.include_router(alerts.router,                        tags=["alerts"])
+app.include_router(audio.router,                         tags=["audio"])
 
 @app.get("/")
 async def root():
     return {"message": "ALIA Backend API"}
+
+@app.get("/health")
+async def health():
+    try:
+        await client.admin.command("ping")
+        db_status = "ok"
+    except Exception:
+        db_status = "unavailable"
+    return {
+        "status": "ok" if db_status == "ok" else "degraded",
+        "db": db_status,
+        "vector_db": "ok" if vector_client.is_ready() else "unavailable",
+        "embedding": "ok" if embedding_encoder.is_ready() else "unavailable",
+    }
 
 @app.on_event("startup")
 async def startup_event():
@@ -148,6 +163,14 @@ async def startup_event():
     else:
         logger.warning("Embedding encoder not ready")
     
+    # Pre-load affect classifier so first user request has no cold-start latency
+    try:
+        from alia_nlp.src.layers.L7_affect.classifier import predict as _affect_predict
+        _affect_predict("warmup", "medrep_training")
+        logger.info("Affect classifier pre-loaded")
+    except Exception as _exc:
+        logger.warning("Affect classifier warm-up skipped: %s", _exc)
+
     # Start scheduler for auto-finalize task
     if not scheduler.running:
         scheduler.add_job(

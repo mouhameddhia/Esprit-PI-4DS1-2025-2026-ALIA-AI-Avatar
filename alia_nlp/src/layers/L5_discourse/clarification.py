@@ -19,6 +19,12 @@ _AMBIGUITY_PHRASES = [
 ]
 
 
+_NO_CLARIFY_INTENTS = frozenset([
+    "general_greeting",
+    "training_simulation",
+])
+
+
 def should_clarify(
     user_text: str,
     intent: str,
@@ -27,28 +33,33 @@ def should_clarify(
     mode: str = "physician_portal",
     llm_flag: bool | None = None,
 ) -> bool:
-    # Respect the LLM's explicit clarification signal when present
+    # High-confidence recognised intents never need clarification — check
+    # before anything else so the token-count heuristic never overrides them.
+    if intent in _NO_CLARIFY_INTENTS:
+        return False
+
+    # Respect the LLM's explicit clarification signal when present.
     if isinstance(llm_flag, bool):
         return llm_flag
 
     tokens = re.findall(r"\b\w+\b", user_text.lower())
 
-    # Physicians ask concise clinical questions — lower token threshold
+    # Physicians ask concise clinical questions — lower token threshold.
     min_tokens = 2 if mode == "physician_portal" else 3
     if len(tokens) < min_tokens and not any(t in _DOMAIN_WORDS for t in tokens):
         return True
 
     has_entity = any(v for v in entity_map.values() if v)
-    if intent == "other" and not has_entity:
+    if intent == "other" and not has_entity and confidence < 0.20:
         return True
 
-    # Confidence threshold varies by mode
+    # Confidence threshold varies by mode.
     threshold = 0.30 if mode == "physician_portal" else 0.45
-    if confidence < threshold:
+    if confidence < threshold and intent == "other":
         return True
 
     lower = user_text.lower()
-    if any(m in lower for m in _AMBIGUITY_PHRASES) and intent in {"other", "general_greeting"}:
+    if any(m in lower for m in _AMBIGUITY_PHRASES) and intent == "other":
         return True
 
     return False

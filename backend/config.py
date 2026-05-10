@@ -56,6 +56,18 @@ HYBRID_MAX_NEW_TOKENS: int = int(os.getenv("ALIA_HYBRID_MAX_NEW_TOKENS", "220"))
 REP_SCORER_ARTIFACT_DIR: str = os.getenv("REP_SCORER_ARTIFACT_DIR", "")
 
 # ---------------------------------------------------------------------------
+# CORS
+# ---------------------------------------------------------------------------
+# Comma-separated list of allowed origins. Default covers local dev.
+CORS_ORIGINS: list[str] = [
+    o.strip()
+    for o in os.getenv(
+        "CORS_ORIGINS", "http://localhost:5173,http://localhost:5174"
+    ).split(",")
+    if o.strip()
+]
+
+# ---------------------------------------------------------------------------
 # Authentication
 # ---------------------------------------------------------------------------
 JWT_SECRET: str = os.getenv("JWT_SECRET", "your_secret_key")

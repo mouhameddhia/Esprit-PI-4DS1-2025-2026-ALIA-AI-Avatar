@@ -190,6 +190,12 @@ async def auto_generate_shadow_monitoring_snapshot(
     for path in (dated_json, latest_json):
         path.write_text(json.dumps(artifact, ensure_ascii=False, indent=2), encoding="utf-8")
 
+    # Persist to MongoDB so the metrics endpoint can query without filesystem access.
+    await db.shadow_monitoring.insert_one({**artifact, "date": today})
+    # Keep only the last 90 days of snapshots in MongoDB.
+    cutoff_date = (datetime.utcnow() - timedelta(days=90)).strftime("%Y%m%d")
+    await db.shadow_monitoring.delete_many({"date": {"$lt": cutoff_date}})
+
     return {
         "rows": len(rows),
         "divergence_rate": report.get("divergence_rate", 0.0),

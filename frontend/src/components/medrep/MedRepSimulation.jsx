@@ -1,81 +1,136 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Mic, Power, XCircle, User, Activity, CheckCircle2, ChevronLeft } from 'lucide-react';
+import { Send, Mic, XCircle, Activity, CheckCircle2, ChevronLeft, Volume2, VolumeX, Loader2 } from 'lucide-react';
+import { useSpeech } from '../../hooks/useSpeech';
+import AffectPanel from '../shared/AffectPanel';
 import './MedRepPortal.css';
 import './MedRepSimulation.css';
 
+const API_BASE = 'http://localhost:8000';
+
 const MedRepSimulation = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [messages, setMessages] = useState([
-    { 
-      id: 1, 
-      sender: 'doctor', 
-      text: "Hello, I'm Dr. Skeptical, Cardiology. I understand you'd like to discuss CardioGuard. What can you tell me about the specific clinical outcomes for patients with Stage 2 Hypertension?",
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    }
-  ]);
-  const [inputText, setInputText] = useState('');
-  const [metrics, setMetrics] = useState({ clarity: 10, accuracy: 5, persuasion: 0 });
+  const navigate   = useNavigate();
+  const location   = useLocation();
+  const persona    = location.state?.persona  || { name: 'Dr. Skeptical', specialty: 'Cardiology', style: 'Critical, Evidence-Focused' };
+  const product    = location.state?.product  || { name: 'Cardivex' };
+
+  const [messages, setMessages] = useState([{
+    id: 1,
+    sender: 'doctor',
+    text: `Hello, I'm ${persona.name}, ${persona.specialty}. I understand you'd like to present ${product.name}. What can you tell me about its clinical outcomes?`,
+    timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+  }]);
+  const [inputText,    setInputText]    = useState('');
+  const [isLoading,    setIsLoading]    = useState(false);
+  const [sessionId,    setSessionId]    = useState(null);
+  const [currentAffect, setCurrentAffect] = useState(null);
+  const [isEndingSession, setIsEndingSession] = useState(false);
+  const [feedback, setFeedback]           = useState(null);
   const chatEndRef = useRef(null);
 
-  // Auto-scroll to bottom of chat
-  const scrollToBottom = () => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  const { isRecording, isTranscribing, startRecording, stopRecording, speakingId, speak } = useSpeech();
+  const [audioAffect, setAudioAffect] = useState(null);
+
+  const handleEndSession = async () => {
+    if (!sessionId) { navigate('/rep/dashboard'); return; }
+    setIsEndingSession(true);
+    try {
+      const token = localStorage.getItem('token');
+      const r = await fetch(`${API_BASE}/chat/sessions/${sessionId}/finalize`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await r.json().catch(() => ({}));
+      if (r.ok) {
+        setFeedback(data);
+      } else {
+        navigate('/rep/dashboard');
+      }
+    } catch {
+      navigate('/rep/dashboard');
+    } finally {
+      setIsEndingSession(false);
+    }
+  };
+
+  const handleMicClick = async () => {
+    if (isRecording) {
+      const { text, audioAffect: af } = await stopRecording();
+      if (text) setInputText((prev) => (prev ? `${prev} ${text}` : text));
+      if (af)   setAudioAffect(af);
+    } else {
+      await startRecording();
+    }
   };
 
   useEffect(() => {
-    scrollToBottom();
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // Simulate AI "analyzing" to increase metrics slowly as user types/interacts
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setMetrics(prev => ({
-        clarity: Math.min(prev.clarity + (inputText.length > 5 ? 2 : 0), 92),
-        accuracy: Math.min(prev.accuracy + (inputText.length > 10 ? 1 : 0), 85),
-        persuasion: Math.min(prev.persuasion + (inputText.length > 15 ? 3 : 0), 78)
-      }));
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [inputText]);
+  const handleSendMessage = async () => {
+    if (!inputText.trim() || isLoading) return;
 
-  const handleSendMessage = () => {
-    if (!inputText.trim()) return;
+    const text  = inputText.trim();
+    const token = localStorage.getItem('token');
 
-    const newMessage = {
+    const userMsg = {
       id: Date.now(),
       sender: 'user',
-      text: inputText,
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      text,
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     };
 
-    setMessages([...messages, newMessage]);
+    setMessages(prev => [...prev, userMsg]);
     setInputText('');
+    setIsLoading(true);
 
-    // Simulate AI Physician thinking and responding
-    setTimeout(() => {
-      const response = {
+    try {
+      const r = await fetch(`${API_BASE}/chat/message`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          session_id: sessionId,
+          content: text,
+          mode: 'medrep_training',
+          audio_affect: audioAffect,
+        }),
+      });
+      setAudioAffect(null);
+
+      const data = await r.json().catch(() => ({}));
+      if (!r.ok) throw new Error(data.detail || 'Chat request failed');
+
+      setSessionId(data.session_id);
+      if (data.affect) setCurrentAffect(data.affect);
+
+      setMessages(prev => [...prev, {
         id: Date.now() + 1,
         sender: 'doctor',
-        text: "That's an interesting point. However, the data I've seen suggests a higher incidence of side effects compared to traditional ACE inhibitors. How does your product address renal safety concerns in diabetic patients?",
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      };
-      setMessages(prev => [...prev, response]);
-    }, 2000);
+        text: data.reply,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      }]);
+    } catch (err) {
+      console.error('Simulation chat error:', err);
+      setMessages(prev => prev.filter(m => m.id !== userMsg.id));
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 10 },
-    show: { opacity: 1, y: 0 }
+    show:   { opacity: 1, y: 0 },
   };
 
   return (
     <div className="portal-container" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <div className="portal-bg-aura"></div>
-      
-      {/* Top Header/Nav */}
+      <div className="portal-bg-aura" />
+
+      {/* Navbar */}
       <nav className="portal-navbar" style={{ position: 'sticky', top: 0, zIndex: 50 }}>
         <div className="portal-nav-left">
           <button onClick={() => navigate('/rep/training')} className="dashboard-back-btn" style={{ margin: 0 }}>
@@ -87,125 +142,203 @@ const MedRepSimulation = () => {
           <span className="portal-nav-title">ALIA Simulation Environment</span>
           <span className="portal-nav-subtitle">Live Interactive Evaluation</span>
         </div>
-        <div className="portal-nav-right" style={{ visibility: 'hidden' }}>
-          {/* Placeholder for balance */}
-        </div>
+        <div className="portal-nav-right" style={{ visibility: 'hidden' }} />
       </nav>
 
       <main className="sim-container relative z-10">
-        
-        {/* Left Sidebar: Profile & Metrics */}
+
+        {/* ── Left Sidebar ── */}
         <aside className="sim-sidebar">
           <div className="sim-avatar-wrapper">
             <div className="avatar-circle">
-              <img 
-                src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=400&h=400" 
-                alt="Dr. Skeptical" 
+              <img
+                src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=400&h=400"
+                alt={persona.name}
               />
               <div className="avatar-status-overlay">
-                <span className="status-dot active"></span> Live AI Avatar
+                <span className="status-dot active" /> Live AI Avatar
               </div>
             </div>
             <div className="sim-doctor-info">
-              <h2>Dr. Skeptical</h2>
-              <p>Cardiology | Critical, Evidence-Focused</p>
+              <h2>{persona.name}</h2>
+              <p>{persona.specialty} | {persona.style}</p>
             </div>
           </div>
 
+          {/* ── Affect Panel ── */}
           <div className="sim-metrics-box">
-            <h3 style={{ fontSize: '0.9rem', fontWeight: 700, marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <Activity size={16} color="#7c3aed" /> 
-              Live Performance Metrics
+            <h3 style={{ fontSize: '0.9rem', fontWeight: 700, marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <Activity size={16} color="#7c3aed" />
+              NLP Affect Analysis
             </h3>
-            
-            <div className="metric-row">
-              <div className="metric-label-row">
-                <span>Clarity</span>
-                <span>{metrics.clarity}%</span>
-              </div>
-              <div className="metric-bar-bg">
-                <motion.div initial={{ width: 0 }} animate={{ width: `${metrics.clarity}%` }} className="metric-bar-fill" />
-              </div>
-            </div>
-
-            <div className="metric-row">
-              <div className="metric-label-row">
-                <span>Accuracy</span>
-                <span>{metrics.accuracy}%</span>
-              </div>
-              <div className="metric-bar-bg">
-                <motion.div initial={{ width: 0 }} animate={{ width: `${metrics.accuracy}%` }} className="metric-bar-fill" style={{ background: '#2dd4bf' }} />
-              </div>
-            </div>
-
-            <div className="metric-row">
-              <div className="metric-label-row">
-                <span>Persuasion</span>
-                <span>{metrics.persuasion}%</span>
-              </div>
-              <div className="metric-bar-bg">
-                <motion.div initial={{ width: 0 }} animate={{ width: `${metrics.persuasion}%` }} className="metric-bar-fill" style={{ background: '#f59e0b' }} />
-              </div>
-            </div>
+            {currentAffect ? (
+              <AffectPanel affect={currentAffect} audioAffect={audioAffect} mode="medrep_training" />
+            ) : (
+              <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+                Send a message to see live affect analysis from the NLP pipeline.
+              </p>
+            )}
           </div>
 
           <div className="sim-product-info" style={{ marginTop: 'auto' }}>
             <div className="flow-node product" style={{ width: '100%' }}>
               <CheckCircle2 size={18} />
-              <span>Targeting: CardioGuard</span>
+              <span>Targeting: {product.name}</span>
             </div>
           </div>
 
           <div className="end-session-row">
-            <button className="btn-end-session" onClick={() => navigate('/rep/dashboard')}>
+            <button
+              className="btn-end-session"
+              onClick={handleEndSession}
+              disabled={isEndingSession}
+            >
               <XCircle size={18} />
-              End Session & Get Feedback
+              {isEndingSession ? 'Generating feedback…' : 'End Session & Get Feedback'}
             </button>
           </div>
         </aside>
 
-        {/* Right Area: Chat Simulation */}
-        <section className="sim-chat-area">
+        {/* ── Feedback Panel (shown after session ends) ── */}
+        {feedback && (
+          <section className="sim-chat-area sim-feedback-panel">
+            <div className="feedback-header">
+              <h2>Session Feedback</h2>
+              {feedback.competency_level && (
+                <span className="feedback-level-badge">{feedback.competency_level}</span>
+              )}
+              {feedback.evaluation_score != null && (
+                <span className="feedback-score">{feedback.evaluation_score.toFixed(1)} / 10</span>
+              )}
+            </div>
+
+            <div className="feedback-summary">
+              <h3>Summary</h3>
+              <p>{feedback.summary}</p>
+            </div>
+
+            {Object.keys(feedback.evaluation_dimensions || {}).length > 0 && (
+              <div className="feedback-dimensions">
+                <h3>Dimensions</h3>
+                <div className="dimensions-grid">
+                  {Object.entries(feedback.evaluation_dimensions).map(([dim, score]) => (
+                    <div key={dim} className="dimension-item">
+                      <span className="dim-label">{dim.replace(/_/g, ' ')}</span>
+                      <div className="dim-bar-wrap">
+                        <div className="dim-bar" style={{ width: `${score * 10}%`, background: score >= 8 ? '#22c55e' : score >= 7 ? '#7c3aed' : '#ef4444' }} />
+                      </div>
+                      <span className="dim-score">{score}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {feedback.evaluation_strengths?.length > 0 && (
+              <div className="feedback-section">
+                <h3>✓ Strengths</h3>
+                <ul>{feedback.evaluation_strengths.map((s, i) => <li key={i}>{s.replace(/_/g, ' ')}</li>)}</ul>
+              </div>
+            )}
+
+            {feedback.evaluation_gaps?.length > 0 && (
+              <div className="feedback-section">
+                <h3>△ Areas to improve</h3>
+                <ul>{feedback.evaluation_gaps.map((g, i) => <li key={i}>{g.replace(/_/g, ' ')}</li>)}</ul>
+              </div>
+            )}
+
+            {feedback.evaluation_notes?.length > 0 && (
+              <div className="feedback-section">
+                <h3>Notes</h3>
+                <ul>{feedback.evaluation_notes.map((n, i) => <li key={i}>{n}</li>)}</ul>
+              </div>
+            )}
+
+            <button className="btn-end-session" style={{ marginTop: '1.5rem' }} onClick={() => navigate('/rep/dashboard')}>
+              Back to Dashboard
+            </button>
+          </section>
+        )}
+
+        {/* ── Chat Area ── */}
+        {!feedback && <section className="sim-chat-area">
           <div className="chat-history">
             <AnimatePresence>
               {messages.map((msg) => (
-                <motion.div 
+                <motion.div
                   key={msg.id}
-                  initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  variants={itemVariants}
+                  initial="hidden"
+                  animate="show"
                   className={`message-bubble ${msg.sender}`}
                 >
                   <p>{msg.text}</p>
-                  <span style={{ fontSize: '0.7rem', opacity: 0.6, display: 'block', marginTop: '0.5rem', textAlign: msg.sender === 'user' ? 'right' : 'left' }}>
-                    {msg.timestamp}
-                  </span>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: msg.sender === 'user' ? 'flex-end' : 'space-between', marginTop: '0.5rem' }}>
+                    <span style={{ fontSize: '0.7rem', opacity: 0.6 }}>{msg.timestamp}</span>
+                    {msg.sender === 'doctor' && (
+                      <button
+                        type="button"
+                        onClick={() => speak(msg.text, 'en-US-GuyNeural', msg.id)}
+                        className="speak-btn"
+                        aria-label={speakingId === msg.id ? 'Stop speaking' : 'Read aloud'}
+                        title={speakingId === msg.id ? 'Stop' : 'Read physician reply'}
+                      >
+                        {speakingId === msg.id ? <VolumeX size={13} /> : <Volume2 size={13} />}
+                      </button>
+                    )}
+                  </div>
                 </motion.div>
               ))}
+              {isLoading && (
+                <motion.div
+                  key="typing"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="message-bubble doctor"
+                >
+                  <div className="typing-dots"><span /><span /><span /></div>
+                </motion.div>
+              )}
             </AnimatePresence>
             <div ref={chatEndRef} />
           </div>
 
           <div className="chat-input-wrapper">
-            <button className="voice-btn">
-              <Mic size={20} />
+            <button
+              className={`voice-btn${isRecording ? ' recording' : ''}`}
+              onClick={handleMicClick}
+              disabled={isTranscribing || isLoading}
+              aria-label={isRecording ? 'Stop recording' : 'Start voice input'}
+              title={isRecording ? 'Stop & transcribe' : 'Speak your response'}
+              style={{
+                background: isRecording ? 'rgba(239,68,68,0.12)' : undefined,
+                border: isRecording ? '1px solid #ef4444' : undefined,
+              }}
+            >
+              {isTranscribing
+                ? <Loader2 size={20} className="spin" />
+                : <Mic size={20} color={isRecording ? '#ef4444' : undefined} />}
             </button>
-            <input 
-              type="text" 
-              className="chat-input-field" 
+            <input
+              type="text"
+              className="chat-input-field"
               placeholder="Type your response to the physician..."
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+              onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleSendMessage()}
+              disabled={isLoading}
             />
-            <button className="btn-send" onClick={handleSendMessage}>
+            <button className="btn-send" onClick={handleSendMessage} disabled={isLoading}>
               <Send size={18} />
             </button>
           </div>
-          
+
           <div style={{ textAlign: 'center', paddingBottom: '0.75rem', fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
-            AI is analyzing clarity, accuracy, and persuasion in real-time
+            NLP pipeline analyzing clarity, affect, and communication patterns in real-time
           </div>
-        </section>
+        </section>}
 
       </main>
     </div>

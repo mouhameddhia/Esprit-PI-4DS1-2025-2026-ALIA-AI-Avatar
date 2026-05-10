@@ -14,6 +14,7 @@ from typing import Any
 from bson import ObjectId
 from bson.errors import InvalidId
 from fastapi import HTTPException, status
+from groq import RateLimitError as GroqRateLimitError
 from motor.motor_asyncio import AsyncIOMotorDatabase
 
 from .. import config
@@ -219,12 +220,18 @@ async def chat_completion(messages: list[dict[str, Any]]) -> str:
         )
 
     def _call() -> str:
-        completion = client.chat.completions.create(
-            model=config.GROQ_MODEL,
-            messages=messages,  # type: ignore[arg-type]
-            temperature=0.7,
-            max_tokens=1024,
-        )
+        try:
+            completion = client.chat.completions.create(
+                model=config.GROQ_MODEL,
+                messages=messages,  # type: ignore[arg-type]
+                temperature=0.7,
+                max_tokens=1024,
+            )
+        except GroqRateLimitError as exc:
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                detail="Language model temporarily unavailable (rate limit). Please try again in a few minutes.",
+            ) from exc
         choice = completion.choices[0].message
         if not choice or not choice.content:
             raise HTTPException(

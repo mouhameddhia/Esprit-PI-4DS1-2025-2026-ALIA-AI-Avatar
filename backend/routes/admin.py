@@ -2,7 +2,7 @@
 
 from typing import Optional
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from motor.motor_asyncio import AsyncIOMotorDatabase
 from pydantic import BaseModel
 
@@ -169,6 +169,68 @@ async def embed_single_conversation(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Error: {str(e)}"
+        )
+
+
+@router.get("/admin/metrics")
+async def get_metrics(
+    limit: int = Query(default=30, ge=1, le=90),
+    current_user: UserInDB = _admin,
+    db: AsyncIOMotorDatabase = Depends(get_database),
+):
+    """
+    Return the latest shadow monitoring snapshot plus a rolling history.
+    Requires admin role.
+    """
+    snapshots = await db.shadow_monitoring.find(
+        {}, {"_id": 0}
+    ).sort("generated_at", -1).limit(limit).to_list(limit)
+
+    if not snapshots:
+        return {
+            "latest": None,
+            "history": [],
+            "summary": {"total_snapshots": 0, "avg_divergence_rate": None, "gate_pass_rate": None},
+        }
+
+    latest = snapshots[0]
+    total = len(snapshots)
+    avg_divergence = round(
+        sum(s.get("result", {}).get("divergence_rate", 0.0) for s in snapshots) / total, 4
+    )
+    gate_pass_rate = round(
+        sum(1 for s in snapshots if s.get("quality_gate") == "pass") / total, 4
+    )
+
+    return {
+        "latest": latest,
+        "history": snapshots,
+        "summary": {
+            "total_snapshots": total,
+            "avg_divergence_rate": avg_divergence,
+            "gate_pass_rate": gate_pass_rate,
+        },
+    }
+
+
+@router.post("/admin/metrics/trigger-snapshot")
+async def trigger_shadow_snapshot(
+    current_user: UserInDB = _admin,
+    db: AsyncIOMotorDatabase = Depends(get_database),
+):
+    """
+    Manually trigger a shadow monitoring snapshot outside the nightly schedule.
+    Requires admin role.
+    """
+    from ..utils.background_tasks import auto_generate_shadow_monitoring_snapshot
+
+    try:
+        result = await auto_generate_shadow_monitoring_snapshot(db)
+        return {"success": True, "snapshot": result}
+    except Exception as exc:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Snapshot failed: {exc}",
         )
 
 

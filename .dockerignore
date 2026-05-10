@@ -1,0 +1,37 @@
+# Model weights — mounted as a volume at runtime instead
+alia_nlp/models/
+
+# Python artifacts
+**/__pycache__/
+**/*.py[cod]
+**/*.egg-info/
+.venv/
+venv/
+env/
+
+# Frontend build artifacts
+frontend/node_modules/
+frontend/dist/
+
+# Secrets
+.env
+backend/.env
+
+# Git & IDE
+.git/
+.vscode/
+.idea/
+
+# Test & benchmark artifacts
+tests/
+benchmark/
+tools/
+NLP/evaluation/results/
+
+# Large data files
+*.safetensors
+*.pt
+*.bin
+*.ckpt
+*.pth
+*.jsonl

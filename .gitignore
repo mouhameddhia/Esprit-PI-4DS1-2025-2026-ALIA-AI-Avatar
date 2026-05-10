@@ -19,6 +19,9 @@ ENV/
 
 # NLP model weights — large binaries, use model registry instead
 NLP/fine_tuning/models/
+alia_nlp/models/affect_classifier/
+alia_nlp/models/ser_wav2vec2/
+alia_nlp/models/speechbrain/
 *.safetensors
 *.pt
 *.bin
@@ -59,17 +62,9 @@ tmp_transformer/
 # Claude Code memory
 .claude/
 
-# Root-level architecture / audit documents — not part of deployable code
-ADVANCED_NLP_ARCHITECTURE.md
-ALIA_NLP_ARCHITECTURE.md
-ALIA_NLP_DIAGRAMS.md
+# Audit PDFs and deleted stub docs
 ALIA_NLP_FULL_AUDIT.pdf
-ENTITY_EXTRACTION_V2_INDEX.md
-NLP_EVALUATION_MATRIX.md
-NLP_LABEL_TAXONOMY.md
-RAG_INGESTION_PLAN.md
-TESTING_GUIDE.md
-TESTING_QUICK_REFERENCE.md
 
 # Generated evaluation artifacts (keep source datasets, not run artifacts)
 NLP/evaluation/results/
+alia_nlp/evaluation/results/

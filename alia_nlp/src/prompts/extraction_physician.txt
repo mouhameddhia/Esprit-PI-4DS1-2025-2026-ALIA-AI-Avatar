@@ -55,11 +55,14 @@ affect is a nested object assessing the physician's communicative state. Keys:
     "routine"  → standard clinical question, no time pressure indicated
     "elevated" → language implies concern or importance ("important", "worried", "need to check")
     "urgent"   → explicit urgency ("immediately", "emergency", "urgent", "right now", "ASAP")
-• frustration_signal — true if the physician appears frustrated, impatient, or concerned
-    Signals: terse frustrated phrasing, escalating language, "I need this now", repeated questions
+• frustration_signal — true if the physician appears frustrated or impatient
+    Signals: terse frustrated phrasing, "I need this now", escalating or repeated questioning
+• stress_signal — true if the physician appears overloaded or pressured by a complex situation
+    Signals: stacking multiple clinical questions in one message, multiple concurrent drug concerns,
+    "patient is in front of me right now", "I have 3 issues at once", fragmented multi-part queries
 
 Example:
-  "affect": {"query_urgency": "routine", "frustration_signal": false}
+  "affect": {"query_urgency": "urgent", "frustration_signal": false, "stress_signal": true}
 
 ━━━ OUTPUT ━━━
 rewritten_query: concise English semantic-search string, max 15 words

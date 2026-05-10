@@ -106,6 +106,7 @@ class ProductIndexer:
             logger.error(f"Error indexing products: {e}")
             return {'success': False, 'error': str(e)}
 
+
     async def reindex_product(
         self,
         db: AsyncIOMotorDatabase,

@@ -95,33 +95,22 @@ const LoginPage = ({ onClose }) => {
       if (response.ok) {
         const data = await response.json();
 
-        // Fetch real user profile to enforce role selection
         const meRes = await fetch('http://localhost:8000/auth/me', {
           headers: { Authorization: `Bearer ${data.access_token}` },
         });
         if (meRes.ok) {
           const userData = await meRes.json();
-          const actualRole = userData.role;
-          const selectedRole = role === 'Medical Rep' ? 'medrep' : 'physician';
-
-          // Admins can always log in regardless of the UI button selected
-          if (actualRole !== 'admin' && actualRole !== selectedRole) {
-            const label = actualRole === 'medrep' ? 'Medical Rep' : 'Physician';
-            alert(`This account is registered as "${label}". Please select the correct role and try again.`);
-            return;
-          }
-
           localStorage.setItem('token', data.access_token);
-          localStorage.setItem('userRole', actualRole);
+          localStorage.setItem('userRole', userData.role);
           localStorage.setItem('userName', userData.name);
           localStorage.setItem('userEmail', userData.email);
-          navigateByRole(actualRole);
+          navigateByRole(userData.role);
         } else {
-          alert('Login failed: could not verify account role.');
+          alert('Login failed. Please check your credentials.');
         }
       } else {
         const errorData = await response.json();
-        alert(errorData.detail || 'Login failed');
+        alert(errorData.detail || 'Login failed. Please check your credentials.');
       }
     } catch (err) {
       console.error('Traditional login error:', err);

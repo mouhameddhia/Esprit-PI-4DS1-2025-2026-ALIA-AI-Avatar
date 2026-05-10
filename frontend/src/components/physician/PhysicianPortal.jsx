@@ -12,8 +12,13 @@ import {
   ShieldCheck,
   Package,
   MessageSquarePlus,
+  Volume2,
+  VolumeX,
+  Loader2,
 } from 'lucide-react';
+import { useSpeech } from '../../hooks/useSpeech';
 import { useSessionFinalize } from '../../hooks/useSessionFinalize';
+import AffectPanel from '../shared/AffectPanel';
 import './PhysicianPortal.css';
 import '../medrep/MedRepPortal.css';
 import '../medrep/MedRepSimulation.css';
@@ -21,14 +26,14 @@ import '../medrep/MedRepSimulation.css';
 const API_BASE = 'http://localhost:8000';
 const SESSION_STORAGE_KEY = 'alia_physician_session_id';
 
-const NOUR_AVATAR_PRIMARY =
+const ALIA_AVATAR_PRIMARY =
   'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=400&h=400';
 /** Shown if the primary URL fails (network / referrer / hotlink limits). */
-const NOUR_AVATAR_FALLBACK =
-  'https://api.dicebear.com/7.x/avataaars/svg?seed=Nour&backgroundColor=b6e3f4&radius=50';
+const ALIA_AVATAR_FALLBACK =
+  'https://api.dicebear.com/7.x/avataaars/svg?seed=ALIA&backgroundColor=b6e3f4&radius=50';
 
 const WELCOME_TEXT =
-  "Hello Doctor! I'm Nour, your AI pharmaceutical representative. How can I assist you today? You can ask me about any of our products, clinical data, dosing guidelines, or request information about upcoming webinars.";
+  "Hello Doctor! I'm ALIA, your AI pharmaceutical representative. How can I assist you today? You can ask me about any of our products, clinical data, dosing guidelines, or request information about upcoming webinars.";
 
 function buildWelcomeMessage() {
   return {
@@ -40,7 +45,7 @@ function buildWelcomeMessage() {
 }
 
 function mapApiMessagesToUi(messages, sessionId) {
-  if (!messages?.length) return [buildWelcomeMessage()];
+  if (!messages?.length) return [];
   return messages.map((m, i) => ({
     id: `${sessionId}-${i}-${m.at}`,
     sender: m.role === 'user' ? 'user' : 'doctor',
@@ -60,15 +65,32 @@ function parseApiError(data) {
 
 const PhysicianPortal = () => {
   const navigate = useNavigate();
-  const [messages, setMessages] = useState([buildWelcomeMessage()]);
+  const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
   const [activeSection, setActiveSection] = useState('chat');
   const [sessionId, setSessionId] = useState(null);
   const [chatLoading, setChatLoading] = useState(false);
   const [sessionHistory, setSessionHistory] = useState([]);
   const [historyLoading, setHistoryLoading] = useState(false);
-  const [avatarSrc, setAvatarSrc] = useState(NOUR_AVATAR_PRIMARY);
+  const [avatarSrc, setAvatarSrc] = useState(ALIA_AVATAR_PRIMARY);
+  const [loadedSessionMeta, setLoadedSessionMeta] = useState(null);
+  const [currentAffect, setCurrentAffect] = useState(null);
   const chatHistoryRef = useRef(null);
+  const welcomeIntervalRef = useRef(null);
+  const welcomeTimeoutRef = useRef(null);
+
+  const { isRecording, isTranscribing, startRecording, stopRecording, speakingId, speak } = useSpeech();
+  const [audioAffect, setAudioAffect] = useState(null);
+
+  const handleMicClick = async () => {
+    if (isRecording) {
+      const { text, audioAffect: af } = await stopRecording();
+      if (text) setInputText((prev) => (prev ? `${prev} ${text}` : text));
+      if (af)   setAudioAffect(af);
+    } else {
+      await startRecording();
+    }
+  };
 
   const products = [
     { id: 'pr1', name: 'CardioGuard', desc: 'ACE Inhibitor' },
@@ -80,6 +102,29 @@ const PhysicianPortal = () => {
     { date: 'OCT 24', title: 'Advances in Hypertension', time: '14:00 GMT' },
     { date: 'NOV 12', title: 'Managing Diabetic Renal Risk', time: '10:00 GMT' },
   ];
+
+  const cancelWelcomeAnimation = useCallback(() => {
+    if (welcomeTimeoutRef.current) { clearTimeout(welcomeTimeoutRef.current); welcomeTimeoutRef.current = null; }
+    if (welcomeIntervalRef.current) { clearInterval(welcomeIntervalRef.current); welcomeIntervalRef.current = null; }
+  }, []);
+
+  const startWelcomeAnimation = useCallback(() => {
+    cancelWelcomeAnimation();
+    const baseMsg = buildWelcomeMessage();
+    setMessages([{ ...baseMsg, text: '' }]);
+    let charCount = 0;
+    const total = WELCOME_TEXT.length;
+    welcomeTimeoutRef.current = setTimeout(() => {
+      welcomeIntervalRef.current = setInterval(() => {
+        charCount = Math.min(charCount + 2, total);
+        setMessages([{ ...baseMsg, text: WELCOME_TEXT.slice(0, charCount) }]);
+        if (charCount >= total) {
+          clearInterval(welcomeIntervalRef.current);
+          welcomeIntervalRef.current = null;
+        }
+      }, 18);
+    }, 500);
+  }, [cancelWelcomeAnimation]);
 
   // Auto-finalize session when tab/window closes
   useSessionFinalize(sessionId, API_BASE, SESSION_STORAGE_KEY);
@@ -97,7 +142,10 @@ const PhysicianPortal = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     const sid = sessionStorage.getItem(SESSION_STORAGE_KEY);
-    if (!token || !sid) return;
+    if (!token || !sid) {
+      startWelcomeAnimation();
+      return;
+    }
 
     (async () => {
       try {
@@ -106,6 +154,7 @@ const PhysicianPortal = () => {
         });
         if (!r.ok) {
           sessionStorage.removeItem(SESSION_STORAGE_KEY);
+          startWelcomeAnimation();
           return;
         }
         const data = await r.json();
@@ -113,9 +162,12 @@ const PhysicianPortal = () => {
         setMessages(mapApiMessagesToUi(data.messages, sid));
       } catch {
         sessionStorage.removeItem(SESSION_STORAGE_KEY);
+        startWelcomeAnimation();
       }
     })();
-  }, []);
+
+    return () => cancelWelcomeAnimation();
+  }, [startWelcomeAnimation, cancelWelcomeAnimation]);
 
   useEffect(() => {
     if (activeSection !== 'history') return;
@@ -150,12 +202,39 @@ const PhysicianPortal = () => {
   };
 
   const startNewChat = useCallback(() => {
+    cancelWelcomeAnimation();
     sessionStorage.removeItem(SESSION_STORAGE_KEY);
     setSessionId(null);
-    setMessages([buildWelcomeMessage()]);
     setInputText('');
+    setLoadedSessionMeta(null);
     setActiveSection('chat');
-  }, []);
+    startWelcomeAnimation();
+  }, [cancelWelcomeAnimation, startWelcomeAnimation]);
+
+  const loadHistorySession = useCallback(async (item) => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+    try {
+      const r = await fetch(`${API_BASE}/chat/sessions/${item.id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!r.ok) {
+        const err = await r.json().catch(() => ({}));
+        alert(`Failed to load conversation: ${err.detail || r.status}`);
+        return;
+      }
+      const data = await r.json();
+      const mapped = mapApiMessagesToUi(data.messages, item.id);
+      cancelWelcomeAnimation();
+      sessionStorage.setItem(SESSION_STORAGE_KEY, item.id);
+      setSessionId(item.id);
+      setMessages(mapped);
+      setLoadedSessionMeta({ id: item.id, date: item.updated_at, count: mapped.length });
+      setActiveSection('chat');
+    } catch (err) {
+      alert(`Failed to load conversation: ${err.message}`);
+    }
+  }, [cancelWelcomeAnimation]);
 
   const handleSendMessage = async () => {
     if (!inputText.trim() || chatLoading) return;
@@ -166,6 +245,8 @@ const PhysicianPortal = () => {
       return;
     }
 
+    cancelWelcomeAnimation();
+    setLoadedSessionMeta(null);
     const text = inputText.trim();
     setInputText('');
 
@@ -189,14 +270,17 @@ const PhysicianPortal = () => {
           session_id: sessionId,
           content: text,
           mode: 'physician_portal',
+          audio_affect: audioAffect,
         }),
       });
+      setAudioAffect(null);
       const data = await r.json().catch(() => ({}));
       if (!r.ok) {
         throw new Error(parseApiError(data));
       }
       setSessionId(data.session_id);
       sessionStorage.setItem(SESSION_STORAGE_KEY, data.session_id);
+      if (data.affect) setCurrentAffect(data.affect);
       const reply = {
         id: `a-${Date.now()}`,
         sender: 'doctor',
@@ -223,7 +307,7 @@ const PhysicianPortal = () => {
   };
 
   const modeLabel = (mode) => {
-    if (mode === 'physician_portal') return 'Physician — AI rep (Nour)';
+    if (mode === 'physician_portal') return 'Physician — AI rep (ALIA)';
     if (mode === 'medrep_training') return 'Med rep training';
     return mode || 'Chat';
   };
@@ -264,11 +348,11 @@ const PhysicianPortal = () => {
             <div className="ai-rep-avatar">
               <img
                 src={avatarSrc}
-                alt="Nour AI"
+                alt="ALIA AI"
                 referrerPolicy="no-referrer"
                 loading="eager"
                 decoding="async"
-                onError={() => setAvatarSrc((s) => (s === NOUR_AVATAR_FALLBACK ? s : NOUR_AVATAR_FALLBACK))}
+                onError={() => setAvatarSrc((s) => (s === ALIA_AVATAR_FALLBACK ? s : ALIA_AVATAR_FALLBACK))}
               />
               <div className="ai-rep-status">Available 24/7</div>
             </div>
@@ -380,6 +464,17 @@ const PhysicianPortal = () => {
                             <span>{item.summary || item.preview || '—'}</span>
                           </div>
                         </div>
+                        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '0.5rem' }}>
+                          <button
+                            type="button"
+                            className="history-back"
+                            style={{ fontSize: '0.85rem', gap: '0.4rem' }}
+                            onClick={() => loadHistorySession(item)}
+                          >
+                            Continue Chat
+                            <ArrowRight size={14} />
+                          </button>
+                        </div>
                       </div>
                     ))
                   )}
@@ -417,9 +512,11 @@ const PhysicianPortal = () => {
                       <Activity size={20} color="#7c3aed" />
                       <span style={{ fontWeight: 700 }}>Ask Our AI Representative</span>
                     </div>
-                    <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>
-                      Powered by Groq — voice or text
-                    </div>
+                    {loadedSessionMeta && (
+                      <div style={{ fontSize: '0.75rem', color: '#7c3aed', marginTop: '0.25rem' }}>
+                        Resumed · {loadedSessionMeta.count} message{loadedSessionMeta.count !== 1 ? 's' : ''} · {new Date(loadedSessionMeta.date).toLocaleDateString()}
+                      </div>
+                    )}
                   </div>
                   <button
                     type="button"
@@ -433,7 +530,7 @@ const PhysicianPortal = () => {
                 </div>
 
                 <div className="chat-history" ref={chatHistoryRef}>
-                  <AnimatePresence>
+                  <AnimatePresence initial={false}>
                     {messages.map((msg) => (
                       <motion.div
                         key={msg.id}
@@ -443,29 +540,63 @@ const PhysicianPortal = () => {
                         style={{ maxWidth: '75%' }}
                       >
                         <p style={{ fontSize: '0.95rem' }}>{msg.text}</p>
-                        <span
-                          style={{
-                            fontSize: '0.7rem',
-                            opacity: 0.6,
-                            display: 'block',
-                            marginTop: '0.5rem',
-                          }}
-                        >
-                          {msg.timestamp}
-                        </span>
+                        {msg.text && (
+                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '0.5rem' }}>
+                            <span style={{ fontSize: '0.7rem', opacity: 0.6 }}>{msg.timestamp}</span>
+                            {msg.sender === 'doctor' && (
+                              <button
+                                type="button"
+                                onClick={() => speak(msg.text, 'en-US-JennyNeural', msg.id)}
+                                className="speak-btn"
+                                aria-label={speakingId === msg.id ? 'Stop speaking' : 'Read aloud'}
+                                title={speakingId === msg.id ? 'Stop' : 'Read aloud'}
+                              >
+                                {speakingId === msg.id ? <VolumeX size={13} /> : <Volume2 size={13} />}
+                              </button>
+                            )}
+                          </div>
+                        )}
                       </motion.div>
                     ))}
+                    {chatLoading && (
+                      <motion.div
+                        key="typing-indicator"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0 }}
+                        className="message-bubble doctor"
+                        style={{ maxWidth: '75%' }}
+                      >
+                        <div className="typing-dots">
+                          <span /><span /><span />
+                        </div>
+                      </motion.div>
+                    )}
                   </AnimatePresence>
                 </div>
+
+                {currentAffect && (
+                  <div style={{ padding: '0 2rem 0.5rem' }}>
+                    <AffectPanel affect={currentAffect} audioAffect={audioAffect} mode="physician_portal" />
+                  </div>
+                )}
 
                 <div className="chat-input-wrapper" style={{ padding: '1.25rem 2rem' }}>
                   <button
                     type="button"
-                    className="voice-btn"
-                    style={{ background: 'transparent', border: '1px solid var(--glass-border)' }}
-                    aria-label="Voice input (coming soon)"
+                    className={`voice-btn${isRecording ? ' recording' : ''}`}
+                    onClick={handleMicClick}
+                    disabled={isTranscribing || chatLoading}
+                    aria-label={isRecording ? 'Stop recording' : 'Start voice input'}
+                    title={isRecording ? 'Stop & transcribe' : 'Speak your question'}
+                    style={{
+                      background: isRecording ? 'rgba(239,68,68,0.12)' : 'transparent',
+                      border: `1px solid ${isRecording ? '#ef4444' : 'var(--glass-border)'}`,
+                    }}
                   >
-                    <Mic size={20} />
+                    {isTranscribing
+                      ? <Loader2 size={20} className="spin" />
+                      : <Mic size={20} color={isRecording ? '#ef4444' : undefined} />}
                   </button>
                   <input
                     type="text"

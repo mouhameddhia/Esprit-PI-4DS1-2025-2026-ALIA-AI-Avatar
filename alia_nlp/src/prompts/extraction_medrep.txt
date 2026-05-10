@@ -58,15 +58,17 @@ affect is a nested object assessing the rep's communicative state. Keys:
     "low"    → hedging, uncertain phrasing, very short or vague responses, "I don't know", "maybe"
     "medium" → partial confidence, mixes hedging with some clear statements
     "high"   → assertive, structured, domain vocabulary, direct answers without hedging
-• frustration_signal — true if the rep appears stuck, repeating themselves, lost, or disengaging
+• frustration_signal — true if the rep appears stuck, disengaging, or giving up
     Signals: "I don't know", "I give up", "I'm lost", repeated short replies, explicit confusion
-• engagement_level — quality of participation
-    "passive"         → minimal effort, very short responses, formulaic replies
-    "active"          → substantive response, uses domain knowledge
-    "highly_engaged"  → asks to go deeper, challenges themselves, requests harder scenarios
+• stress_signal — true if the rep appears pressured, overloaded, or frantic (distinct from frustration)
+    Signals: stacking multiple questions at once, time-pressure language ("quickly", "I need to"),
+    fragmented bursts, juggling too many topics simultaneously, "how do I handle X AND Y AND Z?"
+• engagement_level — quality of participation (binary)
+    "passive" → minimal effort, very short responses, formulaic or one-word replies
+    "engaged" → substantive response, uses domain knowledge, asks follow-ups, wants to practice more
 
 Example:
-  "affect": {"rep_confidence": "high", "frustration_signal": false, "engagement_level": "highly_engaged"}
+  "affect": {"rep_confidence": "high", "frustration_signal": false, "stress_signal": false, "engagement_level": "engaged"}
 
 ━━━ OUTPUT ━━━
 rewritten_query: concise English semantic-search string, max 15 words

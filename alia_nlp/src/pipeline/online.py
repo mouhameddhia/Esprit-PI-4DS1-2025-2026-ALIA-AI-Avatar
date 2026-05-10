@@ -121,15 +121,22 @@ def analyze(
     )
     rewritten_query = rewrite(parsed_llm, user_text)
 
-    # L6 — confidence and explainability
+    # L6 — confidence
     has_entities = any(v for v in entity_map.values() if v)
     confidence = aggregate(intent_confidence, has_entities, intent_source)
+
+    # L7 — affect analysis (with last user turn as context for multi-turn model)
+    prev_turn = next(
+        (m.get("content", "") for m in reversed(history) if m.get("role") == "user"),
+        "",
+    )
+    affect = analyze_affect(user_text, parsed_llm, mode, prev_turn=prev_turn)
+
+    # L6 — explainability (built after L7 so affect_source is available)
     explainability = build_explainability(
         user_text, intent, entity_map, secondary_tags, confidence, intent_source,
+        affect_source=affect.affect_source,
     )
-
-    # L7 — affect analysis
-    affect = analyze_affect(user_text, parsed_llm, mode)
 
     return NLPResult(
         intent=intent,

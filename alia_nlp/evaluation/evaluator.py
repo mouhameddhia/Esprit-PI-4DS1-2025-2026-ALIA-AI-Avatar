@@ -58,11 +58,13 @@ def _score_objection_handling(metadata: Dict, messages: List[Dict]) -> float:
     return min(10.0, score)
 
 
-def _score_argumentation(summary: str, metadata: Dict) -> float:
+def _score_argumentation(summary: str, metadata: Dict, affect: Optional[Dict] = None) -> float:
     score = 5.0 + min(3.0, len(metadata.get("topics") or []) * 0.75)
     score += min(2.0, len(metadata.get("action_items") or []) * 0.5)
     if _contains_any(summary, ["benefice", "preuve", "usage", "avantage"]):
         score += 1.0
+    if affect and affect.get("avg_confidence", 1.0) >= 1.5:
+        score += 0.5   # rep delivered arguments with consistent confidence
     return min(10.0, score)
 
 
@@ -92,6 +94,36 @@ def _score_safety(nlp_events: List[Dict], summary: str) -> float:
     return 10.0 if _contains_any(summary, ["je verifie", "source", "officiel", "label"]) else 9.0
 
 
+def _extract_affect_signals(nlp_events: List[Dict]) -> Dict[str, Any]:
+    """Aggregate affect signals across all nlp_events in a session."""
+    conf_map = {"low": 0, "medium": 1, "high": 2}
+    # binary engagement: legacy 3-class values normalised
+    eng_map  = {"passive": 0, "active": 1, "highly_engaged": 1, "engaged": 1}
+    conf_scores, eng_scores = [], []
+    frust_count = stress_count = 0
+
+    for ev in nlp_events:
+        af = ev.get("affect") or {}
+        if af.get("rep_confidence") in conf_map:
+            conf_scores.append(conf_map[af["rep_confidence"]])
+        if af.get("engagement_level") in eng_map:
+            eng_scores.append(eng_map[af["engagement_level"]])
+        if af.get("frustration_signal"):
+            frust_count += 1
+        if af.get("stress_signal"):
+            stress_count += 1
+
+    total = len(nlp_events) or 1
+    return {
+        "avg_confidence":  mean(conf_scores) if conf_scores else 1.0,
+        "avg_engagement":  mean(eng_scores)  if eng_scores  else 1.0,
+        "frustration_ratio": frust_count / total,
+        "frustration_count": frust_count,
+        "stress_ratio":      stress_count / total,
+        "stress_count":      stress_count,
+    }
+
+
 def _score_adaptation(metadata: Dict, nlp_events: List[Dict]) -> float:
     topics   = set(metadata.get("topics") or [])
     entities = {e for ev in nlp_events for e in (ev.get("entities") or [])}
@@ -100,6 +132,10 @@ def _score_adaptation(metadata: Dict, nlp_events: List[Dict]) -> float:
     if len(entities) >= 3: score += 2.0
     if any(ev.get("intent") == "training_simulation" for ev in nlp_events):
         score += 1.0
+
+    af = _extract_affect_signals(nlp_events)
+    if af["avg_engagement"] >= 1.5:   score += 0.5   # mostly active/highly_engaged
+    if af["avg_confidence"] >= 1.5:   score += 0.5   # mostly medium/high confidence
     return min(10.0, score)
 
 
@@ -131,12 +167,14 @@ def evaluate_conversation(
     nlp_events = nlp_events or []
     first = (messages[0].get("content") if messages else "") or ""
 
+    affect_signals = _extract_affect_signals(nlp_events)
+
     dims = {
         "opening":            _score_opening(first),
         "discovery":          _score_discovery(messages),
         "synthesis":          _score_synthesis(summary),
         "objection_handling": _score_objection_handling(metadata, messages),
-        "argumentation":      _score_argumentation(summary, metadata),
+        "argumentation":      _score_argumentation(summary, metadata, affect_signals),
         "closing":            _score_closing(metadata, summary),
         "crm":                _score_crm(summary, metadata),
         "safety":             _score_safety(nlp_events, summary),
@@ -148,14 +186,31 @@ def evaluate_conversation(
     level = _infer_level(score, dims, messages)
 
     notes: List[str] = []
-    if dims.get("safety", 0) < 7.0:       notes.append("Safety/compliance needs attention")
-    if dims.get("crm", 0) < 7.0:          notes.append("CRM traceability is weak")
-    if dims.get("closing", 0) < 7.0:      notes.append("Closing and commitment need reinforcement")
+    if dims.get("safety", 0) < 7.0:
+        notes.append("Safety/compliance needs attention")
+    if dims.get("crm", 0) < 7.0:
+        notes.append("CRM traceability is weak")
+    if dims.get("closing", 0) < 7.0:
+        notes.append("Closing and commitment need reinforcement")
+    if affect_signals["frustration_ratio"] >= 0.4:
+        notes.append("Rep showed frustration in over 40% of turns — consider reviewing session difficulty")
+    if affect_signals["avg_engagement"] < 0.5:
+        notes.append("Low engagement detected — rep may benefit from more varied scenarios")
+    if affect_signals["stress_ratio"] >= 0.3:
+        notes.append("Rep showed stress signals in over 30% of turns — may benefit from pacing guidance")
 
     return {
         "level": level, "score": score, "dimensions": dims,
         "strengths": [k for k, v in dims.items() if v >= 8.0],
         "gaps":      [k for k, v in dims.items() if v < 7.0],
         "notes": notes,
+        "affect_summary": {
+            "avg_confidence":    round(affect_signals["avg_confidence"], 2),
+            "avg_engagement":    round(affect_signals["avg_engagement"], 2),
+            "frustration_ratio": round(affect_signals["frustration_ratio"], 2),
+            "frustration_count": affect_signals["frustration_count"],
+            "stress_ratio":      round(affect_signals["stress_ratio"], 2),
+            "stress_count":      affect_signals["stress_count"],
+        },
         "evaluated_at": datetime.utcnow(),
     }

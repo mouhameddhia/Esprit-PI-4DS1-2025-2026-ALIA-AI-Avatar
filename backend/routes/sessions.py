@@ -7,7 +7,12 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from motor.motor_asyncio import AsyncIOMotorDatabase
 
 from ..dependencies import get_database, get_current_user
-from ..models.conversation import ConversationResponse, SessionListItem
+from ..models.conversation import (
+    ConversationResponse,
+    PhysicianConversationResponse,
+    MedRepConversationResponse,
+    SessionListItem,
+)
 from ..models.user import UserInDB
 from ..utils.chat_helpers import get_owned_session
 from ..utils.nlp import SUPPORTED_INTENTS
@@ -85,11 +90,14 @@ async def list_sessions(
     return items
 
 
-@router.get("/sessions/{session_id}", response_model=ConversationResponse)
+@router.get("/sessions/{session_id}")
 async def get_session(
     session_id: str,
     current_user: UserInDB = Depends(get_current_user),
     db: AsyncIOMotorDatabase = Depends(get_database),
 ):
     doc, _ = await get_owned_session(db, session_id, current_user.email)
-    return ConversationResponse(**doc)
+    mode = doc.get("mode", "physician_portal")
+    if mode == "medrep_training":
+        return MedRepConversationResponse(**doc)
+    return PhysicianConversationResponse(**doc)

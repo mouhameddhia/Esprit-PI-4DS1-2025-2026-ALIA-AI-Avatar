@@ -34,16 +34,26 @@ class SendMessageRequest(BaseModel):
     session_id: Optional[str] = None
     content: str = Field(..., min_length=1, max_length=16000)
     mode: Literal["physician_portal", "medrep_training"] = "physician_portal"
+    audio_affect: Optional[dict] = None  # SpeechBrain output, present only on voice input
 
 
 class SendMessageResponse(BaseModel):
     session_id: str
     reply: str
+    affect: dict = {}
 
 
 class FinalizeResponse(BaseModel):
     session_id: str
     summary: str
+    # MedRep-only evaluation fields (None for physician_portal)
+    competency_level: Optional[str] = None
+    evaluation_score: Optional[float] = None
+    evaluation_dimensions: dict = {}
+    evaluation_strengths: list = []
+    evaluation_gaps: list = []
+    evaluation_notes: list = []
+    evaluation_affect_summary: dict = {}
 
 
 # ---------------------------------------------------------------------------
@@ -87,6 +97,8 @@ async def send_message(
         prior_nlp_events and prior_nlp_events[-1].get("clarification_requested")
     )
 
+    affect = nlp_analysis.get("affect", {})
+
     nlp_event: dict[str, Any] = {
         "at": now,
         "mode": mode,
@@ -104,6 +116,8 @@ async def send_message(
         "confidence": nlp_analysis.get("confidence", 0.0),
         "taxonomy_version": nlp_analysis.get("taxonomy_version"),
         "explainability": nlp_analysis.get("explainability", {}),
+        "affect": affect,
+        "audio_affect": body.audio_affect or {},
         "clarification_requested": needs_clarification,
         "clarification_follow_up": prior_clarification_requested,
         "clarification_resolved": prior_clarification_requested and not needs_clarification,
@@ -139,6 +153,28 @@ async def send_message(
                 ),
             })
 
+        if mode == "medrep_training" and affect.get("frustration_signal"):
+            groq_messages.append({
+                "role": "system",
+                "content": (
+                    "The medical representative appears to be struggling or frustrated. "
+                    "Begin your response with a brief word of encouragement (one sentence), "
+                    "then provide a concrete, structured hint to help them move forward in the exercise. "
+                    "Keep the hint specific and actionable — do not simply repeat the question."
+                ),
+            })
+
+        if mode == "medrep_training" and affect.get("stress_signal"):
+            groq_messages.append({
+                "role": "system",
+                "content": (
+                    "The medical representative appears to be stressed or overloaded — "
+                    "they may be juggling too many things at once. "
+                    "Focus your response on ONE clear priority. Break it into numbered steps if needed. "
+                    "Do not overwhelm them with more information — simplify and structure."
+                ),
+            })
+
         try:
             context = await rag.get_context(query=retrieval_query, top_k=3, min_score=0.3)
             if context:
@@ -160,7 +196,7 @@ async def send_message(
     messages.append(asst_entry)
 
     if doc is None:
-        result = await db.conversations.insert_one({
+        new_doc: dict[str, Any] = {
             "user_email": current_user.email,
             "mode": mode,
             "messages": messages,
@@ -171,33 +207,50 @@ async def send_message(
             "summary_triggered_by": None,
             "rolling_summaries": [],
             "topics": [],
-            "objections": [],
             "action_items": [],
             "status": "open",
             "created_at": now,
             "updated_at": asst_time,
-        })
+        }
+        # objections and evaluation fields only exist on MedRep documents
+        if mode == "medrep_training":
+            new_doc["objections"] = []
+            new_doc["competency_level"] = None
+            new_doc["evaluation_score"] = None
+            new_doc["evaluation_dimensions"] = {}
+            new_doc["evaluation_strengths"] = []
+            new_doc["evaluation_gaps"] = []
+            new_doc["evaluation_notes"] = []
+            new_doc["evaluation_affect_summary"] = {}
+            new_doc["evaluation_completed_at"] = None
+
+        result = await db.conversations.insert_one(new_doc)
         session_id = str(result.inserted_id)
     else:
         update_set: dict[str, Any] = {"messages": messages, "updated_at": asst_time}
         if reopened_closed_session:
-            update_set.update({
+            reset: dict[str, Any] = {
                 "status": "open",
                 "summary": None, "summary_created_at": None,
                 "summary_method": None, "summary_triggered_by": None,
                 "rolling_summaries": [],
-                "nlp_evaluation": None, "competency_level": None,
-                "evaluation_score": None, "evaluation_dimensions": {},
-                "evaluation_strengths": [], "evaluation_gaps": [],
-                "evaluation_notes": [], "evaluation_completed_at": None,
-            })
+            }
+            # Only reset evaluation fields for MedRep documents
+            if mode == "medrep_training":
+                reset.update({
+                    "competency_level": None, "evaluation_score": None,
+                    "evaluation_dimensions": {}, "evaluation_strengths": [],
+                    "evaluation_gaps": [], "evaluation_notes": [],
+                    "evaluation_affect_summary": {}, "evaluation_completed_at": None,
+                })
+            update_set.update(reset)
         await db.conversations.update_one(
             {"_id": oid},
             {"$set": update_set, "$push": {"nlp_events": nlp_event}},
         )
         session_id = str(oid)
 
-    return SendMessageResponse(session_id=session_id, reply=reply_text)
+    return SendMessageResponse(session_id=session_id, reply=reply_text, affect=affect)
 
 
 @router.post("/sessions/{session_id}/finalize", response_model=FinalizeResponse)
@@ -212,6 +265,7 @@ async def finalize_session(
     if doc.get("summary") and not force_regenerate:
         return FinalizeResponse(session_id=session_id, summary=doc["summary"])
 
+    mode = doc.get("mode", "physician_portal")
     msgs = doc.get("messages") or []
     summary, metadata, rolling_summaries = await generate_summary_with_caching(
         session_id=session_id,
@@ -219,35 +273,49 @@ async def finalize_session(
         force_regenerate=force_regenerate,
     )
 
-    nlp_evaluation = evaluate_conversation(
-        messages=msgs,
-        summary=summary,
-        metadata=metadata,
-        nlp_events=list(doc.get("nlp_events") or []),
-    )
-
     now = datetime.utcnow()
-    await db.conversations.update_one(
-        {"_id": oid},
-        {"$set": {
-            "summary": summary,
-            "summary_created_at": now,
-            "summary_method": "manual",
-            "summary_triggered_by": current_user.email,
-            "rolling_summaries": rolling_summaries,
+    update: dict[str, Any] = {
+        "summary": summary,
+        "summary_created_at": now,
+        "summary_method": "manual",
+        "summary_triggered_by": current_user.email,
+        "rolling_summaries": rolling_summaries,
+        "topics": metadata.get("topics", []),
+        "objections": metadata.get("objections", []),
+        "action_items": metadata.get("action_items", []),
+        "status": "closed",
+        "updated_at": now,
+    }
+
+    # Competency evaluation is only meaningful for MedRep training sessions.
+    # Physicians are users seeking clinical information — not trainees being scored.
+    if mode == "medrep_training":
+        nlp_evaluation = evaluate_conversation(
+            messages=msgs,
+            summary=summary,
+            metadata=metadata,
+            nlp_events=list(doc.get("nlp_events") or []),
+        )
+        update.update({
             "competency_level": nlp_evaluation.get("level"),
             "evaluation_score": nlp_evaluation.get("score"),
             "evaluation_dimensions": nlp_evaluation.get("dimensions", {}),
             "evaluation_strengths": nlp_evaluation.get("strengths", []),
             "evaluation_gaps": nlp_evaluation.get("gaps", []),
             "evaluation_notes": nlp_evaluation.get("notes", []),
+            "evaluation_affect_summary": nlp_evaluation.get("affect_summary", {}),
             "evaluation_completed_at": nlp_evaluation.get("evaluated_at"),
-            "topics": metadata.get("topics", []),
-            "objections": metadata.get("objections", []),
-            "action_items": metadata.get("action_items", []),
-            "status": "closed",
-            "updated_at": now,
-        }},
-    )
+        })
 
-    return FinalizeResponse(session_id=session_id, summary=summary)
+    await db.conversations.update_one({"_id": oid}, {"$set": update})
+
+    response = FinalizeResponse(session_id=session_id, summary=summary)
+    if mode == "medrep_training" and "competency_level" in update:
+        response.competency_level      = update.get("competency_level")
+        response.evaluation_score      = update.get("evaluation_score")
+        response.evaluation_dimensions = update.get("evaluation_dimensions", {})
+        response.evaluation_strengths  = update.get("evaluation_strengths", [])
+        response.evaluation_gaps       = update.get("evaluation_gaps", [])
+        response.evaluation_notes      = update.get("evaluation_notes", [])
+        response.evaluation_affect_summary = update.get("evaluation_affect_summary", {})
+    return response

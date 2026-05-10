@@ -1,0 +1,35 @@
+{
+  "model_id": "alia-nlp-adapter-v1",
+  "base_model": "Qwen/Qwen2.5-1.5B",
+  "adapter_type": "QLoRA",
+  "task": "multi-task NLP extraction (intent classification, entity extraction, safety flag detection)",
+  "training_date": "2025-05",
+  "training_config": {
+    "r": 16,
+    "lora_alpha": 32,
+    "lora_dropout": 0.05,
+    "target_modules": ["q_proj", "v_proj"],
+    "quantization": "4-bit NF4"
+  },
+  "eval_metrics": {
+    "intent_accuracy": 0.8824,
+    "clarification_recall": 1.0,
+    "entity_map_recall": 0.6970,
+    "eval_dataset": "eval_intent_safety_v4.jsonl"
+  },
+  "quality_gates": {
+    "min_intent_accuracy": 0.90,
+    "min_safety_recall": 0.95,
+    "min_retrieval_hit_at_1": 0.70
+  },
+  "inference": {
+    "framework": "transformers + PEFT",
+    "fallback_chain": ["local_qlora_adapter", "groq_llama3.3_70b", "rule_based_baseline"],
+    "cold_start_warmup": true
+  },
+  "artifact_files": [
+    "adapter_config.json",
+    "adapter_model.safetensors"
+  ],
+  "notes": "Adapter is loaded at startup with a warmup call to eliminate cold-start latency on first user request."
+}
